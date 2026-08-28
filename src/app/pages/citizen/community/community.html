@@ -1,0 +1,375 @@
+<div class="community-page">
+
+  <div class="community-container">
+
+    <!-- HEADER -->
+
+    <section class="page-header">
+
+      <div>
+
+        <span class="page-badge">
+          <i class="bi bi-people-fill"></i>
+          GoldenLink Network
+        </span>
+
+        <h1>Our Community</h1>
+
+        <p>
+          Together, ordinary people can become a stronger first-response network.
+        </p>
+
+      </div>
+
+      <div class="header-icon">
+        <i class="bi bi-globe2"></i>
+      </div>
+
+    </section>
+
+
+    <!-- HERO MESSAGE -->
+
+    <section class="community-hero">
+
+      <div class="hero-content">
+
+        <span class="hero-label">
+          <i class="bi bi-heart-fill"></i>
+          Community-powered response
+        </span>
+
+        <h2>
+          Don't just report the accident.
+          <span>Activate the community.</span>
+        </h2>
+
+        <p>
+          GoldenLink connects people who are ready to help with incidents
+          happening around them.
+        </p>
+
+        <button
+          class="join-button"
+          (click)="joinCommunity()"
+        >
+          <i class="bi bi-person-plus-fill"></i>
+          Join the Community
+        </button>
+
+      </div>
+
+      <div class="hero-visual">
+
+        <div class="community-orbit">
+
+          <div class="orbit-center">
+            <i class="bi bi-heart-pulse-fill"></i>
+          </div>
+
+          <div class="orbit-person person-one">
+            <i class="bi bi-person-fill"></i>
+          </div>
+
+          <div class="orbit-person person-two">
+            <i class="bi bi-person-fill"></i>
+          </div>
+
+          <div class="orbit-person person-three">
+            <i class="bi bi-person-fill"></i>
+          </div>
+
+          <div class="orbit-person person-four">
+            <i class="bi bi-person-fill"></i>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- NETWORK STATS -->
+
+    <section class="stats-grid">
+
+      <div class="stat-card">
+
+        <div class="stat-icon responders">
+          <i class="bi bi-people-fill"></i>
+        </div>
+
+        <div>
+          <span>Total responders</span>
+          <strong>{{ totalResponders }}</strong>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon available">
+          <i class="bi bi-broadcast-pin"></i>
+        </div>
+
+        <div>
+          <span>Available now</span>
+          <strong>{{ totalAvailable }}</strong>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon incidents">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+        </div>
+
+        <div>
+          <span>Active incidents</span>
+          <strong>{{ totalIncidents }}</strong>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon coverage">
+          <i class="bi bi-shield-check"></i>
+        </div>
+
+        <div>
+          <span>Network coverage</span>
+          <strong>{{ averageCoverage }}%</strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- AREAS -->
+
+    <section class="areas-section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <h2>Community coverage</h2>
+
+          <p>
+            A snapshot of GoldenLink's community network.
+          </p>
+
+        </div>
+
+        <span class="network-status">
+          <span></span>
+          Network active
+        </span>
+
+      </div>
+
+
+      <div class="areas-grid">
+
+        @for (area of communityAreas; track area.name) {
+
+          <article class="area-card">
+
+            <div class="area-header">
+
+              <div class="area-icon">
+                <i [class]="'bi ' + area.icon"></i>
+              </div>
+
+              <div>
+
+                <h3>{{ area.name }}</h3>
+
+                <span>
+                  {{ area.responders }} registered responders
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="area-stats">
+
+              <div>
+                <strong>{{ area.available }}</strong>
+                <span>Available</span>
+              </div>
+
+              <div>
+                <strong>{{ area.activeIncidents }}</strong>
+                <span>Incidents</span>
+              </div>
+
+              <div>
+                <strong>{{ area.coverage }}%</strong>
+                <span>Coverage</span>
+              </div>
+
+            </div>
+
+
+            <div class="coverage-section">
+
+              <div class="coverage-label">
+
+                <span>Community readiness</span>
+
+                <strong>{{ area.coverage }}%</strong>
+
+              </div>
+
+              <div class="progress-track">
+
+                <div
+                  class="progress-value"
+                  [style.width.%]="area.coverage"
+                ></div>
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="area-button"
+              (click)="viewArea(area)"
+            >
+
+              View community
+
+              <i class="bi bi-arrow-right"></i>
+
+            </button>
+
+          </article>
+
+        }
+
+      </div>
+
+    </section>
+
+
+    <!-- HOW COMMUNITY WORKS -->
+
+    <section class="how-section">
+
+      <div class="section-heading centered">
+
+        <span class="small-label">
+          HOW GOLDENLINK WORKS
+        </span>
+
+        <h2>One community. Different roles.</h2>
+
+        <p>
+          GoldenLink helps nearby people contribute according to their
+          availability and verified capabilities.
+        </p>
+
+      </div>
+
+
+      <div class="role-grid">
+
+        <div class="role-card">
+
+          <div class="role-number">01</div>
+
+          <i class="bi bi-telephone-forward-fill"></i>
+
+          <h3>Report</h3>
+
+          <p>
+            A citizen reports an accident and shares the essential location information.
+          </p>
+
+        </div>
+
+
+        <div class="role-card">
+
+          <div class="role-number">02</div>
+
+          <i class="bi bi-person-check-fill"></i>
+
+          <h3>Match</h3>
+
+          <p>
+            Suitable nearby responders can be identified based on their availability and profile.
+          </p>
+
+        </div>
+
+
+        <div class="role-card">
+
+          <div class="role-number">03</div>
+
+          <i class="bi bi-diagram-3-fill"></i>
+
+          <h3>Coordinate</h3>
+
+          <p>
+            Different people can receive different support roles instead of duplicating the same task.
+          </p>
+
+        </div>
+
+
+        <div class="role-card">
+
+          <div class="role-number">04</div>
+
+          <i class="bi bi-shield-fill-check"></i>
+
+          <h3>Handover</h3>
+
+          <p>
+            Community response transitions when appropriate professional responders arrive.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- FOOTER MESSAGE -->
+
+    <section class="community-note">
+
+      <div class="note-icon">
+        <i class="bi bi-lightbulb-fill"></i>
+      </div>
+
+      <div>
+
+        <h3>Every trained person can become part of the response network.</h3>
+
+        <p>
+          GoldenLink is designed to coordinate people around an incident,
+          not replace professional emergency services.
+        </p>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>

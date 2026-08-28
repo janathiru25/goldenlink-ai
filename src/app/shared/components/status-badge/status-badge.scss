@@ -1,0 +1,103 @@
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  min-height: 30px;
+
+  padding: 5px 10px;
+
+  border-radius: 50px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.status-badge i {
+  font-size: 12px;
+}
+
+
+/* =========================
+   ACTIVE
+========================= */
+
+.status-active {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+
+/* =========================
+   PENDING
+========================= */
+
+.status-pending {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+
+/* =========================
+   RESPONDING
+========================= */
+
+.status-responding {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+
+/* =========================
+   COMPLETED
+========================= */
+
+.status-completed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+
+/* =========================
+   RESOLVED
+========================= */
+
+.status-resolved {
+  background: #dcfce7;
+  color: #166534;
+}
+
+
+/* =========================
+   CANCELLED
+========================= */
+
+.status-cancelled,
+.status-canceled {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+
+/* =========================
+   UNAVAILABLE
+========================= */
+
+.status-unavailable {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+
+/* =========================
+   DEFAULT
+========================= */
+
+.status-info {
+  background: #e0f2fe;
+  color: #0369a1;
+}

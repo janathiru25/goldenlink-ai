@@ -1,0 +1,238 @@
+<section class="community-page page-fade-in">
+
+  <!-- Header -->
+  <div class="community-header">
+
+    <div>
+      <span class="section-eyebrow">
+        <i class="bi bi-globe2"></i>
+        GOLDENLINK COMMUNITY
+      </span>
+
+      <h1>Communities Near You</h1>
+
+      <p>
+        Find nearby GoldenLink communities and connect with people
+        who can coordinate support when it matters.
+      </p>
+    </div>
+
+    <div class="community-summary">
+      <i class="bi bi-people-fill"></i>
+
+      <div>
+        <strong>960+</strong>
+        <span>community members nearby</span>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- Community Map Preview -->
+  <div class="map-preview">
+
+    <div class="map-content">
+
+      <div class="map-icon">
+        <i class="bi bi-geo-alt-fill"></i>
+      </div>
+
+      <h2>Your nearby community network</h2>
+
+      <p>
+        Communities are shown based on your selected location.
+      </p>
+
+      <button type="button" class="btn btn-accent">
+        <i class="bi bi-crosshair"></i>
+        Use My Location
+      </button>
+
+    </div>
+
+
+    <div class="map-pin pin-one">
+      <i class="bi bi-geo-alt-fill"></i>
+    </div>
+
+    <div class="map-pin pin-two">
+      <i class="bi bi-geo-alt-fill"></i>
+    </div>
+
+    <div class="map-pin pin-three">
+      <i class="bi bi-geo-alt-fill"></i>
+    </div>
+
+    <div class="map-pin pin-four">
+      <i class="bi bi-geo-alt-fill"></i>
+    </div>
+
+  </div>
+
+
+  <!-- Filters -->
+  <div class="filter-row">
+
+    <button
+      type="button"
+      class="filter-button"
+      [class.active]="activeFilter === 'ALL'"
+      (click)="setFilter('ALL')"
+    >
+      All communities
+    </button>
+
+    <button
+      type="button"
+      class="filter-button"
+      [class.active]="activeFilter === 'ACTIVE'"
+      (click)="setFilter('ACTIVE')"
+    >
+      <i class="bi bi-circle-fill"></i>
+      Active now
+    </button>
+
+    <button
+      type="button"
+      class="filter-button"
+      [class.active]="activeFilter === 'QUIET'"
+      (click)="setFilter('QUIET')"
+    >
+      Quiet
+    </button>
+
+  </div>
+
+
+  <!-- Results -->
+  <div class="results-heading">
+
+    <div>
+      <h2>Nearby communities</h2>
+
+      <p>
+        {{ filteredCommunities.length }} communities available
+      </p>
+    </div>
+
+  </div>
+
+
+  <!-- Community Grid -->
+  <div class="community-grid">
+
+    <article
+      class="community-card"
+      *ngFor="let community of filteredCommunities"
+    >
+
+      <div class="community-card-top">
+
+        <div class="community-avatar">
+          {{ community.initials }}
+        </div>
+
+        <div class="community-title">
+
+          <div class="title-line">
+
+            <h3>{{ community.name }}</h3>
+
+            <span
+              class="status-badge"
+              [ngClass]="getStatusClass(community.status)"
+            >
+              <i class="bi bi-circle-fill"></i>
+              {{ getStatusLabel(community.status) }}
+            </span>
+
+          </div>
+
+          <p>
+            <i class="bi bi-geo-alt"></i>
+            {{ community.area }}
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- Description -->
+      <p class="community-description">
+        {{ community.description }}
+      </p>
+
+
+      <!-- Category -->
+      <span class="category">
+        {{ community.category }}
+      </span>
+
+
+      <!-- Stats -->
+      <div class="community-stats">
+
+        <div>
+          <strong>{{ community.distance }}</strong>
+          <span>Distance</span>
+        </div>
+
+        <div>
+          <strong>{{ community.members }}</strong>
+          <span>Members</span>
+        </div>
+
+        <div>
+          <strong>{{ community.activeMembers }}</strong>
+          <span>Active now</span>
+        </div>
+
+      </div>
+
+
+      <!-- Actions -->
+      <div class="community-actions">
+
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          (click)="viewCommunity(community)"
+        >
+          View Community
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-accent"
+          (click)="joinCommunity(community)"
+        >
+          <i class="bi bi-person-plus"></i>
+          Join
+        </button>
+
+      </div>
+
+    </article>
+
+  </div>
+
+
+  <!-- Empty -->
+  <div
+    class="empty-state"
+    *ngIf="filteredCommunities.length === 0"
+  >
+
+    <i class="bi bi-globe2"></i>
+
+    <h3>No communities found</h3>
+
+    <p>
+      Try changing the community filter.
+    </p>
+
+  </div>
+
+</section>

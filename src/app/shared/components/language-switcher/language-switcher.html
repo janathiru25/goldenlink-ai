@@ -1,0 +1,73 @@
+<div class="language-switcher">
+
+  <button
+    type="button"
+    class="language-button"
+    (click)="toggleDropdown()"
+    [attr.aria-expanded]="isOpen"
+    aria-label="Select language"
+  >
+
+    <i class="bi bi-translate"></i>
+
+    <span class="language-text">
+      {{ selectedLanguage.nativeName }}
+    </span>
+
+    <i
+      class="bi"
+      [class.bi-chevron-down]="!isOpen"
+      [class.bi-chevron-up]="isOpen"
+    ></i>
+
+  </button>
+
+
+  @if (isOpen) {
+
+    <div class="language-dropdown">
+
+      <div class="dropdown-title">
+        Select Language
+      </div>
+
+      @for (language of languages; track language.code) {
+
+        <button
+          type="button"
+          class="language-option"
+          [class.active]="selectedLanguage.code === language.code"
+          (click)="selectLanguage(language)"
+        >
+
+          <span class="language-flag">
+            {{ language.flag }}
+          </span>
+
+          <span class="language-info">
+
+            <span class="language-native">
+              {{ language.nativeName }}
+            </span>
+
+            <span class="language-name">
+              {{ language.name }}
+            </span>
+
+          </span>
+
+          @if (selectedLanguage.code === language.code) {
+
+            <i class="bi bi-check-circle-fill language-check"></i>
+
+          }
+
+        </button>
+
+      }
+
+    </div>
+
+  }
+
+</div>

@@ -1,0 +1,228 @@
+<section class="incident-page">
+
+  <div class="page-header">
+    <div>
+      <span class="eyebrow">RESPONDER CENTER</span>
+
+      <h1>Incident Response</h1>
+
+      <p>
+        Find nearby incidents and help your community during the golden hour.
+      </p>
+    </div>
+
+    <div class="availability">
+      <span class="availability-dot"></span>
+      Available to respond
+    </div>
+  </div>
+
+
+  <div class="response-summary">
+
+    <div class="summary-card">
+      <div class="summary-icon emergency-icon">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+      </div>
+
+      <div>
+        <span>Active incidents</span>
+        <strong>{{ incidents.length }}</strong>
+      </div>
+    </div>
+
+
+    <div class="summary-card">
+      <div class="summary-icon responder-icon">
+        <i class="bi bi-people-fill"></i>
+      </div>
+
+      <div>
+        <span>People needing help</span>
+        <strong>
+          {{ incidents[0]?.people + incidents[1]?.people }}
+        </strong>
+      </div>
+    </div>
+
+
+    <div class="summary-card">
+      <div class="summary-icon distance-icon">
+        <i class="bi bi-geo-alt-fill"></i>
+      </div>
+
+      <div>
+        <span>Nearest incident</span>
+        <strong>1.2 km</strong>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="incident-section">
+
+    <div class="section-heading">
+      <div>
+        <h2>Nearby incidents</h2>
+        <p>Choose an incident you can safely respond to.</p>
+      </div>
+
+      <div class="filter-tabs">
+
+        <button
+          [class.active]="activeTab === 'ACTIVE'"
+          (click)="setTab('ACTIVE')">
+          Active
+        </button>
+
+        <button
+          [class.active]="activeTab === 'RESPONDING'"
+          (click)="setTab('RESPONDING')">
+          Responding
+        </button>
+
+        <button
+          [class.active]="activeTab === 'HANDED_OVER'"
+          (click)="setTab('HANDED_OVER')">
+          Handed Over
+        </button>
+
+        <button
+          [class.active]="activeTab === 'ALL'"
+          (click)="setTab('ALL')">
+          All
+        </button>
+
+      </div>
+    </div>
+
+
+    <div class="incident-list">
+
+      @for (incident of filteredIncidents; track incident.id) {
+
+        <article class="incident-card">
+
+          <div class="incident-top">
+
+            <div class="incident-type">
+
+              <div class="incident-icon">
+                <i class="bi bi-car-front-fill"></i>
+              </div>
+
+              <div>
+                <span class="incident-id">
+                  {{ incident.id }}
+                </span>
+
+                <h3>{{ incident.type }}</h3>
+              </div>
+
+            </div>
+
+            <span
+              class="status"
+              [class]="getStatusClass(incident.status)">
+              {{ getStatusLabel(incident.status) }}
+            </span>
+
+          </div>
+
+
+          <div class="incident-details">
+
+            <div>
+              <i class="bi bi-geo-alt"></i>
+              <span>{{ incident.location }}</span>
+            </div>
+
+            <div>
+              <i class="bi bi-signpost-2"></i>
+              <span>{{ incident.distance }}</span>
+            </div>
+
+            <div>
+              <i class="bi bi-clock"></i>
+              <span>{{ incident.reportedAt }}</span>
+            </div>
+
+            <div>
+              <i class="bi bi-people"></i>
+              <span>{{ incident.people }} responders needed</span>
+            </div>
+
+          </div>
+
+
+          <p class="incident-description">
+            {{ incident.description }}
+          </p>
+
+
+          <div class="incident-actions">
+
+            <button
+              class="secondary-button"
+              (click)="viewIncident(incident)">
+              <i class="bi bi-eye"></i>
+              View Details
+            </button>
+
+            @if (incident.status === 'ACTIVE') {
+
+              <button
+                class="primary-button"
+                (click)="acceptIncident(incident)">
+                <i class="bi bi-check-circle-fill"></i>
+                Accept Response
+              </button>
+
+            } @else if (incident.status === 'RESPONDING') {
+
+              <button
+                class="responding-button"
+                (click)="viewIncident(incident)">
+                <i class="bi bi-navigation-fill"></i>
+                View Response
+
+              </button>
+
+            } @else {
+
+              <button
+                class="disabled-button"
+                disabled>
+                <i class="bi bi-check-circle"></i>
+                Handed Over
+              </button>
+
+            }
+
+          </div>
+
+        </article>
+
+      }
+
+
+      @if (filteredIncidents.length === 0) {
+
+        <div class="empty-state">
+          <i class="bi bi-check-circle"></i>
+
+          <h3>No incidents here</h3>
+
+          <p>
+            There are no incidents matching this filter right now.
+          </p>
+        </div>
+
+      }
+
+    </div>
+
+  </div>
+
+</section>

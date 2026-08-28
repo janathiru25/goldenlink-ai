@@ -1,0 +1,195 @@
+.workflow-section {
+  padding: 6rem 0;
+  background: var(--surface);
+}
+
+.section-heading {
+  max-width: 760px;
+  margin: 0 auto 4rem;
+  text-align: center;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  padding: 0.5rem 0.9rem;
+
+  border-radius: 999px;
+
+  background: var(--warning-light);
+  color: var(--accent-dark);
+
+  font-size: 0.85rem;
+  font-weight: 700;
+
+  margin-bottom: 1.25rem;
+}
+
+.section-heading h2 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.section-heading h2 span {
+  color: var(--accent-dark);
+}
+
+.section-heading p {
+  color: var(--muted);
+  font-size: 1.05rem;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+
+// -------------------------
+// Workflow layout
+// -------------------------
+
+.workflow {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.workflow-item {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.workflow-card {
+  width: 100%;
+  min-height: 270px;
+
+  padding: 1.5rem;
+
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+
+  position: relative;
+
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base);
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-light);
+  }
+}
+
+.stage-number {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  font-size: 0.8rem;
+  font-weight: 800;
+
+  color: var(--muted);
+}
+
+.stage-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 1.25rem;
+
+  border-radius: 14px;
+
+  background: var(--warning-light);
+  color: var(--accent-dark);
+
+  font-size: 1.35rem;
+}
+
+.workflow-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.7rem;
+}
+
+.workflow-card p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+
+// -------------------------
+// Arrow
+// -------------------------
+
+.workflow-arrow {
+  flex-shrink: 0;
+
+  width: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--accent);
+
+  font-size: 1.2rem;
+}
+
+
+// -------------------------
+// Tablet
+// -------------------------
+
+@media (max-width: 1100px) {
+
+  .workflow {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .workflow-item {
+    display: block;
+  }
+
+  .workflow-arrow {
+    display: none;
+  }
+
+}
+
+
+// -------------------------
+// Mobile
+// -------------------------
+
+@media (max-width: 576px) {
+
+  .workflow-section {
+    padding: 4rem 0;
+  }
+
+  .section-heading {
+    margin-bottom: 2.5rem;
+  }
+
+  .workflow {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-card {
+    min-height: auto;
+  }
+
+}

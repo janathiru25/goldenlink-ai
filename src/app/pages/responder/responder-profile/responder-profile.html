@@ -1,0 +1,198 @@
+<section class="profile-page">
+
+  <div class="page-header">
+
+    <div>
+      <span class="eyebrow">RESPONDER ACCOUNT</span>
+
+      <h1>My Profile</h1>
+
+      <p>
+        Manage your responder information and availability.
+      </p>
+    </div>
+
+    <button
+      class="edit-button"
+      (click)="editProfile()">
+      <i class="bi bi-pencil"></i>
+      Edit Profile
+    </button>
+
+  </div>
+
+
+  <div class="profile-layout">
+
+    <div class="profile-card">
+
+      <div class="profile-cover"></div>
+
+      <div class="profile-content">
+
+        <div class="avatar">
+          {{ responder.name.charAt(0) }}
+        </div>
+
+        <h2>{{ responder.name }}</h2>
+
+        <p class="role">{{ responder.role }}</p>
+
+        <div
+          class="availability-status"
+          [class.unavailable]="!isAvailable">
+
+          <span></span>
+
+          {{ isAvailable ? 'Available to respond' : 'Currently unavailable' }}
+
+        </div>
+
+
+        <div class="profile-id">
+
+          <span>Responder ID</span>
+
+          <strong>{{ responder.responderId }}</strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="details-column">
+
+      <div class="availability-card">
+
+        <div>
+          <span class="card-label">Responder availability</span>
+
+          <h3>
+            {{ isAvailable ? 'You are available' : 'You are unavailable' }}
+          </h3>
+
+          <p>
+            {{ isAvailable
+              ? 'You can receive nearby emergency response requests.'
+              : 'You will not receive new response requests.' }}
+          </p>
+        </div>
+
+        <button
+          class="availability-toggle"
+          [class.off]="!isAvailable"
+          (click)="toggleAvailability()">
+
+          <span></span>
+
+          {{ isAvailable ? 'Available' : 'Unavailable' }}
+
+        </button>
+
+      </div>
+
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <i class="bi bi-check-circle-fill"></i>
+
+          <span>Responses</span>
+
+          <strong>{{ responder.responses }}</strong>
+        </div>
+
+
+        <div class="stat-card">
+          <i class="bi bi-shield-check"></i>
+
+          <span>Successful</span>
+
+          <strong>{{ responder.successfulResponses }}</strong>
+        </div>
+
+
+        <div class="stat-card">
+          <i class="bi bi-star-fill"></i>
+
+          <span>Rating</span>
+
+          <strong>{{ responder.rating }}</strong>
+        </div>
+
+      </div>
+
+
+      <div class="information-card">
+
+        <h2>Responder Information</h2>
+
+
+        <div class="info-row">
+
+          <div class="info-icon">
+            <i class="bi bi-geo-alt-fill"></i>
+          </div>
+
+          <div>
+            <span>Current area</span>
+            <strong>{{ responder.location }}</strong>
+          </div>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <div class="info-icon">
+            <i class="bi bi-calendar-check"></i>
+          </div>
+
+          <div>
+            <span>Joined GoldenLink AI</span>
+            <strong>{{ responder.joined }}</strong>
+          </div>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <div class="info-icon">
+            <i class="bi bi-radar"></i>
+          </div>
+
+          <div>
+            <span>Response radius</span>
+            <strong>{{ responder.distance }}</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="safety-card">
+
+        <div class="safety-icon">
+          <i class="bi bi-shield-check"></i>
+        </div>
+
+        <div>
+          <h3>Respond safely</h3>
+
+          <p>
+            Only respond when it is safe to do so. Follow emergency
+            instructions and never put yourself at risk.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

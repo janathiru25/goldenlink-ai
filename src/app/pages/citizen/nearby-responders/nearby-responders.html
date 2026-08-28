@@ -1,0 +1,291 @@
+<div class="responders-page">
+
+  <!-- LOADING SPINNER -->
+  <app-loading-spinner
+    message="Finding nearby responders..."
+  ></app-loading-spinner>
+
+  <div class="responders-container">
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-header">
+
+      <div class="header-content">
+
+        <span class="page-badge">
+          <i class="bi bi-geo-alt-fill"></i>
+          Community Response
+        </span>
+
+        <h1>Nearby Responders</h1>
+
+        <p>
+          Find verified community responders who are available to help nearby.
+        </p>
+
+      </div>
+
+      <div class="header-icon">
+        <i class="bi bi-people-fill"></i>
+      </div>
+
+    </section>
+
+
+    <!-- LOCATION STATUS -->
+
+    <section class="location-card">
+
+      <div class="location-left">
+
+        <div class="location-icon">
+          <i class="bi bi-crosshair"></i>
+        </div>
+
+        <div>
+
+          <span class="location-label">
+            Searching near your location
+          </span>
+
+          <strong>
+            Current accident area
+          </strong>
+
+        </div>
+
+      </div>
+
+      <div class="radius-selector">
+
+        <span>Radius</span>
+
+        <select
+          [value]="searchRadius"
+          (change)="changeRadius($any($event.target).value)"
+          class="form-select"
+        >
+          <option value="1 km">1 km</option>
+          <option value="2 km">2 km</option>
+          <option value="5 km">5 km</option>
+        </select>
+
+      </div>
+
+    </section>
+
+
+    <!-- RESPONSE SUMMARY -->
+
+    <section class="response-summary">
+
+      <div class="summary-number">
+        <strong>{{ availableCount }}</strong>
+        <span>available now</span>
+      </div>
+
+      <div class="summary-divider"></div>
+
+      <div class="summary-text">
+
+        <div class="live-indicator">
+          <span></span>
+          Live availability
+        </div>
+
+        <p>
+          Verified responders in your selected area.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- RESPONDER LIST -->
+
+    <section class="responder-section">
+
+      <div class="section-heading">
+
+        <div>
+          <h2>People nearby</h2>
+          <p>Choose a suitable responder for assistance.</p>
+        </div>
+
+        <span class="responder-count">
+          {{ responders.length }} found
+        </span>
+
+      </div>
+
+
+      <div class="responder-list">
+
+        @for (responder of responders; track responder.id) {
+
+          <article
+            class="responder-card"
+            [class.unavailable]="!responder.available"
+          >
+
+            <!-- PROFILE -->
+
+            <div class="responder-profile">
+
+              <div class="avatar">
+                {{ responder.initials }}
+              </div>
+
+              <div class="profile-info">
+
+                <div class="name-row">
+
+                  <h3>{{ responder.name }}</h3>
+
+                  @if (responder.verified) {
+
+                    <span class="verified">
+                      <i class="bi bi-patch-check-fill"></i>
+                      Verified
+                    </span>
+
+                  }
+
+                </div>
+
+                <span class="responder-role">
+                  {{ responder.role }}
+                </span>
+
+              </div>
+
+              <div
+                class="availability"
+                [class.available]="responder.available"
+              >
+
+                <span class="availability-dot"></span>
+
+                {{ responder.available ? 'Available' : 'Unavailable' }}
+
+              </div>
+
+            </div>
+
+
+            <!-- RESPONDER INFO -->
+
+            <div class="responder-info-grid">
+
+              <div class="info-item">
+
+                <i class="bi bi-geo-alt"></i>
+
+                <div>
+                  <span>Distance</span>
+                  <strong>{{ responder.distance }}</strong>
+                </div>
+
+              </div>
+
+
+              <div class="info-item">
+
+                <i class="bi bi-clock"></i>
+
+                <div>
+                  <span>Estimated arrival</span>
+                  <strong>{{ responder.eta }}</strong>
+                </div>
+
+              </div>
+
+
+              <div class="info-item">
+
+                <i class="bi bi-star-fill"></i>
+
+                <div>
+                  <span>Community rating</span>
+                  <strong>{{ responder.rating }}</strong>
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- SKILLS -->
+
+            <div class="skills">
+
+              @for (skill of responder.skills; track skill) {
+
+                <span class="skill-tag">
+                  <i class="bi bi-check2"></i>
+                  {{ skill }}
+                </span>
+
+              }
+
+            </div>
+
+
+            <!-- ACTION -->
+
+            <button
+              class="request-button"
+              [disabled]="!responder.available"
+              (click)="requestHelp(responder)"
+            >
+
+              @if (responder.available) {
+
+                <i class="bi bi-hand-thumbs-up"></i>
+                Request Help
+
+              } @else {
+
+                <i class="bi bi-person-x"></i>
+                Currently Unavailable
+
+              }
+
+            </button>
+
+          </article>
+
+        }
+
+      </div>
+
+    </section>
+
+
+    <!-- SAFETY NOTE -->
+
+    <section class="safety-note">
+
+      <div class="safety-icon">
+        <i class="bi bi-shield-check"></i>
+      </div>
+
+      <div>
+
+        <h3>GoldenLink safety principle</h3>
+
+        <p>
+          GoldenLink connects you with registered community responders.
+          Professional emergency services remain the primary response for
+          serious incidents.
+        </p>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>

@@ -1,0 +1,65 @@
+<section class="workflow-section">
+  <div class="container">
+
+    <!-- Section heading -->
+    <div class="section-heading">
+
+      <span class="section-label">
+        <i class="bi bi-lightning-charge-fill"></i>
+        GoldenLink Response Network
+      </span>
+
+      <h2>
+        From accident
+        <span>to coordinated response.</span>
+      </h2>
+
+      <p>
+        GoldenLink connects people around an accident and gives
+        each responder a simple, meaningful role during the Golden Hour.
+      </p>
+
+    </div>
+
+
+    <!-- Workflow -->
+    <div class="workflow">
+
+      @for (stage of workflowStages; track stage.number; let last = $last) {
+
+        <div class="workflow-item">
+
+          <div class="workflow-card">
+
+            <div class="stage-number">
+              {{ stage.number }}
+            </div>
+
+            <div class="stage-icon">
+              <i class="bi {{ stage.icon }}"></i>
+            </div>
+
+            <h3>
+              {{ stage.title }}
+            </h3>
+
+            <p>
+              {{ stage.description }}
+            </p>
+
+          </div>
+
+          @if (!last) {
+            <div class="workflow-arrow">
+              <i class="bi bi-arrow-right"></i>
+            </div>
+          }
+
+        </div>
+
+      }
+
+    </div>
+
+  </div>
+</section>

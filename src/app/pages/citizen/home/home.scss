@@ -1,0 +1,550 @@
+.home-hero {
+  background: #f6f8fb;
+  padding: 90px 20px 80px;
+}
+
+.hero-content {
+  max-width: 950px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 9px 18px;
+  margin-bottom: 25px;
+
+  border-radius: 50px;
+
+  background: #fff3d6;
+  color: #c97b00;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.hero-content h1 {
+  margin: 0;
+
+  color: #102744;
+
+  font-size: clamp(42px, 6vw, 72px);
+  line-height: 1.05;
+  font-weight: 800;
+}
+
+.hero-content h1 span {
+  display: block;
+  color: #d88900;
+}
+
+.hero-description {
+  max-width: 720px;
+  margin: 25px auto 35px;
+
+  color: #64748b;
+
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+.hero-description strong {
+  color: #102744;
+}
+
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  min-height: 52px;
+  padding: 0 24px;
+
+  border-radius: 9px;
+
+  text-decoration: none;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+
+.btn-emergency {
+  background: #e8443d;
+  color: #ffffff;
+}
+
+.btn-emergency:hover {
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(232, 68, 61, 0.25);
+}
+
+
+.btn-community {
+  background: #102744;
+  color: #ffffff;
+}
+
+.btn-community:hover {
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(16, 39, 68, 0.25);
+}
+
+
+.btn-responder {
+  background: #d88900;
+  color: #ffffff;
+}
+
+.btn-responder:hover {
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(216, 137, 0, 0.25);
+}
+
+
+/* ACTIVATION */
+
+.activation-section {
+  padding: 90px 20px;
+  background: #ffffff;
+}
+
+.activation-header {
+  max-width: 850px;
+  margin: 0 auto 55px;
+
+  text-align: center;
+}
+
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 9px 18px;
+
+  border-radius: 50px;
+
+  background: #fff3d6;
+  color: #c97b00;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.activation-header h2 {
+  margin: 25px 0 20px;
+
+  color: #102744;
+
+  font-size: clamp(38px, 5vw, 58px);
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+.activation-header h2 span {
+  display: block;
+  color: #d88900;
+}
+
+.activation-header p {
+  max-width: 700px;
+  margin: 0 auto;
+
+  color: #64748b;
+
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+
+.feature-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+}
+
+
+.feature-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+
+  padding: 28px;
+
+  border: 1px solid #dce3ec;
+  border-radius: 16px;
+
+  background: #f8fafc;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 12px 30px rgba(16, 39, 68, 0.08);
+}
+
+
+.feature-icon {
+  flex: 0 0 52px;
+
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #f9a825;
+  color: #102744;
+
+  font-size: 21px;
+}
+
+
+.feature-card h3 {
+  margin: 2px 0 8px;
+
+  color: #102744;
+
+  font-size: 20px;
+  font-weight: 750;
+}
+
+.feature-card p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+  .home-hero {
+    padding: 65px 18px;
+  }
+
+  .hero-content h1 {
+    font-size: 44px;
+  }
+
+  .hero-description {
+    font-size: 17px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .activation-section {
+    padding: 65px 18px;
+  }
+
+  .activation-header h2 {
+    font-size: 40px;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-card {
+    padding: 22px;
+  }
+}
+
+/* =========================
+   RESPONDER ACCESS
+========================= */
+
+.responder-access-section {
+  padding: 70px 0;
+  background: #f8fafc;
+}
+
+.responder-access-card {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 32px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.responder-access-icon {
+  width: 70px;
+  height: 70px;
+  min-width: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff4d6;
+  color: #d88900;
+
+  border-radius: 18px;
+  font-size: 30px;
+}
+
+.responder-access-content {
+  flex: 1;
+}
+
+.responder-access-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-bottom: 8px;
+
+  color: #d88900;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.responder-access-content h2 {
+  margin: 0 0 8px;
+
+  color: #10233f;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.responder-access-content p {
+  margin: 0;
+
+  max-width: 700px;
+
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.responder-access-action {
+  flex-shrink: 0;
+}
+
+.responder-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 13px 20px;
+
+  background: #10233f;
+  color: #ffffff;
+
+  border-radius: 10px;
+
+  text-decoration: none;
+  font-weight: 700;
+
+  transition: all 0.2s ease;
+}
+
+.responder-btn:hover {
+  background: #1e3a5f;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+  .responder-access-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 25px;
+  }
+
+  .responder-access-action {
+    width: 100%;
+  }
+
+  .responder-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .responder-access-content h2 {
+    font-size: 21px;
+  }
+
+}
+/* =========================
+   ACCIDENT REPORT SECTION
+========================= */
+
+.accident-report-section {
+  padding: 60px 0;
+  background: #fff8f8;
+}
+
+.accident-report-card {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+
+  padding: 30px;
+
+  background: #ffffff;
+
+  border: 1px solid #fecaca;
+  border-radius: 20px;
+
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.accident-report-icon {
+  width: 68px;
+  height: 68px;
+  min-width: 68px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff1f1;
+  color: #e53935;
+
+  border-radius: 17px;
+
+  font-size: 28px;
+}
+
+.accident-report-content {
+  flex: 1;
+}
+
+.accident-report-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-bottom: 7px;
+
+  color: #e53935;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.accident-report-content h2 {
+  margin: 0 0 8px;
+
+  color: #10233f;
+
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.accident-report-content p {
+  margin: 0;
+
+  max-width: 650px;
+
+  color: #64748b;
+
+  line-height: 1.6;
+}
+
+.accident-report-action {
+  flex-shrink: 0;
+}
+
+.accident-report-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 13px 20px;
+
+  background: #e53935;
+  color: #ffffff;
+
+  border-radius: 10px;
+
+  text-decoration: none;
+
+  font-weight: 700;
+
+  transition: all 0.2s ease;
+}
+
+.accident-report-btn:hover {
+  background: #c62828;
+  color: #ffffff;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  .accident-report-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .accident-report-action {
+    width: 100%;
+  }
+
+  .accident-report-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+}

@@ -1,0 +1,399 @@
+<div class="report-page">
+
+  <div class="report-container">
+
+    <!-- HEADER -->
+
+    <div class="report-header">
+
+      <a routerLink="/" class="back-link">
+        <i class="bi bi-arrow-left"></i>
+        Back to Home
+      </a>
+
+      <span class="report-badge">
+        <i class="bi bi-shield-check"></i>
+        GoldenLink AI
+      </span>
+
+      <h1>Report an Accident</h1>
+
+      <p>
+        Help activate the nearby community response.
+      </p>
+
+    </div>
+
+
+    <!-- PROGRESS -->
+
+    <div class="progress-area">
+
+      <div class="progress-text">
+        Step {{ currentStep }} of {{ totalSteps }}
+      </div>
+
+      <div class="progress">
+
+        <div
+          class="progress-bar"
+          [style.width.%]="(currentStep / totalSteps) * 100"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- STEP 1 -->
+
+    @if (currentStep === 1) {
+
+      <div class="report-card">
+
+        <div class="step-icon">
+          <i class="bi bi-geo-alt-fill"></i>
+        </div>
+
+        <h2>Where did the accident happen?</h2>
+
+        <p>
+          Your location helps GoldenLink identify the incident
+          area and nearby responders.
+        </p>
+
+        <button
+          class="btn btn-primary location-button"
+          (click)="getLocation()"
+        >
+          <i class="bi bi-crosshair"></i>
+          Use My Current Location
+        </button>
+
+        <div class="location-status">
+
+          <i class="bi bi-geo-alt"></i>
+
+          {{ locationStatus }}
+
+        </div>
+
+        @if (latitude !== null && longitude !== null) {
+
+          <div class="coordinates">
+
+            <strong>Latitude:</strong>
+            {{ latitude }}
+
+            <br>
+
+            <strong>Longitude:</strong>
+            {{ longitude }}
+
+          </div>
+
+        }
+
+      </div>
+
+    }
+
+
+    <!-- STEP 2 -->
+
+    @if (currentStep === 2) {
+
+      <div class="report-card">
+
+        <div class="step-icon">
+          <i class="bi bi-car-front-fill"></i>
+        </div>
+
+        <h2>What happened?</h2>
+
+        <p>
+          Select the option that best describes the incident.
+        </p>
+
+
+        <div class="options-grid">
+
+          <button
+            class="option-card"
+            [class.selected]="incidentType === 'ROAD_ACCIDENT'"
+            (click)="incidentType = 'ROAD_ACCIDENT'"
+          >
+
+            <i class="bi bi-car-front-fill"></i>
+
+            <span>Road Accident</span>
+
+          </button>
+
+
+          <button
+            class="option-card"
+            [class.selected]="incidentType === 'TWO_WHEELER'"
+            (click)="incidentType = 'TWO_WHEELER'"
+          >
+
+            <i class="bi bi-bicycle"></i>
+
+            <span>Two-Wheeler Accident</span>
+
+          </button>
+
+
+          <button
+            class="option-card"
+            [class.selected]="incidentType === 'PEDESTRIAN'"
+            (click)="incidentType = 'PEDESTRIAN'"
+          >
+
+            <i class="bi bi-person-walking"></i>
+
+            <span>Pedestrian Incident</span>
+
+          </button>
+
+
+          <button
+            class="option-card"
+            [class.selected]="incidentType === 'UNKNOWN'"
+            (click)="incidentType = 'UNKNOWN'"
+          >
+
+            <i class="bi bi-question-circle"></i>
+
+            <span>Not Sure</span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+    }
+
+
+    <!-- STEP 3 -->
+
+    @if (currentStep === 3) {
+
+      <div class="report-card">
+
+        <div class="step-icon">
+          <i class="bi bi-people-fill"></i>
+        </div>
+
+        <h2>Tell us about the situation</h2>
+
+        <div class="question">
+
+          <h3>Are people involved?</h3>
+
+          <div class="choice-row">
+
+            <button
+              class="choice-button"
+              [class.selected]="peopleInvolved === 'YES'"
+              (click)="peopleInvolved = 'YES'"
+            >
+              Yes
+            </button>
+
+            <button
+              class="choice-button"
+              [class.selected]="peopleInvolved === 'NO'"
+              (click)="peopleInvolved = 'NO'"
+            >
+              No
+            </button>
+
+            <button
+              class="choice-button"
+              [class.selected]="peopleInvolved === 'NOT_SURE'"
+              (click)="peopleInvolved = 'NOT_SURE'"
+            >
+              Not Sure
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="question">
+
+          <h3>Can emergency responders reach the location?</h3>
+
+          <div class="choice-row">
+
+            <button
+              class="choice-button"
+              [class.selected]="locationAccessible === 'YES'"
+              (click)="locationAccessible = 'YES'"
+            >
+              Yes
+            </button>
+
+            <button
+              class="choice-button"
+              [class.selected]="locationAccessible === 'NO'"
+              (click)="locationAccessible = 'NO'"
+            >
+              No
+            </button>
+
+            <button
+              class="choice-button"
+              [class.selected]="locationAccessible === 'NOT_SURE'"
+              (click)="locationAccessible = 'NOT_SURE'"
+            >
+              Not Sure
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="question">
+
+          <h3>Additional information</h3>
+
+          <textarea
+            [(ngModel)]="description"
+            class="form-control"
+            rows="4"
+            placeholder="Describe what you can see..."
+          ></textarea>
+
+        </div>
+
+      </div>
+
+    }
+
+
+    <!-- STEP 4 -->
+
+    @if (currentStep === 4) {
+
+      <div class="report-card">
+
+        <div class="step-icon success">
+          <i class="bi bi-check-lg"></i>
+        </div>
+
+        <h2>Review your report</h2>
+
+        <p>
+          Please check the information before activating GoldenLink.
+        </p>
+
+
+        <div class="review-item">
+
+          <span>Incident</span>
+
+          <strong>
+            {{ incidentType || 'Not selected' }}
+          </strong>
+
+        </div>
+
+
+        <div class="review-item">
+
+          <span>People involved</span>
+
+          <strong>
+            {{ peopleInvolved || 'Not selected' }}
+          </strong>
+
+        </div>
+
+
+        <div class="review-item">
+
+          <span>Location access</span>
+
+          <strong>
+            {{ locationAccessible || 'Not selected' }}
+          </strong>
+
+        </div>
+
+
+        <div class="review-item">
+
+          <span>GPS</span>
+
+          <strong>
+            @if (latitude !== null) {
+              Location detected
+            } @else {
+              Not detected
+            }
+          </strong>
+
+        </div>
+
+
+        <button
+          class="btn btn-emergency activate-button"
+          (click)="submitReport()"
+        >
+
+          <i class="bi bi-broadcast-pin"></i>
+
+          Activate GoldenLink
+
+        </button>
+
+      </div>
+
+    }
+
+
+    <!-- NAVIGATION -->
+
+    <div class="navigation">
+
+      @if (currentStep > 1) {
+
+        <button
+          class="btn btn-outline-secondary"
+          (click)="previousStep()"
+        >
+
+          <i class="bi bi-arrow-left"></i>
+
+          Previous
+
+        </button>
+
+      }
+
+
+      @if (currentStep < totalSteps) {
+
+        <button
+          class="btn btn-accent"
+          (click)="nextStep()"
+        >
+
+          Continue
+
+          <i class="bi bi-arrow-right"></i>
+
+        </button>
+
+      }
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,304 @@
+<div class="records-page">
+
+  <div class="records-container">
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+      <div>
+
+        <span class="page-badge">
+          <i class="bi bi-clock-history"></i>
+          GoldenLink History
+        </span>
+
+        <h1>Accident Records</h1>
+
+        <p>
+          Track the incidents you have reported and their response status.
+        </p>
+
+      </div>
+
+      <div class="header-icon">
+        <i class="bi bi-journal-check"></i>
+      </div>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary-grid">
+
+      <div class="summary-card">
+
+        <div class="summary-icon all">
+          <i class="bi bi-list-check"></i>
+        </div>
+
+        <div>
+          <span>Total Reports</span>
+          <strong>{{ records.length }}</strong>
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="summary-icon active">
+          <i class="bi bi-broadcast"></i>
+        </div>
+
+        <div>
+          <span>Active</span>
+
+          <strong>{{ activeCount }}</strong>
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="summary-icon responders">
+          <i class="bi bi-people-fill"></i>
+        </div>
+
+        <div>
+
+          <span>Responders</span>
+
+          <strong>{{ totalResponders }}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- FILTERS -->
+
+    <div class="filter-section">
+
+      <div class="filter-title">
+        <i class="bi bi-funnel"></i>
+        Filter incidents
+      </div>
+
+      <div class="filter-buttons">
+
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'ALL'"
+          (click)="setFilter('ALL')"
+        >
+          All
+        </button>
+
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'ACTIVE'"
+          (click)="setFilter('ACTIVE')"
+        >
+          Active
+        </button>
+
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'RESPONDING'"
+          (click)="setFilter('RESPONDING')"
+        >
+          Responding
+        </button>
+
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'HANDED_OVER'"
+          (click)="setFilter('HANDED_OVER')"
+        >
+          Handed Over
+        </button>
+
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'COMPLETED'"
+          (click)="setFilter('COMPLETED')"
+        >
+          Completed
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- RECORD LIST -->
+
+    <div class="records-list">
+
+      @for (record of filteredRecords; track record.id) {
+
+        <article class="record-card">
+
+          <!-- CARD TOP -->
+
+          <div class="record-top">
+
+            <div class="incident-icon">
+
+              <i [class]="'bi ' + record.icon"></i>
+
+            </div>
+
+            <div class="incident-heading">
+
+              <div class="incident-title-row">
+
+                <h2>{{ record.type }}</h2>
+
+                <span
+                  class="status-badge"
+                  [ngClass]="getStatusClass(record.status)"
+                >
+
+                  @if (record.status === 'ACTIVE') {
+                    <i class="bi bi-broadcast"></i>
+                  }
+
+                  @if (record.status === 'RESPONDING') {
+                    <i class="bi bi-truck"></i>
+                  }
+
+                  @if (record.status === 'HANDED_OVER') {
+                    <i class="bi bi-shield-check"></i>
+                  }
+
+                  @if (record.status === 'COMPLETED') {
+                    <i class="bi bi-check-circle"></i>
+                  }
+
+                  {{ record.status.replace('_', ' ') }}
+
+                </span>
+
+              </div>
+
+              <span class="incident-id">
+                {{ record.id }}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- LOCATION -->
+
+          <div class="record-location">
+
+            <i class="bi bi-geo-alt-fill"></i>
+
+            <span>{{ record.location }}</span>
+
+          </div>
+
+
+          <!-- DESCRIPTION -->
+
+          <p class="record-description">
+
+            {{ record.description }}
+
+          </p>
+
+
+          <!-- META -->
+
+          <div class="record-meta">
+
+            <div class="meta-item">
+
+              <i class="bi bi-clock"></i>
+
+              <span>{{ record.reportedAt }}</span>
+
+            </div>
+
+
+            <div class="meta-item">
+
+              <i class="bi bi-people"></i>
+
+              <span>
+                {{ record.responders }} responders
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- STATUS -->
+
+          <div
+            class="response-status"
+            [ngClass]="getStatusClass(record.status)"
+          >
+
+            <div class="status-dot"></div>
+
+            <span>
+              {{ getStatusLabel(record.status) }}
+            </span>
+
+          </div>
+
+
+          <!-- ACTION -->
+
+          <button
+            class="view-button"
+            (click)="viewIncident(record)"
+          >
+
+            View Incident
+
+            <i class="bi bi-arrow-right"></i>
+
+          </button>
+
+        </article>
+
+      }
+
+
+      <!-- EMPTY STATE -->
+
+      @if (filteredRecords.length === 0) {
+
+        <div class="empty-state">
+
+          <div class="empty-icon">
+
+            <i class="bi bi-folder2-open"></i>
+
+          </div>
+
+          <h2>No incidents found</h2>
+
+          <p>
+            There are no accident records in this category.
+          </p>
+
+        </div>
+
+      }
+
+    </div>
+
+  </div>
+
+</div>

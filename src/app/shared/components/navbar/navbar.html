@@ -1,0 +1,124 @@
+<header class="navbar-wrapper">
+
+  <nav class="navbar">
+
+    <!-- LOGO -->
+
+    <a
+      routerLink="/"
+      class="brand"
+      routerLinkActive="active-brand"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+
+      <div class="brand-icon">
+        <i class="bi bi-shield-check"></i>
+      </div>
+
+      <div class="brand-text">
+
+        <div class="brand-name">
+          GoldenLink <span>AI</span>
+        </div>
+
+        <div class="brand-subtitle">
+          Community Response Network
+        </div>
+
+      </div>
+
+    </a>
+
+
+    <!-- NAVIGATION -->
+
+    <div class="nav-links">
+
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link"
+      >
+        <i class="bi bi-house"></i>
+        <span>{{ t('home') }}</span>
+      </a>
+
+
+      <a
+        routerLink="/report-accident"
+        routerLinkActive="active"
+        class="nav-link emergency-link"
+      >
+        <i class="bi bi-exclamation-triangle"></i>
+        <span>{{ t('reportAccident') }}</span>
+      </a>
+
+
+      <a
+        routerLink="/community"
+        routerLinkActive="active"
+        class="nav-link"
+      >
+        <i class="bi bi-people"></i>
+        <span>{{ t('community') }}</span>
+      </a>
+
+
+      <a
+        routerLink="/nearby-responders"
+        routerLinkActive="active"
+        class="nav-link"
+      >
+        <i class="bi bi-geo-alt"></i>
+        <span>{{ t('nearbyResponders') }}</span>
+      </a>
+
+
+      <a
+        routerLink="/volunteer-search"
+        routerLinkActive="active"
+        class="nav-link"
+      >
+        <i class="bi bi-person-plus"></i>
+        <span>{{ t('volunteers') }}</span>
+      </a>
+
+    </div> 
+
+  
+
+
+    <!-- RIGHT CONTROLS -->
+
+    <div class="nav-actions">
+
+      <app-language-switcher></app-language-switcher>
+
+      <!-- THEME TOGGLE -->
+      <app-theme-toggle></app-theme-toggle>
+
+
+
+      <button
+        type="button"
+        class="nav-action"
+        aria-label="Toggle dark mode"
+      >
+        <i class="bi bi-moon"></i>
+      </button>
+
+
+      <button
+        type="button"
+        class="nav-action"
+        aria-label="Profile"
+      >
+        <i class="bi bi-person"></i>
+      </button>
+
+    </div>
+
+  </nav>
+
+</header>

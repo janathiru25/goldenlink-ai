@@ -1,0 +1,246 @@
+.language-switcher {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  z-index: 2000;
+}
+
+/* =========================
+   LANGUAGE BUTTON
+========================= */
+
+.language-button {
+  height: 44px;
+  min-width: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 0 13px;
+
+  border: 1px solid #dce2ea;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #263449;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.language-button:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.language-button:focus {
+  outline: none;
+  border-color: #f9a825;
+  box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.15);
+}
+
+.language-button > i:first-child {
+  font-size: 17px;
+}
+
+.language-button > i:last-child {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.language-text {
+  display: inline-block;
+}
+
+/* =========================
+   DROPDOWN
+========================= */
+
+.language-dropdown {
+  position: absolute;
+
+  top: calc(100% + 8px);
+  right: 0;
+
+  width: 235px;
+
+  padding: 8px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+
+  box-shadow:
+    0 15px 40px rgba(15, 23, 42, 0.15);
+
+  overflow: hidden;
+}
+
+/* =========================
+   DROPDOWN TITLE
+========================= */
+
+.dropdown-title {
+  padding: 9px 11px 10px;
+
+  color: #64748b;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* =========================
+   LANGUAGE OPTION
+========================= */
+
+.language-option {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 10px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: transparent;
+
+  color: #263449;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  transition:
+    background 0.2s ease;
+}
+
+.language-option:hover {
+  background: #f5f7fa;
+}
+
+.language-option.active {
+  background: #fff8e7;
+}
+
+/* =========================
+   FLAG
+========================= */
+
+.language-flag {
+  width: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 19px;
+
+  flex-shrink: 0;
+}
+
+/* =========================
+   LANGUAGE INFO
+========================= */
+
+.language-info {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.language-native {
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #10233f;
+}
+
+.language-name {
+  font-size: 11px;
+
+  color: #64748b;
+}
+
+/* =========================
+   CHECK ICON
+========================= */
+
+.language-check {
+  color: #f9a825;
+
+  font-size: 15px;
+
+  flex-shrink: 0;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1050px) {
+
+  .language-button {
+    min-width: 44px;
+    width: 44px;
+
+    padding: 0;
+  }
+
+  .language-text {
+    display: none;
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .language-button {
+    width: 40px;
+    min-width: 40px;
+
+    height: 40px;
+  }
+
+  .language-dropdown {
+    width: 220px;
+
+    right: -5px;
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  .language-button {
+    width: 38px;
+    min-width: 38px;
+
+    height: 38px;
+  }
+
+}

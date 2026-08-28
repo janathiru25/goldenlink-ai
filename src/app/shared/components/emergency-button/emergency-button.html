@@ -1,0 +1,99 @@
+<!-- Emergency Floating Button -->
+
+<button
+  type="button"
+  class="emergency-button"
+  (click)="openEmergency()"
+  aria-label="Emergency"
+>
+  <span class="emergency-icon">
+    <i class="bi bi-exclamation-triangle-fill"></i>
+  </span>
+
+  <span class="emergency-text">
+    Emergency
+  </span>
+</button>
+
+
+<!-- Emergency Dialog -->
+
+@if (isEmergencyOpen) {
+
+  <div
+    class="emergency-overlay"
+    (click)="closeEmergency()"
+  >
+
+    <div
+      class="emergency-modal"
+      (click)="$event.stopPropagation()"
+    >
+
+      <!-- Close -->
+
+      <button
+        type="button"
+        class="close-button"
+        (click)="closeEmergency()"
+        aria-label="Close"
+      >
+        <i class="bi bi-x-lg"></i>
+      </button>
+
+
+      <!-- Icon -->
+
+      <div class="modal-icon">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+      </div>
+
+
+      <!-- Content -->
+
+      <h2>Emergency Assistance</h2>
+
+      <p>
+        Are you witnessing an accident or facing an emergency?
+      </p>
+
+
+      <!-- Actions -->
+
+      <div class="emergency-actions">
+
+        <button
+          type="button"
+          class="report-button"
+          (click)="reportAccident()"
+        >
+          <i class="bi bi-clipboard-plus"></i>
+          Report Accident
+        </button>
+
+
+        <button
+          type="button"
+          class="call-button"
+          (click)="callEmergency()"
+        >
+          <i class="bi bi-telephone-fill"></i>
+          Call 112
+        </button>
+
+
+        <button
+          type="button"
+          class="cancel-button"
+          (click)="closeEmergency()"
+        >
+          Cancel
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}

@@ -1,0 +1,474 @@
+<div class="responder-page page-fade-in">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <section class="dashboard-header gl-container">
+
+    <div>
+
+      <span class="eyebrow">
+        <i class="bi bi-shield-check"></i>
+        Responder Network
+      </span>
+
+      <h1>Responder Dashboard</h1>
+
+      <p>
+        Monitor nearby incidents and coordinate community response
+        during the golden hour.
+      </p>
+
+    </div>
+
+
+    <!-- Availability -->
+
+    <div class="availability-card">
+
+      <div class="availability-info">
+
+        <span
+          class="availability-dot"
+          [class.offline]="!isAvailable">
+        </span>
+
+        <div>
+
+          <strong>
+            {{ isAvailable ? 'Available' : 'Offline' }}
+          </strong>
+
+          <small>
+            {{ isAvailable
+              ? 'You can receive nearby requests'
+              : 'You will not receive requests'
+            }}
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="availability-toggle"
+        [class.active]="isAvailable"
+        (click)="toggleAvailability()">
+
+        <span></span>
+
+        {{ isAvailable ? 'Available' : 'Offline' }}
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       STATISTICS
+  ====================================================== -->
+
+  <section class="gl-container">
+
+    <div class="stats-grid">
+
+
+      <!-- Nearby Incidents -->
+
+      <div class="stat-card">
+
+        <div class="stat-icon blue">
+          <i class="bi bi-broadcast"></i>
+        </div>
+
+        <div>
+
+          <span>Nearby Incidents</span>
+
+          <strong>
+            {{ incidents.length }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- High Priority -->
+
+      <div class="stat-card">
+
+        <div class="stat-icon red">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+        </div>
+
+        <div>
+
+          <span>High Priority</span>
+
+          <strong>
+            {{ highPriorityIncidents }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Active Responses -->
+
+      <div class="stat-card">
+
+        <div class="stat-icon green">
+          <i class="bi bi-activity"></i>
+        </div>
+
+        <div>
+
+          <span>Active Responses</span>
+
+          <strong>
+            {{ activeIncidents }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Completed Today -->
+
+      <div class="stat-card">
+
+        <div class="stat-icon gold">
+          <i class="bi bi-check-circle-fill"></i>
+        </div>
+
+        <div>
+
+          <span>Completed Today</span>
+
+          <strong>7</strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       MAIN CONTENT
+  ====================================================== -->
+
+  <section class="gl-container dashboard-content">
+
+
+    <!-- Section Heading -->
+
+    <div class="section-heading">
+
+      <div>
+
+        <span class="section-label">
+
+          <i class="bi bi-geo-alt-fill"></i>
+
+          LIVE NEARBY
+
+        </span>
+
+
+        <h2>
+          Nearby Incidents
+        </h2>
+
+
+        <p>
+          Incidents that may need your community response.
+        </p>
+
+      </div>
+
+
+      <span class="live-badge">
+
+        <span></span>
+
+        Live Demo
+
+      </span>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         INCIDENT LIST
+    ====================================================== -->
+
+    <div class="incident-list">
+
+
+      @for (incident of incidents; track incident.id) {
+
+        <article class="incident-card">
+
+
+          <!-- =================================================
+               INCIDENT TOP
+          ================================================== -->
+
+          <div class="incident-top">
+
+
+            <!-- Incident Type -->
+
+            <div class="incident-type">
+
+              <div class="incident-icon">
+
+                <i [class]="incident.icon"></i>
+
+              </div>
+
+
+              <div>
+
+                <span class="incident-id">
+                  {{ incident.id }}
+                </span>
+
+                <h3>
+                  {{ incident.type }}
+                </h3>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- Priority -->
+
+            <span
+              class="priority-badge"
+              [class]="getPriorityClass(incident.priority)">
+
+              <i class="bi bi-circle-fill"></i>
+
+              {{ incident.priority }}
+
+            </span>
+
+          </div>
+
+
+
+          <!-- =================================================
+               INCIDENT DETAILS
+          ================================================== -->
+
+          <div class="incident-details">
+
+
+            <!-- Location -->
+
+            <div>
+
+              <i class="bi bi-geo-alt"></i>
+
+              <span>
+                {{ incident.location }}
+              </span>
+
+            </div>
+
+
+
+            <!-- Distance -->
+
+            <div>
+
+              <i class="bi bi-signpost-2"></i>
+
+              <span>
+                {{ incident.distance }}
+              </span>
+
+            </div>
+
+
+
+            <!-- Reported Time -->
+
+            <div>
+
+              <i class="bi bi-clock"></i>
+
+              <span>
+                {{ incident.reportedAt }}
+              </span>
+
+            </div>
+
+
+
+            <!-- Responders -->
+
+            <div>
+
+              <i class="bi bi-people"></i>
+
+              <span>
+                {{ incident.responders }} responders
+              </span>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- =================================================
+               INCIDENT BOTTOM
+          ================================================== -->
+
+          <div class="incident-bottom">
+
+
+            <!-- Status -->
+
+            <span
+              class="status-badge"
+              [class]="getStatusClass(incident.status)">
+
+              <i class="bi bi-circle-fill"></i>
+
+
+              {{
+                incident.status === 'NEW'
+                  ? 'New incident'
+                  : incident.status === 'RESPONDING'
+                  ? 'Responders on the way'
+                  : 'Response active'
+              }}
+
+            </span>
+
+
+
+            <!-- =================================================
+                 ACTION BUTTONS
+            ================================================== -->
+
+            <div class="incident-actions">
+
+
+              <!-- VIEW INCIDENT -->
+
+              <a
+                class="btn btn-outline-secondary"
+                [routerLink]="['/incident-response']"
+                [queryParams]="{ id: incident.id }">
+
+                <i class="bi bi-eye"></i>
+
+                View
+
+              </a>
+
+
+
+              <!-- ACCEPT RESPONSE -->
+
+              <a
+                class="btn btn-primary"
+                [routerLink]="['/incident-response']"
+                [queryParams]="{ id: incident.id }"
+                (click)="acceptIncident(incident)">
+
+                <i class="bi bi-hand-thumbs-up-fill"></i>
+
+                Accept Response
+
+              </a>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      }
+
+    </div>
+
+
+
+    <!-- =====================================================
+         LOCATION CARD
+    ====================================================== -->
+
+    <div class="location-card">
+
+
+      <!-- Location Icon -->
+
+      <div class="location-icon">
+
+        <i class="bi bi-crosshair"></i>
+
+      </div>
+
+
+
+      <!-- Location Information -->
+
+      <div class="location-content">
+
+        <span>
+          Your current response area
+        </span>
+
+        <strong>
+          Chennai, Tamil Nadu
+        </strong>
+
+        <small>
+          Location is simulated for this frontend demonstration.
+        </small>
+
+      </div>
+
+
+
+      <!-- Update Area -->
+
+      <button
+        type="button"
+        class="btn btn-outline-primary">
+
+        <i class="bi bi-geo-alt"></i>
+
+        Update Area
+
+      </button>
+
+    </div>
+
+  </section>
+
+</div>

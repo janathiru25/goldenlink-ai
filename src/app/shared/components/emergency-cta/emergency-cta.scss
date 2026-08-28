@@ -1,0 +1,163 @@
+.emergency-cta-section {
+  padding: 6rem 0;
+  background: var(--background);
+}
+
+.emergency-cta {
+  position: relative;
+
+  overflow: hidden;
+
+  text-align: center;
+
+  padding: 4rem 2rem;
+
+  border-radius: var(--radius-lg);
+
+  background: var(--primary);
+
+  box-shadow: var(--shadow-lg);
+
+  color: #fff;
+}
+
+.emergency-cta::before {
+  content: '';
+
+  position: absolute;
+
+  width: 280px;
+  height: 280px;
+
+  top: -150px;
+  right: -100px;
+
+  border-radius: 50%;
+
+  background: rgba(245, 166, 35, 0.12);
+}
+
+.emergency-cta::after {
+  content: '';
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  bottom: -130px;
+  left: -80px;
+
+  border-radius: 50%;
+
+  background: rgba(245, 166, 35, 0.08);
+}
+
+.emergency-icon,
+.section-label,
+.emergency-cta h2,
+.emergency-cta p,
+.emergency-cta button,
+.emergency-cta small {
+  position: relative;
+  z-index: 1;
+}
+
+.emergency-icon {
+  width: 64px;
+  height: 64px;
+
+  margin: 0 auto 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 18px;
+
+  background: rgba(245, 166, 35, 0.15);
+
+  color: var(--accent);
+
+  font-size: 1.7rem;
+}
+
+.section-label {
+  display: inline-block;
+
+  margin-bottom: 1rem;
+
+  color: var(--accent-light);
+
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.emergency-cta h2 {
+  max-width: 750px;
+
+  margin: 0 auto 1rem;
+
+  color: #fff;
+
+  font-size: clamp(2rem, 4vw, 3.3rem);
+
+  line-height: 1.1;
+}
+
+.emergency-cta h2 span {
+  color: var(--accent);
+}
+
+.emergency-cta p {
+  max-width: 650px;
+
+  margin: 0 auto 2rem;
+
+  color: rgba(255, 255, 255, 0.75);
+
+  line-height: 1.7;
+}
+
+.emergency-cta .btn-emergency {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.5rem;
+
+  min-width: 230px;
+
+  margin-bottom: 1.5rem;
+}
+
+.emergency-cta small {
+  display: block;
+
+  max-width: 650px;
+
+  margin: 0 auto;
+
+  color: rgba(255, 255, 255, 0.5);
+
+  font-size: 0.78rem;
+
+  line-height: 1.5;
+}
+
+@media (max-width: 576px) {
+
+  .emergency-cta-section {
+    padding: 4rem 0;
+  }
+
+  .emergency-cta {
+    padding: 3rem 1.25rem;
+  }
+
+  .emergency-cta .btn-emergency {
+    width: 100%;
+  }
+
+}
