@@ -1,0 +1,469 @@
+<div class="ai-page">
+
+  <!-- HEADER -->
+  <div class="container py-4">
+
+    <div class="d-flex align-items-center justify-content-between mb-4">
+
+      <div>
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <span class="ai-status-dot"></span>
+          <span class="text-success fw-semibold small">
+            GOLDENLINK AI
+          </span>
+        </div>
+
+        <h1 class="fw-bold mb-1">
+          Emergency Assistant
+        </h1>
+
+        <p class="text-muted mb-0">
+          AI-assisted incident assessment and response coordination
+        </p>
+      </div>
+
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="backToReport()">
+
+        <i class="bi bi-arrow-left me-2"></i>
+        Back
+      </button>
+
+    </div>
+
+
+    <!-- MAIN GRID -->
+
+    <div class="row g-4">
+
+      <!-- CHAT -->
+
+      <div class="col-lg-7">
+
+        <div class="card border-0 shadow-sm chat-card">
+
+          <!-- CHAT HEADER -->
+
+          <div class="card-header bg-white border-bottom p-3">
+
+            <div class="d-flex align-items-center">
+
+              <div class="ai-avatar me-3">
+                <i class="bi bi-stars"></i>
+              </div>
+
+              <div>
+
+                <h5 class="mb-0 fw-bold">
+                  GoldenLink AI
+                </h5>
+
+                <small class="text-success">
+                  Emergency-response assistant
+                </small>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- CHAT BODY -->
+
+          <div class="chat-body">
+
+            @for (message of messages; track $index) {
+
+              <div
+                class="message-row"
+                [class.user-row]="message.sender === 'user'"
+                [class.ai-row]="message.sender === 'ai'">
+
+                @if (message.sender === 'ai') {
+
+                  <div class="message-avatar">
+                    <i class="bi bi-stars"></i>
+                  </div>
+
+                }
+
+                <div
+                  class="message"
+                  [class.ai-message]="message.sender === 'ai'"
+                  [class.user-message]="message.sender === 'user'">
+
+                  {{ message.text }}
+
+                </div>
+
+              </div>
+
+            }
+
+
+            @if (isTyping) {
+
+              <div class="message-row ai-row">
+
+                <div class="message-avatar">
+                  <i class="bi bi-stars"></i>
+                </div>
+
+                <div class="message ai-message typing">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+
+              </div>
+
+            }
+
+          </div>
+
+
+          <!-- QUICK ANSWERS -->
+
+          @if (!assessmentComplete) {
+
+            <div class="quick-actions px-3 pt-3">
+
+              @if (currentQuestion === 0) {
+
+                <button
+                  class="btn btn-outline-success btn-sm"
+                  (click)="quickAnswer('Yes')">
+                  Yes
+                </button>
+
+                <button
+                  class="btn btn-outline-secondary btn-sm"
+                  (click)="quickAnswer('No')">
+                  No
+                </button>
+
+              }
+
+              @if (
+                currentQuestion >= 2 &&
+                currentQuestion <= 5
+              ) {
+
+                <button
+                  class="btn btn-outline-danger btn-sm"
+                  (click)="quickAnswer('Yes')">
+                  Yes
+                </button>
+
+                <button
+                  class="btn btn-outline-secondary btn-sm"
+                  (click)="quickAnswer('No')">
+                  No
+                </button>
+
+              }
+
+            </div>
+
+          }
+
+
+          <!-- INPUT -->
+
+          @if (!assessmentComplete) {
+
+            <div class="chat-input p-3">
+
+              <div class="input-group">
+
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Type your answer..."
+                  [(ngModel)]="userMessage"
+                  (keyup.enter)="sendMessage()"
+                />
+
+                <button
+                  class="btn btn-success"
+                  type="button"
+                  (click)="sendMessage()">
+
+                  <i class="bi bi-send-fill"></i>
+
+                </button>
+
+              </div>
+
+              <small class="text-muted d-block mt-2">
+                GoldenLink AI provides response coordination assistance,
+                not medical diagnosis.
+              </small>
+
+            </div>
+
+          }
+
+        </div>
+
+      </div>
+
+
+      <!-- ASSESSMENT -->
+
+      <div class="col-lg-5">
+
+        <div class="card border-0 shadow-sm assessment-card">
+
+          <div class="card-body p-4">
+
+            <div class="d-flex align-items-center justify-content-between mb-4">
+
+              <div>
+
+                <span class="text-muted small">
+                  INCIDENT
+                </span>
+
+                <h5 class="fw-bold mb-0">
+                  #{{ incident.incidentId }}
+                </h5>
+
+              </div>
+
+              <span class="badge bg-light text-dark">
+                AI Assessment
+              </span>
+
+            </div>
+
+
+            @if (!assessmentComplete) {
+
+              <div class="assessment-waiting text-center py-5">
+
+                <div class="assessment-icon mb-3">
+                  <i class="bi bi-robot"></i>
+                </div>
+
+                <h5 class="fw-bold">
+                  Assessment in progress
+                </h5>
+
+                <p class="text-muted small mb-0">
+                  Answer the questions to help GoldenLink
+                  understand the emergency.
+                </p>
+
+              </div>
+
+            }
+
+
+            @if (assessmentComplete) {
+
+              <div class="assessment-result">
+
+                <div
+                  class="severity-box mb-4"
+                  [ngClass]="getSeverityClass()">
+
+                  <div class="severity-icon">
+                    @if (severity === 'critical') {
+                      <i class="bi bi-exclamation-triangle-fill"></i>
+                    } @else if (severity === 'serious') {
+                      <i class="bi bi-exclamation-circle-fill"></i>
+                    } @else {
+                      <i class="bi bi-info-circle-fill"></i>
+                    }
+                  </div>
+
+                  <div>
+
+                    <small>
+                      AI INCIDENT ASSESSMENT
+                    </small>
+
+                    <h2 class="fw-bold mb-0">
+                      {{ getSeverityLabel() }}
+                    </h2>
+
+                  </div>
+
+                </div>
+
+
+                <!-- INCIDENT STATS -->
+
+                <div class="row g-3 mb-4">
+
+                  <div class="col-6">
+
+                    <div class="stat-box">
+
+                      <small class="text-muted">
+                        Victims
+                      </small>
+
+                      <strong>
+                        {{ incident.victims }}
+                      </strong>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-6">
+
+                    <div class="stat-box">
+
+                      <small class="text-muted">
+                        Confidence
+                      </small>
+
+                      <strong>
+                        {{ confidence }}%
+                      </strong>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <!-- CONDITIONS -->
+
+                <h6 class="fw-bold mb-3">
+                  Reported conditions
+                </h6>
+
+                <div class="condition-list">
+
+                  <div class="condition-item">
+                    <span>Unconscious</span>
+
+                    @if (incident.unconscious) {
+                      <span class="text-danger fw-semibold">
+                        Yes
+                      </span>
+                    } @else {
+                      <span class="text-success fw-semibold">
+                        No
+                      </span>
+                    }
+                  </div>
+
+                  <div class="condition-item">
+                    <span>Bleeding</span>
+
+                    @if (incident.bleeding) {
+                      <span class="text-danger fw-semibold">
+                        Yes
+                      </span>
+                    } @else {
+                      <span class="text-success fw-semibold">
+                        No
+                      </span>
+                    }
+                  </div>
+
+                  <div class="condition-item">
+                    <span>Breathing difficulty</span>
+
+                    @if (incident.breathingDifficulty) {
+                      <span class="text-danger fw-semibold">
+                        Yes
+                      </span>
+                    } @else {
+                      <span class="text-success fw-semibold">
+                        No
+                      </span>
+                    }
+                  </div>
+
+                  <div class="condition-item">
+                    <span>Trapped</span>
+
+                    @if (incident.trapped) {
+                      <span class="text-danger fw-semibold">
+                        Yes
+                      </span>
+                    } @else {
+                      <span class="text-success fw-semibold">
+                        No
+                      </span>
+                    }
+                  </div>
+
+                </div>
+
+
+                <!-- SUMMARY -->
+
+                <div class="summary-box mt-4">
+
+                  <div class="d-flex gap-2">
+
+                    <i class="bi bi-stars text-success"></i>
+
+                    <div>
+
+                      <strong class="d-block mb-1">
+                        AI assessment
+                      </strong>
+
+                      <p class="small text-muted mb-0">
+                        {{ assessmentSummary }}
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <!-- ACTION -->
+
+                <button
+                  type="button"
+                  class="btn btn-success w-100 mt-4 py-3 fw-semibold"
+                  (click)="activateResponse()">
+
+                  <i class="bi bi-broadcast me-2"></i>
+
+                  Activate Community Response
+
+                </button>
+
+              </div>
+
+            }
+
+          </div>
+
+        </div>
+
+
+        <!-- SAFETY NOTE -->
+
+        <div class="alert alert-light border mt-3 small">
+
+          <i class="bi bi-shield-check text-success me-2"></i>
+
+          Stay in a safe location and follow instructions
+          from emergency services.
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
