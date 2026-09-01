@@ -2,38 +2,23 @@
 
   <div class="report-container">
 
-
-    <!-- =====================================================
-         HEADER
-         ===================================================== -->
+    <!-- ================================================= -->
+    <!-- HEADER -->
+    <!-- ================================================= -->
 
     <div class="report-header">
 
-      <a
-        routerLink="/"
-        class="back-link"
-      >
-
+      <a routerLink="/" class="back-link">
         <i class="bi bi-arrow-left"></i>
-
         Back to Home
-
       </a>
 
-
       <span class="report-badge">
-
         <i class="bi bi-shield-check"></i>
-
         GoldenLink AI
-
       </span>
 
-
-      <h1>
-        Report an Accident
-      </h1>
-
+      <h1>Report an Accident</h1>
 
       <p>
         Help activate the nearby community response.
@@ -42,50 +27,35 @@
     </div>
 
 
-
-    <!-- =====================================================
-         PROGRESS
-         ===================================================== -->
+    <!-- ================================================= -->
+    <!-- PROGRESS -->
+    <!-- ================================================= -->
 
     <div class="progress-area">
 
-      <div class="progress-header">
-
-        <span>
-          Step {{ currentStep }} of {{ totalSteps }}
-        </span>
-
-        <span>
-          {{ progressPercentage | number:'1.0-0' }}%
-        </span>
-
+      <div class="progress-text">
+        Step {{ currentStep }} of {{ totalSteps }}
       </div>
-
 
       <div class="progress">
 
         <div
           class="progress-bar"
-          [style.width.%]="progressPercentage"
-        ></div>
+          [style.width.%]="progressPercentage">
+        </div>
 
       </div>
 
     </div>
 
 
-
-    <!-- =====================================================
-         STEP 1
-         LOCATION
-         ===================================================== -->
+    <!-- ================================================= -->
+    <!-- STEP 1 : LOCATION -->
+    <!-- ================================================= -->
 
     @if (currentStep === 1) {
 
       <div class="report-card location-card">
-
-
-        <!-- ICON -->
 
         <div class="step-icon location-icon">
 
@@ -93,77 +63,55 @@
 
         </div>
 
-
-        <!-- TITLE -->
-
         <h2>
           Where did the accident happen?
         </h2>
 
-
         <p class="step-description">
-
-          Your location helps GoldenLink identify
-          the incident area and nearby responders.
-
+          Allow GoldenLink to detect your current GPS
+          location so nearby responders can find the accident.
         </p>
 
 
-
-        <!-- LOCATION STATUS -->
+        <!-- LOCATION INFORMATION -->
 
         <div
-          class="location-status-card"
-
-          [class.detecting]="locationLoading"
-
+          class="location-information"
           [class.success]="locationCaptured"
+          [class.error]="locationError">
 
-          [class.error]="locationError"
-        >
-
-          <div class="location-status-icon">
-
+          <div class="location-information-icon">
 
             @if (locationLoading) {
 
-              <i
-                class="bi bi-crosshair spinning"
-              ></i>
+              <i class="bi bi-crosshair spinning"></i>
 
             }
 
             @else if (locationCaptured) {
 
-              <i
-                class="bi bi-check-circle-fill"
-              ></i>
+              <i class="bi bi-check-circle-fill"></i>
 
             }
 
             @else if (locationError) {
 
-              <i
-                class="bi bi-exclamation-triangle-fill"
-              ></i>
+              <i class="bi bi-exclamation-circle-fill"></i>
 
             }
 
             @else {
 
-              <i
-                class="bi bi-geo-alt"
-              ></i>
+              <i class="bi bi-geo-alt-fill"></i>
 
             }
 
           </div>
 
 
-          <div class="location-status-content">
+          <div class="location-information-content">
 
             <strong>
-
 
               @if (locationLoading) {
 
@@ -189,14 +137,10 @@
 
               }
 
-
             </strong>
 
-
             <span>
-
               {{ locationStatus }}
-
             </span>
 
           </div>
@@ -204,29 +148,21 @@
         </div>
 
 
-
-        <!-- =================================================
-             DETECT LOCATION BUTTON
-             ================================================= -->
+        <!-- ================================================= -->
+        <!-- GPS BUTTON -->
+        <!-- ================================================= -->
 
         <button
           type="button"
-
           class="location-button"
-
-          [disabled]="
-            locationLoading ||
-            locationCaptured
-          "
-
-          (click)="getLocation()"
-        >
+          [class.loading]="locationLoading"
+          [class.success]="locationCaptured"
+          [disabled]="locationLoading"
+          (click)="getLocation()">
 
           @if (locationLoading) {
 
-            <i
-              class="bi bi-arrow-repeat spinning"
-            ></i>
+            <i class="bi bi-arrow-repeat spinning"></i>
 
             Detecting Location...
 
@@ -234,9 +170,7 @@
 
           @else if (locationCaptured) {
 
-            <i
-              class="bi bi-check-circle-fill"
-            ></i>
+            <i class="bi bi-check-circle-fill"></i>
 
             Location Captured
 
@@ -244,9 +178,7 @@
 
           @else {
 
-            <i
-              class="bi bi-crosshair"
-            ></i>
+            <i class="bi bi-crosshair"></i>
 
             Detect My Location
 
@@ -255,75 +187,57 @@
         </button>
 
 
-
-        <!-- =================================================
-             COORDINATES
-             ================================================= -->
+        <!-- ================================================= -->
+        <!-- COORDINATES -->
+        <!-- ================================================= -->
 
         @if (
           latitude !== null &&
-          longitude !== null
+          longitude !== null &&
+          locationCaptured
         ) {
 
-          <div class="coordinates">
+          <div class="coordinates-box">
 
+            <div class="coordinates-header">
 
-            <div class="coordinate-box">
+              <i class="bi bi-broadcast-pin"></i>
 
               <span>
-                Latitude
+                GPS coordinates captured
               </span>
 
-              <strong>
-
-                {{ latitude | number:'1.5-6' }}
-
-              </strong>
+              <i class="bi bi-check-circle-fill"></i>
 
             </div>
 
 
-            <div class="coordinate-box">
+            <div class="coordinates-grid">
 
-              <span>
-                Longitude
-              </span>
+              <div class="coordinate-item">
 
-              <strong>
+                <span>
+                  Latitude
+                </span>
 
-                {{ longitude | number:'1.5-6' }}
+                <strong>
+                  {{ latitude | number:'1.5-6' }}
+                </strong>
 
-              </strong>
-
-            </div>
-
-
-          </div>
-
-        }
+              </div>
 
 
+              <div class="coordinate-item">
 
-        <!-- =================================================
-             LOCATION SUCCESS
-             ================================================= -->
+                <span>
+                  Longitude
+                </span>
 
-        @if (locationCaptured) {
+                <strong>
+                  {{ longitude | number:'1.5-6' }}
+                </strong>
 
-          <div class="location-confirmation">
-
-            <i class="bi bi-shield-check"></i>
-
-
-            <div>
-
-              <strong>
-                Accident location captured
-              </strong>
-
-              <span>
-                GoldenLink can now identify nearby responders.
-              </span>
+              </div>
 
             </div>
 
@@ -332,24 +246,18 @@
         }
 
 
+        <!-- ================================================= -->
+        <!-- RETRY -->
+        <!-- ================================================= -->
 
-        <!-- =================================================
-             RETRY
-             ================================================= -->
-
-        @if (locationError) {
+        @if (locationError && !locationLoading) {
 
           <button
             type="button"
-
             class="retry-button"
+            (click)="retryLocation()">
 
-            (click)="retryLocation()"
-          >
-
-            <i
-              class="bi bi-arrow-clockwise"
-            ></i>
+            <i class="bi bi-arrow-clockwise"></i>
 
             Try Again
 
@@ -358,45 +266,36 @@
         }
 
 
+        <!-- ================================================= -->
+        <!-- HELP -->
+        <!-- ================================================= -->
 
-        <!-- =================================================
-             HELP
-             ================================================= -->
+        <div class="location-help">
 
-        @if (!locationCaptured) {
+          <i class="bi bi-info-circle"></i>
 
-          <div class="location-help">
+          <span>
 
-            <i
-              class="bi bi-info-circle"
-            ></i>
+            Click <strong>Detect My Location</strong>.
+            Your GPS coordinates will be captured automatically
+            when detection succeeds.
 
-            <span>
+          </span>
 
-              Click "Detect My Location" and allow
-              location access when your browser asks.
-
-            </span>
-
-          </div>
-
-        }
+        </div>
 
       </div>
 
     }
 
 
-
-    <!-- =====================================================
-         STEP 2
-         ACCIDENT TYPE
-         ===================================================== -->
+    <!-- ================================================= -->
+    <!-- STEP 2 : ACCIDENT TYPE -->
+    <!-- ================================================= -->
 
     @if (currentStep === 2) {
 
       <div class="report-card">
-
 
         <div class="step-icon">
 
@@ -404,38 +303,22 @@
 
         </div>
 
-
         <h2>
           What happened?
         </h2>
 
-
         <p class="step-description">
-
-          Select the option that best describes
-          the incident.
-
+          Select the option that best describes the incident.
         </p>
 
 
         <div class="options-grid">
 
-
-          <!-- ROAD ACCIDENT -->
-
           <button
             type="button"
-
             class="option-card"
-
-            [class.selected]="
-              incidentType === 'ROAD_ACCIDENT'
-            "
-
-            (click)="
-              incidentType = 'ROAD_ACCIDENT'
-            "
-          >
+            [class.selected]="incidentType === 'ROAD_ACCIDENT'"
+            (click)="incidentType = 'ROAD_ACCIDENT'">
 
             <i class="bi bi-car-front-fill"></i>
 
@@ -443,25 +326,18 @@
               Road Accident
             </span>
 
+            @if (incidentType === 'ROAD_ACCIDENT') {
+              <i class="bi bi-check-circle-fill option-check"></i>
+            }
+
           </button>
 
 
-
-          <!-- TWO WHEELER -->
-
           <button
             type="button"
-
             class="option-card"
-
-            [class.selected]="
-              incidentType === 'TWO_WHEELER'
-            "
-
-            (click)="
-              incidentType = 'TWO_WHEELER'
-            "
-          >
+            [class.selected]="incidentType === 'TWO_WHEELER'"
+            (click)="incidentType = 'TWO_WHEELER'">
 
             <i class="bi bi-bicycle"></i>
 
@@ -469,25 +345,18 @@
               Two-Wheeler Accident
             </span>
 
+            @if (incidentType === 'TWO_WHEELER') {
+              <i class="bi bi-check-circle-fill option-check"></i>
+            }
+
           </button>
 
 
-
-          <!-- PEDESTRIAN -->
-
           <button
             type="button"
-
             class="option-card"
-
-            [class.selected]="
-              incidentType === 'PEDESTRIAN'
-            "
-
-            (click)="
-              incidentType = 'PEDESTRIAN'
-            "
-          >
+            [class.selected]="incidentType === 'PEDESTRIAN'"
+            (click)="incidentType = 'PEDESTRIAN'">
 
             <i class="bi bi-person-walking"></i>
 
@@ -495,25 +364,18 @@
               Pedestrian Incident
             </span>
 
+            @if (incidentType === 'PEDESTRIAN') {
+              <i class="bi bi-check-circle-fill option-check"></i>
+            }
+
           </button>
 
 
-
-          <!-- UNKNOWN -->
-
           <button
             type="button"
-
             class="option-card"
-
-            [class.selected]="
-              incidentType === 'UNKNOWN'
-            "
-
-            (click)="
-              incidentType = 'UNKNOWN'
-            "
-          >
+            [class.selected]="incidentType === 'UNKNOWN'"
+            (click)="incidentType = 'UNKNOWN'">
 
             <i class="bi bi-question-circle"></i>
 
@@ -521,8 +383,11 @@
               Not Sure
             </span>
 
-          </button>
+            @if (incidentType === 'UNKNOWN') {
+              <i class="bi bi-check-circle-fill option-check"></i>
+            }
 
+          </button>
 
         </div>
 
@@ -531,16 +396,13 @@
     }
 
 
-
-    <!-- =====================================================
-         STEP 3
-         PEOPLE
-         ===================================================== -->
+    <!-- ================================================= -->
+    <!-- STEP 3 : PEOPLE -->
+    <!-- ================================================= -->
 
     @if (currentStep === 3) {
 
       <div class="report-card">
-
 
         <div class="step-icon">
 
@@ -548,25 +410,17 @@
 
         </div>
 
-
         <h2>
           How many people are affected?
         </h2>
 
-
         <p class="step-description">
-
-          Tell us approximately how many people
-          are involved in the accident.
-
+          Tell us approximately how many people are involved
+          in the accident.
         </p>
 
 
-
-        <!-- VICTIMS -->
-
         <div class="victim-options">
-
 
           @for (
             option of victimOptions;
@@ -575,36 +429,24 @@
 
             <button
               type="button"
-
               class="victim-card"
-
-              [class.selected]="
-                accident.victims === option.value
-              "
-
-              (click)="
-                selectVictims(option.value)
-              "
-            >
+              [class.selected]="accident.victims === option.value"
+              (click)="selectVictims(option.value)">
 
               <i
                 class="bi"
-                [class]="option.icon"
-              ></i>
-
+                [class]="option.icon">
+              </i>
 
               <span>
                 {{ option.label }}
               </span>
 
-
               @if (
                 accident.victims === option.value
               ) {
 
-                <i
-                  class="bi bi-check-circle-fill selected-check"
-                ></i>
+                <i class="bi bi-check-circle-fill selected-check"></i>
 
               }
 
@@ -612,12 +454,10 @@
 
           }
 
-
         </div>
 
 
-
-        <!-- DESCRIPTION -->
+        <!-- ADDITIONAL INFORMATION -->
 
         <div class="question">
 
@@ -625,41 +465,27 @@
             Additional information
           </h3>
 
-
-          <p>
-            Describe anything important that you can see.
-          </p>
-
-
           <textarea
-
             [(ngModel)]="description"
-
             class="form-control"
-
             rows="4"
-
-            placeholder="Example: One person is injured and another person is trapped inside the vehicle..."
-          ></textarea>
+            placeholder="Describe what you can see...">
+          </textarea>
 
         </div>
-
 
       </div>
 
     }
 
 
-
-    <!-- =====================================================
-         STEP 4
-         SEVERITY
-         ===================================================== -->
+    <!-- ================================================= -->
+    <!-- STEP 4 : SEVERITY -->
+    <!-- ================================================= -->
 
     @if (currentStep === 4) {
 
       <div class="report-card">
-
 
         <div class="step-icon success">
 
@@ -667,78 +493,54 @@
 
         </div>
 
-
         <h2>
           How urgent is the situation?
         </h2>
 
-
         <p class="step-description">
-
-          Select the urgency level based on what
-          you can currently see at the accident location.
-
+          Select the urgency level based on what you
+          can currently see at the accident location.
         </p>
-
 
 
         <!-- REVIEW -->
 
         <div class="review-section">
 
-
           <div class="review-item">
 
             <span>
-
               <i class="bi bi-car-front"></i>
-
               Incident
-
             </span>
 
-
             <strong>
-
               {{ incidentType || 'Not selected' }}
-
             </strong>
 
           </div>
 
 
-
           <div class="review-item">
 
             <span>
-
               <i class="bi bi-people"></i>
-
               People affected
-
             </span>
-
 
             <strong>
-
               {{ getVictimLabel() }}
-
             </strong>
 
           </div>
 
 
-
           <div class="review-item">
 
             <span>
-
               <i class="bi bi-geo-alt"></i>
-
               GPS Location
-
             </span>
-
 
             <strong class="gps-success">
 
@@ -750,12 +552,10 @@
 
           </div>
 
-
         </div>
 
 
-
-        <!-- SEVERITY QUESTION -->
+        <!-- SEVERITY -->
 
         <div class="severity-question">
 
@@ -763,22 +563,15 @@
             Select emergency level
           </h3>
 
-
           <p>
-
-            GoldenLink will use your selection
-            to coordinate the appropriate response.
-
+            GoldenLink will use your selection to
+            coordinate the appropriate response.
           </p>
 
         </div>
 
 
-
-        <!-- SEVERITY OPTIONS -->
-
         <div class="severity-options">
-
 
           @for (
             option of severityOptions;
@@ -786,43 +579,22 @@
           ) {
 
             <button
-
               type="button"
-
               class="severity-card"
-
-              [class.selected]="
-                selectedSeverity === option.value
-              "
-
-              [class.normal]="
-                option.value === 'normal'
-              "
-
-              [class.moderate]="
-                option.value === 'moderate'
-              "
-
-              [class.critical]="
-                option.value === 'critical'
-              "
-
-              (click)="
-                selectSeverity(option.value)
-              "
-
-            >
-
+              [class.selected]="selectedSeverity === option.value"
+              [class.normal]="option.value === 'normal'"
+              [class.moderate]="option.value === 'moderate'"
+              [class.critical]="option.value === 'critical'"
+              (click)="selectSeverity(option.value)">
 
               <div class="severity-icon">
 
                 <i
                   class="bi"
-                  [class]="option.icon"
-                ></i>
+                  [class]="option.icon">
+                </i>
 
               </div>
-
 
               <div class="severity-content">
 
@@ -836,42 +608,30 @@
 
               </div>
 
-
               @if (
                 selectedSeverity === option.value
               ) {
 
                 <i
-                  class="bi bi-check-circle-fill selected-check"
-                ></i>
+                  class="bi bi-check-circle-fill selected-check">
+                </i>
 
               }
-
 
             </button>
 
           }
 
-
         </div>
-
 
 
         <!-- ACTIVATE -->
 
         <button
-
           type="button"
-
           class="activate-button"
-
-          [class.active]="selectedSeverity"
-
           [disabled]="!selectedSeverity"
-
-          (click)="submitReport()"
-
-        >
+          (click)="submitReport()">
 
           <i class="bi bi-broadcast-pin"></i>
 
@@ -880,69 +640,49 @@
         </button>
 
 
-
-        <!-- SELECTED MESSAGE -->
-
         @if (selectedSeverity) {
 
           <div class="selected-severity-message">
 
             <i class="bi bi-info-circle"></i>
 
-            <span>
+            Selected urgency:
 
-              Selected urgency:
-
-              <strong>
-                {{ getSeverityLabel() }}
-              </strong>
-
-            </span>
+            <strong>
+              {{ getSeverityLabel() }}
+            </strong>
 
           </div>
 
         }
 
 
-
-        <!-- NOTE -->
-
         <div class="activation-note">
 
           <i class="bi bi-shield-check"></i>
 
-          <span>
-
-            GoldenLink will use this report to
-            coordinate nearby community assistance.
-
-          </span>
+          GoldenLink will use this report to coordinate
+          nearby community assistance.
 
         </div>
-
 
       </div>
 
     }
 
 
-
-    <!-- =====================================================
-         NAVIGATION
-         ===================================================== -->
+    <!-- ================================================= -->
+    <!-- NAVIGATION -->
+    <!-- ================================================= -->
 
     <div class="navigation">
-
 
       @if (currentStep > 1) {
 
         <button
           type="button"
-
-          class="navigation-button previous"
-
-          (click)="previousStep()"
-        >
+          class="previous-button"
+          (click)="previousStep()">
 
           <i class="bi bi-arrow-left"></i>
 
@@ -956,20 +696,14 @@
       @if (currentStep < totalSteps) {
 
         <button
-
           type="button"
-
-          class="navigation-button continue"
-
+          class="continue-button"
           [disabled]="
             (currentStep === 1 && !locationCaptured) ||
             (currentStep === 2 && !incidentType) ||
             (currentStep === 3 && !accident.victims)
           "
-
-          (click)="nextStep()"
-
-        >
+          (click)="nextStep()">
 
           Continue
 
@@ -979,9 +713,7 @@
 
       }
 
-
     </div>
-
 
   </div>
 

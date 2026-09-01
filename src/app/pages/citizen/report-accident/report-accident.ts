@@ -1,4 +1,9 @@
-import { Component, inject } from '@angular/core';
+import {
+  Component,
+  NgZone,
+  inject
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -13,36 +18,34 @@ import { IncidentService } from '../../../core/services/incident';
 @Component({
   selector: 'app-report-accident',
   standalone: true,
+
   imports: [
     CommonModule,
     FormsModule,
     RouterLink
   ],
+
   templateUrl: './report-accident.html',
   styleUrl: './report-accident.scss'
 })
 export class ReportAccident {
 
   private readonly router = inject(Router);
+  private readonly incidentService = inject(IncidentService);
+  private readonly ngZone = inject(NgZone);
 
-  private readonly incidentService =
-    inject(IncidentService);
-
-
-  // =====================================================
+  // ============================================================
   // STEPS
-  // =====================================================
+  // ============================================================
 
   currentStep = 1;
-
   totalSteps = 4;
 
   submitted = false;
 
-
-  // =====================================================
+  // ============================================================
   // BASIC FORM VALUES
-  // =====================================================
+  // ============================================================
 
   incidentType = '';
 
@@ -52,16 +55,15 @@ export class ReportAccident {
 
   description = '';
 
-
-  // =====================================================
+  // ============================================================
   // LOCATION
-  // =====================================================
+  // ============================================================
 
   latitude: number | null = null;
 
   longitude: number | null = null;
 
-  locationStatus = 'Location not detected';
+  locationStatus = 'Click the button to detect your current location.';
 
   locationLoading = false;
 
@@ -69,32 +71,15 @@ export class ReportAccident {
 
   locationError = false;
 
-
-  // =====================================================
-  // LOCATION OBJECT
-  // =====================================================
-
-  location = {
-
-    latitude: 0,
-
-    longitude: 0,
-
-    address: ''
-
-  };
-
-
-  // =====================================================
+  // ============================================================
   // FILE UPLOAD
-  // =====================================================
+  // ============================================================
 
   selectedFiles: File[] = [];
 
-
-  // =====================================================
+  // ============================================================
   // ACCIDENT INFORMATION
-  // =====================================================
+  // ============================================================
 
   accident = {
 
@@ -114,10 +99,23 @@ export class ReportAccident {
 
   };
 
+  // ============================================================
+  // LOCATION OBJECT
+  // ============================================================
 
-  // =====================================================
+  location = {
+
+    latitude: 0,
+
+    longitude: 0,
+
+    address: ''
+
+  };
+
+  // ============================================================
   // VICTIM OPTIONS
-  // =====================================================
+  // ============================================================
 
   victimOptions = [
 
@@ -159,10 +157,9 @@ export class ReportAccident {
 
   ];
 
-
-  // =====================================================
+  // ============================================================
   // SEVERITY OPTIONS
-  // =====================================================
+  // ============================================================
 
   severityOptions: {
     value: IncidentSeverity;
@@ -174,36 +171,31 @@ export class ReportAccident {
     {
       value: 'normal',
       label: 'Normal',
-      description:
-        'No immediate danger is visible.',
+      description: 'No immediate danger is visible.',
       icon: 'bi-check-circle'
     },
 
     {
       value: 'moderate',
       label: 'Moderate',
-      description:
-        'Medical or community assistance may be required.',
+      description: 'Medical or community assistance may be required.',
       icon: 'bi-exclamation-circle'
     },
 
     {
       value: 'critical',
       label: 'Critical',
-      description:
-        'Immediate emergency response is required.',
+      description: 'Immediate emergency response is required.',
       icon: 'bi-exclamation-triangle-fill'
     }
 
   ];
 
-
   selectedSeverity: IncidentSeverity | '' = '';
 
-
-  // =====================================================
+  // ============================================================
   // PROGRESS
-  // =====================================================
+  // ============================================================
 
   get progressPercentage(): number {
 
@@ -211,34 +203,28 @@ export class ReportAccident {
 
   }
 
-
-  // =====================================================
+  // ============================================================
   // STEP NAVIGATION
-  // =====================================================
+  // ============================================================
 
   nextStep(): void {
 
     // STEP 1
-    // Location must be captured.
-
     if (
       this.currentStep === 1 &&
       !this.locationCaptured
     ) {
 
+      this.locationError = true;
+
       this.locationStatus =
         'Please detect your location before continuing.';
-
-      this.locationError = true;
 
       return;
 
     }
 
-
     // STEP 2
-    // Accident type required.
-
     if (
       this.currentStep === 2 &&
       !this.incidentType
@@ -248,10 +234,7 @@ export class ReportAccident {
 
     }
 
-
     // STEP 3
-    // Victim count required.
-
     if (
       this.currentStep === 3 &&
       !this.accident.victims
@@ -261,17 +244,18 @@ export class ReportAccident {
 
     }
 
-
-    if (
-      this.currentStep < this.totalSteps
-    ) {
+    if (this.currentStep < this.totalSteps) {
 
       this.currentStep++;
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
 
     }
 
   }
-
 
   previousStep(): void {
 
@@ -279,10 +263,14 @@ export class ReportAccident {
 
       this.currentStep--;
 
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+
     }
 
   }
-
 
   goToStep(step: number): void {
 
@@ -291,140 +279,31 @@ export class ReportAccident {
       step <= this.totalSteps
     ) {
 
-      // Do not allow jumping ahead
-      // before location is captured.
-
-      if (
-        step > 1 &&
-        !this.locationCaptured
-      ) {
-
-        this.currentStep = 1;
-
-        return;
-
-      }
-
       this.currentStep = step;
 
     }
 
   }
 
-
-  // =====================================================
+  // ============================================================
   // LOCATION DETECTION
-  // =====================================================
+  // ============================================================
 
   getLocation(): void {
 
     console.log(
-      'GoldenLink: requesting browser location...'
+      'GoldenLink: Starting location detection...'
     );
 
-
-    this.locationLoading = true;
-
-    this.locationError = false;
-
-    this.locationCaptured = false;
-
-    this.locationStatus =
-      'Detecting your current location...';
-
-
-    // Check browser support
-
-    if (!navigator.geolocation) {
-
-      this.locationLoading = false;
-
-      this.locationError = true;
-
-      this.locationStatus =
-        'Location is not supported by this browser.';
+    if (this.locationLoading) {
 
       return;
 
     }
 
+    if (!navigator.geolocation) {
 
-    /*
-     * IMPORTANT
-     *
-     * We intentionally use the simple
-     * browser geolocation call here.
-     *
-     * This is the same approach used
-     * by your previously working project.
-     */
-
-    navigator.geolocation.getCurrentPosition(
-
-      (position) => {
-
-        console.log(
-          'GoldenLink location received:',
-          position
-        );
-
-
-        // ---------------------------------------------
-        // GET COORDINATES
-        // ---------------------------------------------
-
-        this.latitude =
-          position.coords.latitude;
-
-        this.longitude =
-          position.coords.longitude;
-
-
-        // ---------------------------------------------
-        // SAVE LOCATION
-        // ---------------------------------------------
-
-        this.location.latitude =
-          position.coords.latitude;
-
-        this.location.longitude =
-          position.coords.longitude;
-
-
-        this.location.address =
-          `${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)}`;
-
-
-        // ---------------------------------------------
-        // UPDATE UI
-        // ---------------------------------------------
-
-        this.locationLoading = false;
-
-        this.locationCaptured = true;
-
-        this.locationError = false;
-
-        this.locationStatus =
-          'Location detected successfully';
-
-
-        console.log(
-          'GoldenLink coordinates:',
-          this.latitude,
-          this.longitude
-        );
-
-      },
-
-
-      (error) => {
-
-        console.error(
-          'GoldenLink location error:',
-          error
-        );
-
+      this.ngZone.run(() => {
 
         this.locationLoading = false;
 
@@ -432,43 +311,155 @@ export class ReportAccident {
 
         this.locationError = true;
 
+        this.locationStatus =
+          'Geolocation is not supported by this browser.';
 
-        // ---------------------------------------------
-        // ERROR HANDLING
-        // ---------------------------------------------
+      });
 
-        switch (error.code) {
+      return;
 
-          case error.PERMISSION_DENIED:
+    }
 
-            this.locationStatus =
-              'Location permission was denied. Please allow location access for localhost.';
+    // Reset UI
 
-            break;
+    this.locationLoading = true;
 
+    this.locationCaptured = false;
 
-          case error.POSITION_UNAVAILABLE:
+    this.locationError = false;
 
-            this.locationStatus =
+    this.locationStatus =
+      'Detecting your current location...';
+
+    // ==========================================================
+    // BROWSER GPS
+    // ==========================================================
+
+    navigator.geolocation.getCurrentPosition(
+
+      (position: GeolocationPosition) => {
+
+        console.log(
+          'GoldenLink GPS SUCCESS:',
+          position.coords.latitude,
+          position.coords.longitude
+        );
+
+        /*
+         * IMPORTANT
+         *
+         * We explicitly enter Angular's zone here.
+         *
+         * This fixes the situation where:
+         *
+         * DevTools says GPS SUCCESS
+         *
+         * but the webpage still says:
+         *
+         * Detecting Location...
+         */
+
+        this.ngZone.run(() => {
+
+          this.latitude =
+            position.coords.latitude;
+
+          this.longitude =
+            position.coords.longitude;
+
+          this.location.latitude =
+            position.coords.latitude;
+
+          this.location.longitude =
+            position.coords.longitude;
+
+          // Show coordinates as address for now.
+
+          this.location.address =
+            `${this.latitude.toFixed(6)}, ${this.longitude.toFixed(6)}`;
+
+          // IMPORTANT:
+          // Detection and capture happen together.
+
+          this.locationLoading = false;
+
+          this.locationCaptured = true;
+
+          this.locationError = false;
+
+          this.locationStatus =
+            'Location captured successfully.';
+
+          console.log(
+            'GoldenLink location captured:',
+            this.latitude,
+            this.longitude
+          );
+
+        });
+
+      },
+
+      (error: GeolocationPositionError) => {
+
+        console.error(
+          'GoldenLink GPS ERROR:',
+          error
+        );
+
+        this.ngZone.run(() => {
+
+          this.locationLoading = false;
+
+          this.locationCaptured = false;
+
+          this.locationError = true;
+
+          let message =
+            'Unable to detect your location.';
+
+          if (
+            error.code ===
+            error.PERMISSION_DENIED
+          ) {
+
+            message =
+              'Location permission was denied. Allow location access for localhost and try again.';
+
+          }
+
+          else if (
+            error.code ===
+            error.POSITION_UNAVAILABLE
+          ) {
+
+            message =
               'Your device could not determine your location. Please check Windows Location Services.';
 
-            break;
+          }
 
+          else if (
+            error.code ===
+            error.TIMEOUT
+          ) {
 
-          case error.TIMEOUT:
+            message =
+              'Location detection timed out. Please try again.';
 
-            this.locationStatus =
-              'Location request timed out. Please try again.';
+          }
 
-            break;
+          this.locationStatus = message;
 
+        });
 
-          default:
+      },
 
-            this.locationStatus =
-              'Unable to detect your location. Please try again.';
+      {
+        enableHighAccuracy: true,
 
-        }
+        timeout: 15000,
+
+        maximumAge: 0
 
       }
 
@@ -476,10 +467,9 @@ export class ReportAccident {
 
   }
 
-
-  // =====================================================
+  // ============================================================
   // RETRY LOCATION
-  // =====================================================
+  // ============================================================
 
   retryLocation(): void {
 
@@ -487,31 +477,35 @@ export class ReportAccident {
 
     this.longitude = null;
 
+    this.location.latitude = 0;
+
+    this.location.longitude = 0;
+
+    this.location.address = '';
+
     this.locationCaptured = false;
 
     this.locationError = false;
 
     this.locationLoading = false;
 
-    this.location.address = '';
-
     this.locationStatus =
-      'Location not detected';
+      'Click the button to detect your current location.';
+
+    // Start detection again.
 
     this.getLocation();
 
   }
 
-
-  // =====================================================
+  // ============================================================
   // FILE UPLOAD
-  // =====================================================
+  // ============================================================
 
   onFilesSelected(event: Event): void {
 
     const input =
       event.target as HTMLInputElement;
-
 
     if (!input.files) {
 
@@ -519,23 +513,20 @@ export class ReportAccident {
 
     }
 
-
     this.selectedFiles =
       Array.from(input.files);
 
   }
 
-
-  // =====================================================
-  // VICTIM COUNT
-  // =====================================================
+  // ============================================================
+  // VICTIMS
+  // ============================================================
 
   selectVictims(value: number): void {
 
     this.accident.victims = value;
 
   }
-
 
   getVictimLabel(): string {
 
@@ -545,22 +536,19 @@ export class ReportAccident {
 
     }
 
-
     if (this.accident.victims >= 6) {
 
       return '5+ People';
 
     }
 
-
     return `${this.accident.victims} People`;
 
   }
 
-
-  // =====================================================
+  // ============================================================
   // SEVERITY
-  // =====================================================
+  // ============================================================
 
   selectSeverity(
     severity: IncidentSeverity
@@ -570,10 +558,9 @@ export class ReportAccident {
 
   }
 
-
-  // =====================================================
+  // ============================================================
   // FORM SYNCHRONIZATION
-  // =====================================================
+  // ============================================================
 
   private syncFormValues(): void {
 
@@ -585,14 +572,11 @@ export class ReportAccident {
 
   }
 
-
-  // =====================================================
-  // SUBMIT REPORT
-  // =====================================================
+  // ============================================================
+  // SUBMIT
+  // ============================================================
 
   submitReport(): void {
-
-    // Severity required
 
     if (!this.selectedSeverity) {
 
@@ -600,22 +584,18 @@ export class ReportAccident {
 
     }
 
-
-    // Location required
-
     if (!this.locationCaptured) {
-
-      this.locationStatus =
-        'Please capture your location before activating GoldenLink.';
 
       this.currentStep = 1;
 
       this.locationError = true;
 
+      this.locationStatus =
+        'Please detect your location before activating GoldenLink.';
+
       return;
 
     }
-
 
     this.syncFormValues();
 
@@ -623,19 +603,16 @@ export class ReportAccident {
 
   }
 
-
-  // =====================================================
+  // ============================================================
   // CREATE INCIDENT
-  // =====================================================
+  // ============================================================
 
   submitIncident(): void {
 
     this.syncFormValues();
 
-
     const severity =
       this.selectedSeverity as IncidentSeverity;
-
 
     const incidentData:
       Omit<
@@ -649,36 +626,25 @@ export class ReportAccident {
         this.accident.accidentType ||
         'Road Accident',
 
-
-      severity:
-
-
-        severity,
-
+      severity,
 
       victims:
         Number(this.accident.victims),
 
-
       unconscious:
         this.accident.unconscious,
-
 
       bleeding:
         this.accident.bleeding,
 
-
       breathingDifficulty:
         this.accident.breathingDifficulty,
-
 
       trapped:
         this.accident.trapped,
 
-
       description:
         this.accident.description,
-
 
       location: {
 
@@ -696,60 +662,39 @@ export class ReportAccident {
 
       },
 
-
       aiAssessment: {
 
-        severity:
+        severity,
 
-          severity,
-
-        confidence:
-
-          1,
+        confidence: 1,
 
         summary:
-
-          this.getSeveritySummary(
-            severity
-          )
+          this.getSeveritySummary(severity)
 
       },
 
-
       responder: null,
 
-
       ambulanceStatus:
-
         severity === 'critical'
           ? 'requested'
           : 'not_requested',
 
-
       hospital: null
 
     };
-
 
     const incident =
       this.incidentService.createIncident(
         incidentData
       );
 
-
     this.submitted = true;
-
 
     console.log(
       'GoldenLink incident created:',
       incident
     );
-
-
-    /*
-     * Give the UI a moment to show
-     * the activation state.
-     */
 
     setTimeout(() => {
 
@@ -761,10 +706,9 @@ export class ReportAccident {
 
   }
 
-
-  // =====================================================
+  // ============================================================
   // SEVERITY SUMMARY
-  // =====================================================
+  // ============================================================
 
   private getSeveritySummary(
     severity: IncidentSeverity
@@ -774,39 +718,27 @@ export class ReportAccident {
 
       case 'critical':
 
-        return (
-          'Critical incident requiring immediate emergency response.'
-        );
-
+        return 'Critical incident requiring immediate emergency response.';
 
       case 'moderate':
 
-        return (
-          'Moderate incident requiring prompt community assistance.'
-        );
-
+        return 'Moderate incident requiring prompt community assistance.';
 
       case 'normal':
 
-        return (
-          'Normal incident with no immediate critical danger reported.'
-        );
-
+        return 'Normal incident with no immediate critical danger reported.';
 
       default:
 
-        return (
-          'Incident reported through GoldenLink.'
-        );
+        return 'Incident reported through GoldenLink.';
 
     }
 
   }
 
-
-  // =====================================================
+  // ============================================================
   // HELPERS
-  // =====================================================
+  // ============================================================
 
   getSeverityLabel(): string {
 
@@ -816,16 +748,12 @@ export class ReportAccident {
 
     }
 
-
-    return (
-      this.selectedSeverity
-        .charAt(0)
-        .toUpperCase() +
-      this.selectedSeverity.slice(1)
-    );
+    return this.selectedSeverity
+      .charAt(0)
+      .toUpperCase() +
+      this.selectedSeverity.slice(1);
 
   }
-
 
   getSeverityClass(): string {
 
@@ -834,7 +762,6 @@ export class ReportAccident {
       return '';
 
     }
-
 
     return `severity-${this.selectedSeverity}`;
 
