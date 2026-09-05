@@ -6,22 +6,18 @@ import {
 } from '@angular/router';
 
 import { LanguageSwitcher } from '../language-switcher/language-switcher';
-
 import { ThemeToggle } from '../theme-toggle/theme-toggle';
-
 import { TranslationService } from '../../../core/services/translation';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-
   imports: [
     RouterLink,
     RouterLinkActive,
     LanguageSwitcher,
     ThemeToggle
   ],
-
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss'
 })

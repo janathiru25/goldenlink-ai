@@ -5,7 +5,7 @@
     class="language-button"
     (click)="toggleDropdown()"
     [attr.aria-expanded]="isOpen"
-    aria-label="Select language"
+    [attr.aria-label]="t('selectLanguage')"
   >
 
     <i class="bi bi-translate"></i>
@@ -28,21 +28,25 @@
     <div class="language-dropdown">
 
       <div class="dropdown-title">
-        Select Language
+        {{ t('selectLanguage') }}
       </div>
+
 
       @for (language of languages; track language.code) {
 
         <button
           type="button"
           class="language-option"
-          [class.active]="selectedLanguage.code === language.code"
+          [class.active]="
+            selectedLanguage.code === language.code
+          "
           (click)="selectLanguage(language)"
         >
 
           <span class="language-flag">
             {{ language.flag }}
           </span>
+
 
           <span class="language-info">
 
@@ -56,9 +60,14 @@
 
           </span>
 
-          @if (selectedLanguage.code === language.code) {
 
-            <i class="bi bi-check-circle-fill language-check"></i>
+          @if (
+            selectedLanguage.code === language.code
+          ) {
+
+            <i
+              class="bi bi-check-circle-fill language-check"
+            ></i>
 
           }
 

@@ -2,7 +2,9 @@
 
   <nav class="navbar">
 
-    <!-- LOGO -->
+    <!-- =========================
+         LOGO
+    ========================== -->
 
     <a
       routerLink="/"
@@ -30,7 +32,9 @@
     </a>
 
 
-    <!-- NAVIGATION -->
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
 
     <div class="nav-links">
 
@@ -84,35 +88,33 @@
         <span>{{ t('volunteers') }}</span>
       </a>
 
-    </div> 
 
-  
+      <a
+        routerLink="/ai-assistant"
+        routerLinkActive="active"
+        class="nav-link ai-link"
+      >
+        <i class="bi bi-stars"></i>
+        <span>{{ t('aiAssistant') }}</span>
+      </a>
+
+    </div>
 
 
-    <!-- RIGHT CONTROLS -->
+    <!-- =========================
+         RIGHT CONTROLS
+    ========================== -->
 
     <div class="nav-actions">
 
       <app-language-switcher></app-language-switcher>
 
-      <!-- THEME TOGGLE -->
       <app-theme-toggle></app-theme-toggle>
 
-
-
       <button
         type="button"
         class="nav-action"
-        aria-label="Toggle dark mode"
-      >
-        <i class="bi bi-moon"></i>
-      </button>
-
-
-      <button
-        type="button"
-        class="nav-action"
-        aria-label="Profile"
+        [attr.aria-label]="t('profile')"
       >
         <i class="bi bi-person"></i>
       </button>

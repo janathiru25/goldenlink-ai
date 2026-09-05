@@ -1,3 +1,5 @@
+<!-- NEARBY RESPONDERS PAGE -->
+
 <div class="responders-page">
 
   <!-- LOADING SPINNER -->
@@ -5,9 +7,64 @@
     message="Finding nearby responders..."
   ></app-loading-spinner>
 
+
   <div class="responders-container">
 
+
+    <!-- ===================================================== -->
+    <!-- SUCCESS MESSAGE -->
+    <!-- ===================================================== -->
+
+    @if (incidentAccepted) {
+
+      <div class="assignment-success">
+
+        <div class="assignment-success-icon">
+          <i class="bi bi-check-circle-fill"></i>
+        </div>
+
+        <div class="assignment-success-content">
+
+          <h2>
+            Responder Assigned Successfully!
+          </h2>
+
+          <p>
+            {{ selectedResponder?.name }}
+            has accepted the incident and is preparing
+            to respond.
+          </p>
+
+          <div class="assignment-info">
+
+            <span>
+              <i class="bi bi-person-check-fill"></i>
+
+              {{ selectedResponder?.role }}
+            </span>
+
+            <span>
+              <i class="bi bi-clock-fill"></i>
+
+              ETA {{ selectedResponder?.eta }}
+            </span>
+
+          </div>
+
+          <small>
+            Opening responder dashboard...
+          </small>
+
+        </div>
+
+      </div>
+
+    }
+
+
+    <!-- ===================================================== -->
     <!-- PAGE HEADER -->
+    <!-- ===================================================== -->
 
     <section class="page-header">
 
@@ -18,10 +75,13 @@
           Community Response
         </span>
 
-        <h1>Nearby Responders</h1>
+        <h1>
+          Nearby Responders
+        </h1>
 
         <p>
-          Find verified community responders who are available to help nearby.
+          Find verified community responders who are
+          available to help nearby.
         </p>
 
       </div>
@@ -33,7 +93,96 @@
     </section>
 
 
+    <!-- ===================================================== -->
+    <!-- ACTIVE INCIDENT -->
+    <!-- ===================================================== -->
+
+    @if (activeIncident) {
+
+      <section class="incident-summary-card">
+
+        <div class="incident-summary-header">
+
+          <div>
+
+            <span class="incident-label">
+              Active GoldenLink Incident
+            </span>
+
+            <h2>
+              {{ activeIncident.accidentType }}
+            </h2>
+
+          </div>
+
+          <span
+            class="incident-severity"
+            [class.critical]="
+              activeIncident.severity === 'critical'
+            "
+            [class.moderate]="
+              activeIncident.severity === 'moderate'
+            "
+          >
+            {{ getIncidentSeverityLabel() }}
+          </span>
+
+        </div>
+
+
+        <div class="incident-summary-grid">
+
+          <div class="incident-summary-item">
+
+            <i class="bi bi-hash"></i>
+
+            <div>
+              <span>Incident ID</span>
+              <strong>
+                {{ activeIncident.incidentId }}
+              </strong>
+            </div>
+
+          </div>
+
+
+          <div class="incident-summary-item">
+
+            <i class="bi bi-people-fill"></i>
+
+            <div>
+              <span>People affected</span>
+              <strong>
+                {{ activeIncident.victims }}
+              </strong>
+            </div>
+
+          </div>
+
+
+          <div class="incident-summary-item">
+
+            <i class="bi bi-geo-alt-fill"></i>
+
+            <div>
+              <span>Location</span>
+              <strong>
+                {{ getIncidentLocation() }}
+              </strong>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    }
+
+
+    <!-- ===================================================== -->
     <!-- LOCATION STATUS -->
+    <!-- ===================================================== -->
 
     <section class="location-card">
 
@@ -57,18 +206,35 @@
 
       </div>
 
+
       <div class="radius-selector">
 
-        <span>Radius</span>
+        <span>
+          Radius
+        </span>
 
         <select
           [value]="searchRadius"
-          (change)="changeRadius($any($event.target).value)"
+          (change)="
+            changeRadius(
+              $any($event.target).value
+            )
+          "
           class="form-select"
         >
-          <option value="1 km">1 km</option>
-          <option value="2 km">2 km</option>
-          <option value="5 km">5 km</option>
+
+          <option value="1 km">
+            1 km
+          </option>
+
+          <option value="2 km">
+            2 km
+          </option>
+
+          <option value="5 km">
+            5 km
+          </option>
+
         </select>
 
       </div>
@@ -76,22 +242,36 @@
     </section>
 
 
+    <!-- ===================================================== -->
     <!-- RESPONSE SUMMARY -->
+    <!-- ===================================================== -->
 
     <section class="response-summary">
 
       <div class="summary-number">
-        <strong>{{ availableCount }}</strong>
-        <span>available now</span>
+
+        <strong>
+          {{ availableCount }}
+        </strong>
+
+        <span>
+          available now
+        </span>
+
       </div>
 
+
       <div class="summary-divider"></div>
+
 
       <div class="summary-text">
 
         <div class="live-indicator">
+
           <span></span>
+
           Live availability
+
         </div>
 
         <p>
@@ -103,15 +283,24 @@
     </section>
 
 
+    <!-- ===================================================== -->
     <!-- RESPONDER LIST -->
+    <!-- ===================================================== -->
 
     <section class="responder-section">
 
       <div class="section-heading">
 
         <div>
-          <h2>People nearby</h2>
-          <p>Choose a suitable responder for assistance.</p>
+
+          <h2>
+            People nearby
+          </h2>
+
+          <p>
+            Choose a suitable responder for assistance.
+          </p>
+
         </div>
 
         <span class="responder-count">
@@ -123,12 +312,19 @@
 
       <div class="responder-list">
 
-        @for (responder of responders; track responder.id) {
+        @for (
+          responder of responders;
+          track responder.id
+        ) {
 
           <article
             class="responder-card"
             [class.unavailable]="!responder.available"
+            [class.selected-responder]="
+              selectedResponder?.id === responder.id
+            "
           >
+
 
             <!-- PROFILE -->
 
@@ -138,22 +334,29 @@
                 {{ responder.initials }}
               </div>
 
+
               <div class="profile-info">
 
                 <div class="name-row">
 
-                  <h3>{{ responder.name }}</h3>
+                  <h3>
+                    {{ responder.name }}
+                  </h3>
 
                   @if (responder.verified) {
 
                     <span class="verified">
+
                       <i class="bi bi-patch-check-fill"></i>
+
                       Verified
+
                     </span>
 
                   }
 
                 </div>
+
 
                 <span class="responder-role">
                   {{ responder.role }}
@@ -161,14 +364,21 @@
 
               </div>
 
+
               <div
                 class="availability"
-                [class.available]="responder.available"
+                [class.available]="
+                  responder.available
+                "
               >
 
                 <span class="availability-dot"></span>
 
-                {{ responder.available ? 'Available' : 'Unavailable' }}
+                {{
+                  responder.available
+                    ? 'Available'
+                    : 'Unavailable'
+                }}
 
               </div>
 
@@ -184,8 +394,15 @@
                 <i class="bi bi-geo-alt"></i>
 
                 <div>
-                  <span>Distance</span>
-                  <strong>{{ responder.distance }}</strong>
+
+                  <span>
+                    Distance
+                  </span>
+
+                  <strong>
+                    {{ responder.distance }}
+                  </strong>
+
                 </div>
 
               </div>
@@ -196,8 +413,15 @@
                 <i class="bi bi-clock"></i>
 
                 <div>
-                  <span>Estimated arrival</span>
-                  <strong>{{ responder.eta }}</strong>
+
+                  <span>
+                    Estimated arrival
+                  </span>
+
+                  <strong>
+                    {{ responder.eta }}
+                  </strong>
+
                 </div>
 
               </div>
@@ -208,8 +432,15 @@
                 <i class="bi bi-star-fill"></i>
 
                 <div>
-                  <span>Community rating</span>
-                  <strong>{{ responder.rating }}</strong>
+
+                  <span>
+                    Community rating
+                  </span>
+
+                  <strong>
+                    {{ responder.rating }}
+                  </strong>
+
                 </div>
 
               </div>
@@ -221,11 +452,17 @@
 
             <div class="skills">
 
-              @for (skill of responder.skills; track skill) {
+              @for (
+                skill of responder.skills;
+                track skill
+              ) {
 
                 <span class="skill-tag">
+
                   <i class="bi bi-check2"></i>
+
                   {{ skill }}
+
                 </span>
 
               }
@@ -236,19 +473,47 @@
             <!-- ACTION -->
 
             <button
+              type="button"
               class="request-button"
-              [disabled]="!responder.available"
+              [disabled]="
+                !responder.available ||
+                acceptingIncident ||
+                incidentAccepted
+              "
               (click)="requestHelp(responder)"
             >
 
-              @if (responder.available) {
+              @if (
+                acceptingIncident &&
+                selectedResponder?.id === responder.id
+              ) {
+
+                <i class="bi bi-arrow-repeat spinning"></i>
+
+                Accepting Incident...
+
+              }
+              @else if (
+                incidentAccepted &&
+                selectedResponder?.id === responder.id
+              ) {
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                Incident Accepted
+
+              }
+              @else if (responder.available) {
 
                 <i class="bi bi-hand-thumbs-up"></i>
-                Request Help
 
-              } @else {
+                Accept Incident
+
+              }
+              @else {
 
                 <i class="bi bi-person-x"></i>
+
                 Currently Unavailable
 
               }
@@ -264,21 +529,29 @@
     </section>
 
 
+    <!-- ===================================================== -->
     <!-- SAFETY NOTE -->
+    <!-- ===================================================== -->
 
     <section class="safety-note">
 
       <div class="safety-icon">
+
         <i class="bi bi-shield-check"></i>
+
       </div>
+
 
       <div>
 
-        <h3>GoldenLink safety principle</h3>
+        <h3>
+          GoldenLink safety principle
+        </h3>
 
         <p>
-          GoldenLink connects you with registered community responders.
-          Professional emergency services remain the primary response for
+          GoldenLink connects you with registered
+          community responders. Professional emergency
+          services remain the primary response for
           serious incidents.
         </p>
 

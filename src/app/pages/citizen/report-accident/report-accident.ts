@@ -1,5 +1,6 @@
 import {
   Component,
+  ChangeDetectorRef,
   NgZone,
   inject
 } from '@angular/core';
@@ -33,6 +34,7 @@ export class ReportAccident {
   private readonly router = inject(Router);
   private readonly incidentService = inject(IncidentService);
   private readonly ngZone = inject(NgZone);
+  private readonly changeDetector = inject(ChangeDetectorRef);
 
   // ============================================================
   // STEPS
@@ -63,7 +65,8 @@ export class ReportAccident {
 
   longitude: number | null = null;
 
-  locationStatus = 'Click the button to detect your current location.';
+  locationStatus =
+    'Click the button to detect your current location.';
 
   locationLoading = false;
 
@@ -82,21 +85,13 @@ export class ReportAccident {
   // ============================================================
 
   accident = {
-
     accidentType: '',
-
     victims: 1,
-
     unconscious: false,
-
     bleeding: false,
-
     breathingDifficulty: false,
-
     trapped: false,
-
     description: ''
-
   };
 
   // ============================================================
@@ -104,13 +99,9 @@ export class ReportAccident {
   // ============================================================
 
   location = {
-
     latitude: 0,
-
     longitude: 0,
-
     address: ''
-
   };
 
   // ============================================================
@@ -118,43 +109,36 @@ export class ReportAccident {
   // ============================================================
 
   victimOptions = [
-
     {
       value: 1,
       label: '1 Person',
       icon: 'bi-person'
     },
-
     {
       value: 2,
       label: '2 People',
       icon: 'bi-people'
     },
-
     {
       value: 3,
       label: '3 People',
       icon: 'bi-people'
     },
-
     {
       value: 4,
       label: '4 People',
       icon: 'bi-people'
     },
-
     {
       value: 5,
       label: '5 People',
       icon: 'bi-people-fill'
     },
-
     {
       value: 6,
       label: '5+ People',
       icon: 'bi-people-fill'
     }
-
   ];
 
   // ============================================================
@@ -198,9 +182,7 @@ export class ReportAccident {
   // ============================================================
 
   get progressPercentage(): number {
-
     return (this.currentStep / this.totalSteps) * 100;
-
   }
 
   // ============================================================
@@ -209,7 +191,6 @@ export class ReportAccident {
 
   nextStep(): void {
 
-    // STEP 1
     if (
       this.currentStep === 1 &&
       !this.locationCaptured
@@ -221,30 +202,27 @@ export class ReportAccident {
         'Please detect your location before continuing.';
 
       return;
-
     }
 
-    // STEP 2
     if (
       this.currentStep === 2 &&
       !this.incidentType
     ) {
 
       return;
-
     }
 
-    // STEP 3
     if (
       this.currentStep === 3 &&
       !this.accident.victims
     ) {
 
       return;
-
     }
 
-    if (this.currentStep < this.totalSteps) {
+    if (
+      this.currentStep < this.totalSteps
+    ) {
 
       this.currentStep++;
 
@@ -259,7 +237,9 @@ export class ReportAccident {
 
   previousStep(): void {
 
-    if (this.currentStep > 1) {
+    if (
+      this.currentStep > 1
+    ) {
 
       this.currentStep--;
 
@@ -272,14 +252,17 @@ export class ReportAccident {
 
   }
 
-  goToStep(step: number): void {
+  goToStep(
+    step: number
+  ): void {
 
     if (
       step >= 1 &&
       step <= this.totalSteps
     ) {
 
-      this.currentStep = step;
+      this.currentStep =
+        step;
 
     }
 
@@ -296,9 +279,11 @@ export class ReportAccident {
     );
 
     if (this.locationLoading) {
-
       return;
+    }
 
+    if (this.locationCaptured) {
+      return;
     }
 
     if (!navigator.geolocation) {
@@ -317,10 +302,11 @@ export class ReportAccident {
       });
 
       return;
-
     }
 
-    // Reset UI
+    // ==========================================================
+    // START LOADING
+    // ==========================================================
 
     this.locationLoading = true;
 
@@ -332,69 +318,59 @@ export class ReportAccident {
       'Detecting your current location...';
 
     // ==========================================================
-    // BROWSER GPS
+    // GPS
     // ==========================================================
 
     navigator.geolocation.getCurrentPosition(
 
       (position: GeolocationPosition) => {
 
+        const lat =
+          position.coords.latitude;
+
+        const lng =
+          position.coords.longitude;
+
         console.log(
           'GoldenLink GPS SUCCESS:',
-          position.coords.latitude,
-          position.coords.longitude
+          lat,
+          lng
         );
-
-        /*
-         * IMPORTANT
-         *
-         * We explicitly enter Angular's zone here.
-         *
-         * This fixes the situation where:
-         *
-         * DevTools says GPS SUCCESS
-         *
-         * but the webpage still says:
-         *
-         * Detecting Location...
-         */
 
         this.ngZone.run(() => {
 
-          this.latitude =
-            position.coords.latitude;
+          this.latitude = lat;
 
-          this.longitude =
-            position.coords.longitude;
+          this.longitude = lng;
 
           this.location.latitude =
-            position.coords.latitude;
+            lat;
 
           this.location.longitude =
-            position.coords.longitude;
-
-          // Show coordinates as address for now.
+            lng;
 
           this.location.address =
-            `${this.latitude.toFixed(6)}, ${this.longitude.toFixed(6)}`;
+            `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
 
-          // IMPORTANT:
-          // Detection and capture happen together.
+          this.locationLoading =
+            false;
 
-          this.locationLoading = false;
+          this.locationCaptured =
+            true;
 
-          this.locationCaptured = true;
-
-          this.locationError = false;
+          this.locationError =
+            false;
 
           this.locationStatus =
-            'Location captured successfully.';
+            `Location captured successfully: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
 
           console.log(
             'GoldenLink location captured:',
-            this.latitude,
-            this.longitude
+            lat,
+            lng
           );
+
+          this.changeDetector.detectChanges();
 
         });
 
@@ -409,11 +385,14 @@ export class ReportAccident {
 
         this.ngZone.run(() => {
 
-          this.locationLoading = false;
+          this.locationLoading =
+            false;
 
-          this.locationCaptured = false;
+          this.locationCaptured =
+            false;
 
-          this.locationError = true;
+          this.locationError =
+            true;
 
           let message =
             'Unable to detect your location.';
@@ -424,21 +403,17 @@ export class ReportAccident {
           ) {
 
             message =
-              'Location permission was denied. Allow location access for localhost and try again.';
+              'Location permission was denied. Please allow location access and try again.';
 
-          }
-
-          else if (
+          } else if (
             error.code ===
             error.POSITION_UNAVAILABLE
           ) {
 
             message =
-              'Your device could not determine your location. Please check Windows Location Services.';
+              'Your device could not determine your location.';
 
-          }
-
-          else if (
+          } else if (
             error.code ===
             error.TIMEOUT
           ) {
@@ -448,7 +423,8 @@ export class ReportAccident {
 
           }
 
-          this.locationStatus = message;
+          this.locationStatus =
+            message;
 
         });
 
@@ -456,11 +432,8 @@ export class ReportAccident {
 
       {
         enableHighAccuracy: true,
-
         timeout: 15000,
-
         maximumAge: 0
-
       }
 
     );
@@ -477,22 +450,27 @@ export class ReportAccident {
 
     this.longitude = null;
 
-    this.location.latitude = 0;
+    this.location = {
 
-    this.location.longitude = 0;
+      latitude: 0,
 
-    this.location.address = '';
+      longitude: 0,
 
-    this.locationCaptured = false;
+      address: ''
 
-    this.locationError = false;
+    };
 
-    this.locationLoading = false;
+    this.locationCaptured =
+      false;
+
+    this.locationError =
+      false;
+
+    this.locationLoading =
+      false;
 
     this.locationStatus =
       'Click the button to detect your current location.';
-
-    // Start detection again.
 
     this.getLocation();
 
@@ -502,15 +480,15 @@ export class ReportAccident {
   // FILE UPLOAD
   // ============================================================
 
-  onFilesSelected(event: Event): void {
+  onFilesSelected(
+    event: Event
+  ): void {
 
     const input =
       event.target as HTMLInputElement;
 
     if (!input.files) {
-
       return;
-
     }
 
     this.selectedFiles =
@@ -522,21 +500,28 @@ export class ReportAccident {
   // VICTIMS
   // ============================================================
 
-  selectVictims(value: number): void {
+  selectVictims(
+    value: number
+  ): void {
 
-    this.accident.victims = value;
+    this.accident.victims =
+      value;
 
   }
 
   getVictimLabel(): string {
 
-    if (this.accident.victims === 1) {
+    if (
+      this.accident.victims === 1
+    ) {
 
       return '1 Person';
 
     }
 
-    if (this.accident.victims >= 6) {
+    if (
+      this.accident.victims >= 6
+    ) {
 
       return '5+ People';
 
@@ -554,7 +539,8 @@ export class ReportAccident {
     severity: IncidentSeverity
   ): void {
 
-    this.selectedSeverity = severity;
+    this.selectedSeverity =
+      severity;
 
   }
 
@@ -573,15 +559,13 @@ export class ReportAccident {
   }
 
   // ============================================================
-  // SUBMIT
+  // SUBMIT REPORT
   // ============================================================
 
   submitReport(): void {
 
     if (!this.selectedSeverity) {
-
       return;
-
     }
 
     if (!this.locationCaptured) {
@@ -594,7 +578,6 @@ export class ReportAccident {
         'Please detect your location before activating GoldenLink.';
 
       return;
-
     }
 
     this.syncFormValues();
@@ -629,7 +612,9 @@ export class ReportAccident {
       severity,
 
       victims:
-        Number(this.accident.victims),
+        Number(
+          this.accident.victims
+        ),
 
       unconscious:
         this.accident.unconscious,
@@ -649,16 +634,14 @@ export class ReportAccident {
       location: {
 
         latitude:
-          this.latitude ??
-          this.location.latitude,
+          this.latitude ?? 0,
 
         longitude:
-          this.longitude ??
-          this.location.longitude,
+          this.longitude ?? 0,
 
         address:
           this.location.address ||
-          'Location captured'
+          'GPS Location'
 
       },
 
@@ -666,43 +649,57 @@ export class ReportAccident {
 
         severity,
 
-        confidence: 1,
+        confidence:
+          1,
 
         summary:
-          this.getSeveritySummary(severity)
+          this.getSeveritySummary(
+            severity
+          )
 
       },
 
-      responder: null,
+      responder:
+        null,
 
       ambulanceStatus:
         severity === 'critical'
           ? 'requested'
           : 'not_requested',
 
-      hospital: null
+      hospital:
+        null
 
     };
+
+    // ==========================================================
+    // CREATE INCIDENT IN INCIDENT SERVICE
+    // ==========================================================
 
     const incident =
       this.incidentService.createIncident(
         incidentData
       );
 
-    this.submitted = true;
-
     console.log(
-      'GoldenLink incident created:',
+      'GoldenLink INCIDENT CREATED:',
       incident
     );
 
-    setTimeout(() => {
+    console.log(
+      'GoldenLink ACTIVE INCIDENT:',
+      this.incidentService.getActiveIncident()
+    );
 
-      this.router.navigate([
-        '/ai-assistant'
-      ]);
+    this.submitted = true;
 
-    }, 800);
+// Show "Community Response Activated Successfully"
+// before moving to Nearby Responders
+setTimeout(() => {
+  this.router.navigate([
+    '/nearby-responders'
+  ]);
+}, 2500);
 
   }
 
@@ -748,10 +745,15 @@ export class ReportAccident {
 
     }
 
-    return this.selectedSeverity
-      .charAt(0)
-      .toUpperCase() +
-      this.selectedSeverity.slice(1);
+    return (
+
+      this.selectedSeverity
+        .charAt(0)
+        .toUpperCase() +
+
+      this.selectedSeverity.slice(1)
+
+    );
 
   }
 

@@ -10,49 +10,72 @@
 .navbar {
   width: 100%;
   min-height: 76px;
-  padding: 0 28px;
+  padding: 0 20px;
+
   display: flex;
   align-items: center;
-  gap: 20px;
+
+  gap: 14px;
+
   background: #ffffff;
+
+  box-sizing: border-box;
 }
 
-/* =========================
+
+/* =====================================================
    BRAND
-========================= */
+===================================================== */
 
 .brand {
+  flex: 0 0 215px;
+
   display: flex;
   align-items: center;
-  gap: 12px;
+
+  gap: 10px;
+
   text-decoration: none;
+
   color: #10233f;
-  flex-shrink: 0;
+
+  min-width: 0;
 }
 
 .brand-icon {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   background: #f9a825;
   color: #10233f;
-  border-radius: 12px;
-  font-size: 21px;
+
+  border-radius: 11px;
+
+  font-size: 20px;
+
   flex-shrink: 0;
 }
 
 .brand-text {
   display: flex;
   flex-direction: column;
+
+  min-width: 0;
 }
 
 .brand-name {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 800;
+
   line-height: 1.1;
+
   letter-spacing: -0.4px;
+
+  white-space: nowrap;
 }
 
 .brand-name span {
@@ -60,43 +83,71 @@
 }
 
 .brand-subtitle {
-  margin-top: 4px;
-  font-size: 10px;
+  margin-top: 3px;
+
+  font-size: 9px;
+
   color: #64748b;
-  letter-spacing: 0.4px;
+
+  letter-spacing: 0.3px;
+
+  white-space: nowrap;
 }
 
-/* =========================
+
+/* =====================================================
    NAV LINKS
-========================= */
+===================================================== */
 
 .nav-links {
+  flex: 1;
+  min-width: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  flex: 1;
-  min-width: 0;
+
+  gap: 2px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scrollbar-width: none;
+}
+
+.nav-links::-webkit-scrollbar {
+  display: none;
 }
 
 .nav-link {
+  flex: 0 0 auto;
+
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 11px 12px;
+  justify-content: center;
+
+  gap: 6px;
+
+  padding: 10px 9px;
+
   color: #263449;
+
   text-decoration: none;
-  font-size: 14px;
+
+  font-size: 13px;
   font-weight: 500;
+
   border-radius: 8px;
+
   white-space: nowrap;
+
   transition:
     background 0.2s ease,
     color 0.2s ease;
 }
 
 .nav-link i {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .nav-link:hover {
@@ -110,6 +161,11 @@
   font-weight: 700;
 }
 
+
+/* =====================================================
+   EMERGENCY LINK
+===================================================== */
+
 .nav-link.emergency-link {
   color: #ef4444;
 }
@@ -120,21 +176,62 @@
   color: #e53935;
 }
 
-/* =========================
+
+/* =====================================================
+   GOLDENLINK AI
+===================================================== */
+
+.nav-link.ai-link {
+  color: #8a5a00;
+
+  font-weight: 700;
+
+  border: 1px solid transparent;
+}
+
+.nav-link.ai-link i {
+  color: #d88900;
+}
+
+.nav-link.ai-link:hover {
+  background: #fff8e6;
+  color: #8a5a00;
+
+  border-color: #f5d98a;
+}
+
+.nav-link.ai-link.active {
+  background: #fff4cc;
+  color: #7a4f00;
+
+  border-color: #f5d98a;
+}
+
+.nav-link.ai-link.active i {
+  color: #d88900;
+}
+
+
+/* =====================================================
    RIGHT ACTIONS
-========================= */
+===================================================== */
 
 .nav-actions {
+  flex: 0 0 auto;
+
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 8px;
-  flex-shrink: 0;
+
+  gap: 7px;
+
+  white-space: nowrap;
 }
 
-/* =========================
+
+/* =====================================================
    LANGUAGE SWITCHER
-========================= */
+===================================================== */
 
 .nav-actions app-language-switcher {
   display: block;
@@ -142,33 +239,46 @@
 }
 
 .nav-actions .language-switcher {
-  display: inline-block;
+  display: inline-flex;
 }
 
 .nav-actions .language-button {
-  height: 44px;
-  min-width: 92px;
-  padding: 0 12px;
+  height: 42px;
+
+  min-width: 88px;
+
+  padding: 0 10px;
 }
 
-/* =========================
+
+/* =====================================================
    GENERAL ACTION BUTTONS
-========================= */
+===================================================== */
 
 .nav-action {
-  height: 44px;
-  min-width: 44px;
-  padding: 0 13px;
+  height: 42px;
+  min-width: 42px;
+
+  padding: 0 11px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+
+  gap: 6px;
+
   border: 1px solid #dce2ea;
+
   border-radius: 10px;
+
   background: #ffffff;
+
   color: #263449;
+
   cursor: pointer;
+
   font-size: 14px;
+
   transition:
     background 0.2s ease,
     border-color 0.2s ease;
@@ -183,54 +293,61 @@
   font-size: 16px;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
 
-@media (max-width: 1250px) {
+/* =====================================================
+   LARGE DESKTOP
+===================================================== */
+
+@media (max-width: 1350px) {
+
   .navbar {
-    padding: 0 18px;
-    gap: 12px;
+    padding: 0 14px;
+    gap: 8px;
   }
 
   .brand {
-    gap: 9px;
+    flex-basis: 195px;
   }
 
   .brand-name {
-    font-size: 19px;
-  }
-
-  .nav-links {
-    gap: 2px;
+    font-size: 18px;
   }
 
   .nav-link {
-    padding: 10px 8px;
-    font-size: 13px;
+    padding: 9px 7px;
+    font-size: 12px;
   }
 
   .nav-link i {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .nav-actions {
-    gap: 5px;
+    gap: 4px;
   }
 
   .nav-actions .language-button {
     min-width: 82px;
-    padding: 0 9px;
   }
 }
 
-@media (max-width: 1050px) {
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1150px) {
+
+  .brand {
+    flex-basis: 150px;
+  }
+
   .brand-subtitle {
     display: none;
   }
 
   .nav-link {
-    padding: 10px;
+    padding: 10px 8px;
   }
 
   .nav-link span {
@@ -242,45 +359,56 @@
   }
 
   .nav-actions .language-button {
-    min-width: 44px;
-    width: 44px;
+    min-width: 42px;
+    width: 42px;
     padding: 0;
   }
 
-  .nav-actions .selected-language {
+  .nav-actions .language-text {
     display: none;
   }
 }
 
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
 @media (max-width: 700px) {
+
   .navbar {
-    min-height: 68px;
-    padding: 0 12px;
-    gap: 8px;
+    min-height: 66px;
+    padding: 0 10px;
+    gap: 6px;
+  }
+
+  .brand {
+    flex-basis: auto;
   }
 
   .brand-name {
-    font-size: 18px;
+    font-size: 17px;
   }
 
   .brand-icon {
     width: 38px;
     height: 38px;
-    border-radius: 10px;
+    border-radius: 9px;
   }
 
   .nav-links {
-    gap: 2px;
+    justify-content: flex-start;
   }
 
   .nav-actions {
-    gap: 4px;
+    gap: 3px;
   }
 
   .nav-action {
+    width: 38px;
     min-width: 38px;
     height: 38px;
-    padding: 0 9px;
+    padding: 0;
   }
 
   .nav-actions .language-button {
@@ -290,30 +418,34 @@
   }
 }
 
+
+/* =====================================================
+   VERY SMALL MOBILE
+===================================================== */
+
 @media (max-width: 500px) {
+
   .brand-text {
     display: none;
   }
 
   .brand-icon {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
   }
 
   .nav-link {
     padding: 8px;
   }
 
-  .nav-actions .language-button {
-    width: 36px;
-    min-width: 36px;
-    height: 36px;
+  .nav-link i {
+    font-size: 17px;
   }
 
+  .nav-actions .language-button,
   .nav-action {
-    min-width: 36px;
     width: 36px;
+    min-width: 36px;
     height: 36px;
-    padding: 0;
   }
 }

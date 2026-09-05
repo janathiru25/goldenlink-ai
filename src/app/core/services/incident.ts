@@ -7,6 +7,9 @@ import { Incident } from '../models/incident';
 })
 export class IncidentService {
 
+  private readonly STORAGE_KEY = 'goldenlink_incidents';
+  private readonly ACTIVE_INCIDENT_KEY = 'goldenlink_active_incident';
+
   private incidents: Incident[] = [];
 
   private activeIncidentSubject =
@@ -16,11 +19,15 @@ export class IncidentService {
     this.activeIncidentSubject.asObservable();
 
   constructor() {
-    this.loadMockIncidents();
+    this.loadIncidents();
+    this.loadActiveIncident();
   }
 
   createIncident(
-    incidentData: Omit<Incident, 'incidentId' | 'reportedAt' | 'status'>
+    incidentData: Omit<
+      Incident,
+      'incidentId' | 'reportedAt' | 'status'
+    >
   ): Incident {
 
     const incident: Incident = {
@@ -35,7 +42,14 @@ export class IncidentService {
 
     this.incidents.unshift(incident);
 
-    this.activeIncidentSubject.next(incident);
+    this.saveIncidents();
+
+    this.setActiveIncident(incident);
+
+    console.log(
+      'GoldenLink: Incident saved:',
+      incident
+    );
 
     return incident;
   }
@@ -48,9 +62,13 @@ export class IncidentService {
     return [...this.incidents];
   }
 
-  getIncidentById(id: string): Incident | undefined {
+  getIncidentById(
+    id: string
+  ): Incident | undefined {
+
     return this.incidents.find(
-      incident => incident.incidentId === id
+      incident =>
+        incident.incidentId === id
     );
   }
 
@@ -59,9 +77,11 @@ export class IncidentService {
     updates: Partial<Incident>
   ): Incident | undefined {
 
-    const index = this.incidents.findIndex(
-      incident => incident.incidentId === id
-    );
+    const index =
+      this.incidents.findIndex(
+        incident =>
+          incident.incidentId === id
+      );
 
     if (index === -1) {
       return undefined;
@@ -72,79 +92,194 @@ export class IncidentService {
       ...updates
     };
 
-    const updatedIncident = this.incidents[index];
+    const updatedIncident =
+      this.incidents[index];
+
+    this.saveIncidents();
 
     if (
-      this.activeIncidentSubject.value?.incidentId === id
+      this.activeIncidentSubject.value
+        ?.incidentId === id
     ) {
-      this.activeIncidentSubject.next(updatedIncident);
+
+      this.setActiveIncident(
+        updatedIncident
+      );
     }
 
     return updatedIncident;
   }
 
-  setActiveIncident(incident: Incident): void {
-    this.activeIncidentSubject.next(incident);
+  setActiveIncident(
+    incident: Incident
+  ): void {
+
+    this.activeIncidentSubject.next(
+      incident
+    );
+
+    try {
+
+      localStorage.setItem(
+        this.ACTIVE_INCIDENT_KEY,
+        JSON.stringify(incident)
+      );
+
+    } catch (error) {
+
+      console.error(
+        'GoldenLink: Unable to save active incident:',
+        error
+      );
+    }
   }
 
   clearActiveIncident(): void {
+
     this.activeIncidentSubject.next(null);
+
+    try {
+
+      localStorage.removeItem(
+        this.ACTIVE_INCIDENT_KEY
+      );
+
+    } catch (error) {
+
+      console.error(
+        'GoldenLink: Unable to clear active incident:',
+        error
+      );
+    }
+  }
+
+  private loadIncidents(): void {
+
+    try {
+
+      const storedIncidents =
+        localStorage.getItem(
+          this.STORAGE_KEY
+        );
+
+      if (!storedIncidents) {
+
+        this.incidents = [];
+
+        return;
+      }
+
+      const parsedIncidents =
+        JSON.parse(storedIncidents);
+
+      if (Array.isArray(parsedIncidents)) {
+
+        this.incidents =
+          parsedIncidents;
+
+      } else {
+
+        this.incidents = [];
+      }
+
+    } catch (error) {
+
+      console.error(
+        'GoldenLink: Unable to load incidents:',
+        error
+      );
+
+      this.incidents = [];
+    }
+  }
+
+  private loadActiveIncident(): void {
+
+    try {
+
+      const storedActiveIncident =
+        localStorage.getItem(
+          this.ACTIVE_INCIDENT_KEY
+        );
+
+      if (!storedActiveIncident) {
+
+        this.activeIncidentSubject.next(
+          this.incidents.length > 0
+            ? this.incidents[0]
+            : null
+        );
+
+        return;
+      }
+
+      const parsedIncident =
+        JSON.parse(
+          storedActiveIncident
+        );
+
+      if (parsedIncident) {
+
+        const existingIncident =
+          this.getIncidentById(
+            parsedIncident.incidentId
+          );
+
+        if (existingIncident) {
+
+          this.activeIncidentSubject.next(
+            existingIncident
+          );
+
+        } else {
+
+          this.activeIncidentSubject.next(
+            null
+          );
+        }
+      }
+
+    } catch (error) {
+
+      console.error(
+        'GoldenLink: Unable to load active incident:',
+        error
+      );
+
+      this.activeIncidentSubject.next(null);
+    }
+  }
+
+  private saveIncidents(): void {
+
+    try {
+
+      localStorage.setItem(
+        this.STORAGE_KEY,
+        JSON.stringify(this.incidents)
+      );
+
+    } catch (error) {
+
+      console.error(
+        'GoldenLink: Unable to save incidents:',
+        error
+      );
+    }
   }
 
   private generateIncidentId(): string {
-    const number = Math.floor(
-      1000 + Math.random() * 9000
-    );
 
-    return `GL${number}`;
-  }
+    const timestamp =
+      Date.now()
+        .toString()
+        .slice(-6);
 
-  private loadMockIncidents(): void {
+    const random =
+      Math.floor(
+        10 + Math.random() * 90
+      );
 
-    this.incidents = [
-      {
-        incidentId: 'GL1021',
-
-        accidentType: 'Road Accident',
-
-        severity: 'critical',
-
-        victims: 2,
-
-        unconscious: true,
-
-        bleeding: true,
-
-        breathingDifficulty: false,
-
-        trapped: false,
-
-        description:
-          'Two-wheeler collision reported near the main road.',
-
-        location: {
-          latitude: 11.0168,
-          longitude: 76.9558,
-          address: 'Main Road'
-        },
-
-        reportedAt: new Date().toISOString(),
-
-        aiAssessment: {
-          severity: 'critical',
-          confidence: 0.94,
-          summary:
-            'Critical incident based on unconsciousness and visible bleeding.'
-        },
-
-        responder: null,
-
-        ambulanceStatus: 'requested',
-
-        hospital: null,
-
-        status: 'responder_search'
-      }
-    ];
+    return `GL${timestamp}${random}`;
   }
 }

@@ -1,4 +1,7 @@
-import { Component, inject } from '@angular/core';
+import {
+  Component,
+  inject
+} from '@angular/core';
 
 import {
   TranslationService,
@@ -20,65 +23,88 @@ interface Language {
 })
 export class LanguageSwitcher {
 
-  private translationService = inject(TranslationService);
+  private readonly translationService =
+    inject(TranslationService);
 
   isOpen = false;
 
-  selectedLanguage: Language = {
-    code: 'en',
-    name: 'English',
-    nativeName: 'English',
-    flag: '🇬🇧'
-  };
-
   languages: Language[] = [
+
     {
       code: 'en',
       name: 'English',
       nativeName: 'English',
-      flag: '🇬🇧'
+      flag: 'GB'
     },
+
     {
       code: 'ta',
       name: 'Tamil',
       nativeName: 'தமிழ்',
-      flag: '🇮🇳'
+      flag: 'IN'
     },
+
     {
       code: 'hi',
       name: 'Hindi',
       nativeName: 'हिन्दी',
-      flag: '🇮🇳'
+      flag: 'IN'
     },
+
     {
       code: 'te',
       name: 'Telugu',
       nativeName: 'తెలుగు',
-      flag: '🇮🇳'
+      flag: 'IN'
     },
+
     {
       code: 'ml',
       name: 'Malayalam',
       nativeName: 'മലയാളം',
-      flag: '🇮🇳'
+      flag: 'IN'
     },
+
     {
       code: 'tl',
       name: 'Tanglish',
       nativeName: 'Tanglish',
       flag: '💬'
     }
+
   ];
+
+
+  get selectedLanguage(): Language {
+
+    const current =
+      this.translationService.currentLanguage();
+
+    return (
+      this.languages.find(
+        language => language.code === current
+      ) ?? this.languages[0]
+    );
+  }
+
 
   toggleDropdown(): void {
     this.isOpen = !this.isOpen;
   }
 
-  selectLanguage(language: Language): void {
-    this.selectedLanguage = language;
 
-    this.translationService.setLanguage(language.code);
+  selectLanguage(language: Language): void {
+
+    this.translationService.setLanguage(
+      language.code
+    );
 
     this.isOpen = false;
+  }
+
+
+  t(key: string): string {
+
+    return this.translationService.translate(key);
   }
 }

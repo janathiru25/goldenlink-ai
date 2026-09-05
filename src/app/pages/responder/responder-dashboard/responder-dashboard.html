@@ -1,474 +1,711 @@
-<div class="responder-page page-fade-in">
+<div class="dashboard-page">
 
-  <!-- =====================================================
-       HEADER
-  ====================================================== -->
-
-  <section class="dashboard-header gl-container">
-
-    <div>
-
-      <span class="eyebrow">
-        <i class="bi bi-shield-check"></i>
-        Responder Network
-      </span>
-
-      <h1>Responder Dashboard</h1>
-
-      <p>
-        Monitor nearby incidents and coordinate community response
-        during the golden hour.
-      </p>
-
-    </div>
-
-
-    <!-- Availability -->
-
-    <div class="availability-card">
-
-      <div class="availability-info">
-
-        <span
-          class="availability-dot"
-          [class.offline]="!isAvailable">
-        </span>
-
-        <div>
-
-          <strong>
-            {{ isAvailable ? 'Available' : 'Offline' }}
-          </strong>
-
-          <small>
-            {{ isAvailable
-              ? 'You can receive nearby requests'
-              : 'You will not receive requests'
-            }}
-          </small>
-
-        </div>
-
+  <!-- SUCCESS MESSAGE -->
+  @if (showSuccess) {
+    <div class="success-toast">
+      <div class="success-toast-icon">
+        <i class="bi bi-check-circle-fill"></i>
       </div>
-
-
-      <button
-        type="button"
-        class="availability-toggle"
-        [class.active]="isAvailable"
-        (click)="toggleAvailability()">
-
-        <span></span>
-
-        {{ isAvailable ? 'Available' : 'Offline' }}
-
-      </button>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- =====================================================
-       STATISTICS
-  ====================================================== -->
-
-  <section class="gl-container">
-
-    <div class="stats-grid">
-
-
-      <!-- Nearby Incidents -->
-
-      <div class="stat-card">
-
-        <div class="stat-icon blue">
-          <i class="bi bi-broadcast"></i>
-        </div>
-
-        <div>
-
-          <span>Nearby Incidents</span>
-
-          <strong>
-            {{ incidents.length }}
-          </strong>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- High Priority -->
-
-      <div class="stat-card">
-
-        <div class="stat-icon red">
-          <i class="bi bi-exclamation-triangle-fill"></i>
-        </div>
-
-        <div>
-
-          <span>High Priority</span>
-
-          <strong>
-            {{ highPriorityIncidents }}
-          </strong>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- Active Responses -->
-
-      <div class="stat-card">
-
-        <div class="stat-icon green">
-          <i class="bi bi-activity"></i>
-        </div>
-
-        <div>
-
-          <span>Active Responses</span>
-
-          <strong>
-            {{ activeIncidents }}
-          </strong>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- Completed Today -->
-
-      <div class="stat-card">
-
-        <div class="stat-icon gold">
-          <i class="bi bi-check-circle-fill"></i>
-        </div>
-
-        <div>
-
-          <span>Completed Today</span>
-
-          <strong>7</strong>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- =====================================================
-       MAIN CONTENT
-  ====================================================== -->
-
-  <section class="gl-container dashboard-content">
-
-
-    <!-- Section Heading -->
-
-    <div class="section-heading">
 
       <div>
-
-        <span class="section-label">
-
-          <i class="bi bi-geo-alt-fill"></i>
-
-          LIVE NEARBY
-
-        </span>
-
-
-        <h2>
-          Nearby Incidents
-        </h2>
-
-
-        <p>
-          Incidents that may need your community response.
-        </p>
-
+        <strong>{{ successMessage }}</strong>
+        <span>Incident information has been updated.</span>
       </div>
-
-
-      <span class="live-badge">
-
-        <span></span>
-
-        Live Demo
-
-      </span>
-
     </div>
+  }
 
 
+  <!-- NO ACTIVE INCIDENT -->
+  @if (!incident) {
 
-    <!-- =====================================================
-         INCIDENT LIST
-    ====================================================== -->
+    <div class="empty-dashboard">
 
-    <div class="incident-list">
-
-
-      @for (incident of incidents; track incident.id) {
-
-        <article class="incident-card">
-
-
-          <!-- =================================================
-               INCIDENT TOP
-          ================================================== -->
-
-          <div class="incident-top">
-
-
-            <!-- Incident Type -->
-
-            <div class="incident-type">
-
-              <div class="incident-icon">
-
-                <i [class]="incident.icon"></i>
-
-              </div>
-
-
-              <div>
-
-                <span class="incident-id">
-                  {{ incident.id }}
-                </span>
-
-                <h3>
-                  {{ incident.type }}
-                </h3>
-
-              </div>
-
-            </div>
-
-
-
-            <!-- Priority -->
-
-            <span
-              class="priority-badge"
-              [class]="getPriorityClass(incident.priority)">
-
-              <i class="bi bi-circle-fill"></i>
-
-              {{ incident.priority }}
-
-            </span>
-
-          </div>
-
-
-
-          <!-- =================================================
-               INCIDENT DETAILS
-          ================================================== -->
-
-          <div class="incident-details">
-
-
-            <!-- Location -->
-
-            <div>
-
-              <i class="bi bi-geo-alt"></i>
-
-              <span>
-                {{ incident.location }}
-              </span>
-
-            </div>
-
-
-
-            <!-- Distance -->
-
-            <div>
-
-              <i class="bi bi-signpost-2"></i>
-
-              <span>
-                {{ incident.distance }}
-              </span>
-
-            </div>
-
-
-
-            <!-- Reported Time -->
-
-            <div>
-
-              <i class="bi bi-clock"></i>
-
-              <span>
-                {{ incident.reportedAt }}
-              </span>
-
-            </div>
-
-
-
-            <!-- Responders -->
-
-            <div>
-
-              <i class="bi bi-people"></i>
-
-              <span>
-                {{ incident.responders }} responders
-              </span>
-
-            </div>
-
-          </div>
-
-
-
-          <!-- =================================================
-               INCIDENT BOTTOM
-          ================================================== -->
-
-          <div class="incident-bottom">
-
-
-            <!-- Status -->
-
-            <span
-              class="status-badge"
-              [class]="getStatusClass(incident.status)">
-
-              <i class="bi bi-circle-fill"></i>
-
-
-              {{
-                incident.status === 'NEW'
-                  ? 'New incident'
-                  : incident.status === 'RESPONDING'
-                  ? 'Responders on the way'
-                  : 'Response active'
-              }}
-
-            </span>
-
-
-
-            <!-- =================================================
-                 ACTION BUTTONS
-            ================================================== -->
-
-            <div class="incident-actions">
-
-
-              <!-- VIEW INCIDENT -->
-
-              <a
-                class="btn btn-outline-secondary"
-                [routerLink]="['/incident-response']"
-                [queryParams]="{ id: incident.id }">
-
-                <i class="bi bi-eye"></i>
-
-                View
-
-              </a>
-
-
-
-              <!-- ACCEPT RESPONSE -->
-
-              <a
-                class="btn btn-primary"
-                [routerLink]="['/incident-response']"
-                [queryParams]="{ id: incident.id }"
-                (click)="acceptIncident(incident)">
-
-                <i class="bi bi-hand-thumbs-up-fill"></i>
-
-                Accept Response
-
-              </a>
-
-            </div>
-
-          </div>
-
-        </article>
-
-      }
-
-    </div>
-
-
-
-    <!-- =====================================================
-         LOCATION CARD
-    ====================================================== -->
-
-    <div class="location-card">
-
-
-      <!-- Location Icon -->
-
-      <div class="location-icon">
-
-        <i class="bi bi-crosshair"></i>
-
+      <div class="empty-icon">
+        <i class="bi bi-shield-check"></i>
       </div>
 
+      <h1>No Active Incident</h1>
 
-
-      <!-- Location Information -->
-
-      <div class="location-content">
-
-        <span>
-          Your current response area
-        </span>
-
-        <strong>
-          Chennai, Tamil Nadu
-        </strong>
-
-        <small>
-          Location is simulated for this frontend demonstration.
-        </small>
-
-      </div>
-
-
-
-      <!-- Update Area -->
+      <p>
+        There is currently no active GoldenLink incident assigned
+        to this responder.
+      </p>
 
       <button
         type="button"
-        class="btn btn-outline-primary">
-
-        <i class="bi bi-geo-alt"></i>
-
-        Update Area
-
+        class="primary-button"
+        (click)="openNearbyResponders()"
+      >
+        <i class="bi bi-people-fill"></i>
+        View Nearby Responders
       </button>
 
     </div>
 
-  </section>
+  } @else {
+
+    <div class="dashboard-container">
+
+      <!-- PAGE HEADER -->
+      <section class="dashboard-header">
+
+        <div class="header-left">
+
+          <span class="page-badge">
+            <i class="bi bi-shield-check"></i>
+            Responder Dashboard
+          </span>
+
+          <h1>Emergency Response</h1>
+
+          <p>
+            Manage your assigned GoldenLink incident and update
+            your response status.
+          </p>
+
+        </div>
+
+        <div class="header-status">
+
+          <span
+            class="status-dot"
+            [class.active]="currentStatus !== 'completed'"
+          ></span>
+
+          <span>
+            {{ statusLabel }}
+          </span>
+
+        </div>
+
+      </section>
+
+
+      <!-- INCIDENT ID -->
+      <section class="incident-banner">
+
+        <div class="incident-banner-icon">
+          <i class="bi bi-broadcast-pin"></i>
+        </div>
+
+        <div class="incident-banner-content">
+
+          <span>Active Incident</span>
+
+          <strong>
+            {{ incident.incidentId }}
+          </strong>
+
+        </div>
+
+        <div
+          class="severity-badge"
+          [class]="severityClass"
+        >
+          <i
+            class="bi"
+            [class]="getSeverityIcon()"
+          ></i>
+
+          {{ severityLabel }}
+        </div>
+
+      </section>
+
+
+      <!-- STATUS TRACKER -->
+      <section class="response-progress-card">
+
+        <div class="section-title">
+
+          <div>
+            <span class="section-label">
+              RESPONSE PROGRESS
+            </span>
+
+            <h2>{{ statusLabel }}</h2>
+          </div>
+
+          <div class="live-badge">
+            <span></span>
+            Live
+          </div>
+
+        </div>
+
+
+        <div class="progress-track">
+
+          <div
+            class="progress-step"
+            [class.completed]="
+              currentStatus === 'responder_assigned' ||
+              currentStatus === 'responder_en_route' ||
+              currentStatus === 'on_scene' ||
+              currentStatus === 'handed_over' ||
+              currentStatus === 'completed'
+            "
+          >
+
+            <div class="step-circle">
+              <i class="bi bi-person-check-fill"></i>
+            </div>
+
+            <span>Assigned</span>
+
+          </div>
+
+
+          <div class="progress-line"></div>
+
+
+          <div
+            class="progress-step"
+            [class.completed]="
+              currentStatus === 'responder_en_route' ||
+              currentStatus === 'on_scene' ||
+              currentStatus === 'handed_over' ||
+              currentStatus === 'completed'
+            "
+          >
+
+            <div class="step-circle">
+              <i class="bi bi-car-front-fill"></i>
+            </div>
+
+            <span>On the way</span>
+
+          </div>
+
+
+          <div class="progress-line"></div>
+
+
+          <div
+            class="progress-step"
+            [class.completed]="
+              currentStatus === 'on_scene' ||
+              currentStatus === 'handed_over' ||
+              currentStatus === 'completed'
+            "
+          >
+
+            <div class="step-circle">
+              <i class="bi bi-geo-alt-fill"></i>
+            </div>
+
+            <span>On scene</span>
+
+          </div>
+
+
+          <div class="progress-line"></div>
+
+
+          <div
+            class="progress-step"
+            [class.completed]="
+              currentStatus === 'handed_over' ||
+              currentStatus === 'completed'
+            "
+          >
+
+            <div class="step-circle">
+              <i class="bi bi-check-lg"></i>
+            </div>
+
+            <span>Complete</span>
+
+          </div>
+
+        </div>
+
+        <p class="status-message">
+          <i class="bi bi-info-circle-fill"></i>
+          {{ statusMessage }}
+        </p>
+
+      </section>
+
+
+      <!-- MAIN GRID -->
+      <div class="dashboard-grid">
+
+
+        <!-- INCIDENT DETAILS -->
+        <section class="dashboard-card incident-details">
+
+          <div class="card-header">
+
+            <div class="card-icon">
+              <i class="bi bi-file-earmark-medical-fill"></i>
+            </div>
+
+            <div>
+              <span>INCIDENT INFORMATION</span>
+              <h2>Accident Details</h2>
+            </div>
+
+          </div>
+
+
+          <div class="details-grid">
+
+            <div class="detail-item">
+
+              <div class="detail-icon">
+                <i class="bi bi-car-front-fill"></i>
+              </div>
+
+              <div>
+                <span>Accident type</span>
+                <strong>
+                  {{ incident.accidentType || 'Not specified' }}
+                </strong>
+              </div>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <div class="detail-icon">
+                <i class="bi bi-people-fill"></i>
+              </div>
+
+              <div>
+                <span>People affected</span>
+                <strong>
+                  {{ victimLabel }}
+                </strong>
+              </div>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <div class="detail-icon">
+                <i class="bi bi-person-x-fill"></i>
+              </div>
+
+              <div>
+                <span>Unconscious</span>
+                <strong>
+                  {{ incident.unconscious ? 'Yes' : 'No' }}
+                </strong>
+              </div>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <div class="detail-icon">
+                <i class="bi bi-droplet-fill"></i>
+              </div>
+
+              <div>
+                <span>Bleeding</span>
+                <strong>
+                  {{ incident.bleeding ? 'Yes' : 'No' }}
+                </strong>
+              </div>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <div class="detail-icon">
+                <i class="bi bi-lungs-fill"></i>
+              </div>
+
+              <div>
+                <span>Breathing difficulty</span>
+                <strong>
+                  {{ incident.breathingDifficulty ? 'Yes' : 'No' }}
+                </strong>
+              </div>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <div class="detail-icon">
+                <i class="bi bi-cone-striped"></i>
+              </div>
+
+              <div>
+                <span>Trapped</span>
+                <strong>
+                  {{ incident.trapped ? 'Yes' : 'No' }}
+                </strong>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          @if (incident.description) {
+
+            <div class="description-box">
+
+              <span>
+                <i class="bi bi-chat-left-text-fill"></i>
+                Reporter description
+              </span>
+
+              <p>
+                {{ incident.description }}
+              </p>
+
+            </div>
+
+          }
+
+        </section>
+
+
+        <!-- LOCATION -->
+        <section class="dashboard-card location-card">
+
+          <div class="card-header">
+
+            <div class="card-icon">
+              <i class="bi bi-geo-alt-fill"></i>
+            </div>
+
+            <div>
+              <span>ACCIDENT LOCATION</span>
+              <h2>Respond Here</h2>
+            </div>
+
+          </div>
+
+
+          <div class="location-box">
+
+            <div class="location-main-icon">
+              <i class="bi bi-crosshair"></i>
+            </div>
+
+            <div class="location-content">
+
+              <span>Reported location</span>
+
+              <strong>
+                {{ getLocationText() }}
+              </strong>
+
+              <small>
+                {{ getCoordinates() }}
+              </small>
+
+            </div>
+
+          </div>
+
+
+          <a
+            class="map-button"
+            [href]="getMapUrl()"
+            target="_blank"
+            rel="noopener"
+          >
+            <i class="bi bi-map-fill"></i>
+            Open Location in Maps
+          </a>
+
+        </section>
+
+
+        <!-- ASSIGNED RESPONDER -->
+        <section class="dashboard-card responder-card">
+
+          <div class="card-header">
+
+            <div class="card-icon">
+              <i class="bi bi-person-check-fill"></i>
+            </div>
+
+            <div>
+              <span>ASSIGNMENT</span>
+              <h2>Responder</h2>
+            </div>
+
+          </div>
+
+
+          <div class="responder-profile">
+
+            <div class="responder-avatar">
+              {{ responderName.substring(0, 2).toUpperCase() }}
+            </div>
+
+            <div class="responder-info">
+
+              <h3>
+                {{ responderName }}
+              </h3>
+
+              <span>
+                {{ responderRole }}
+              </span>
+
+              <div class="responder-eta">
+                <i class="bi bi-clock-fill"></i>
+                ETA: {{ responderEta }}
+              </div>
+
+            </div>
+
+            <div class="verified-badge">
+              <i class="bi bi-patch-check-fill"></i>
+              Verified
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- AI SUPPORT -->
+        <section class="dashboard-card ai-card">
+
+          <div class="ai-content">
+
+            <div class="ai-icon">
+              <i class="bi bi-stars"></i>
+            </div>
+
+            <div>
+
+              <span>OPTIONAL AI SUPPORT</span>
+
+              <h2>GoldenLink AI Assistant</h2>
+
+              <p>
+                Get additional incident guidance and AI-assisted
+                emergency information.
+              </p>
+
+            </div>
+
+          </div>
+
+          <button
+            type="button"
+            class="ai-button"
+            (click)="openAI()"
+          >
+            <i class="bi bi-chat-dots-fill"></i>
+            Open AI Assistant
+          </button>
+
+        </section>
+
+      </div>
+
+
+      <!-- RESPONSE ACTIONS -->
+      <section class="action-card">
+
+        <div class="action-header">
+
+          <div>
+
+            <span class="section-label">
+              RESPONSE CONTROL
+            </span>
+
+            <h2>Update Response</h2>
+
+            <p>
+              Keep the incident status updated as you respond.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="action-buttons">
+
+
+          @if (currentStatus === 'responder_assigned') {
+
+            <button
+              type="button"
+              class="action-button primary"
+              [disabled]="actionLoading"
+              (click)="startResponse()"
+            >
+
+              @if (actionLoading) {
+                <span class="button-spinner"></span>
+              } @else {
+                <i class="bi bi-car-front-fill"></i>
+              }
+
+              <span>
+                I'm On the Way
+              </span>
+
+              <i class="bi bi-arrow-right"></i>
+
+            </button>
+
+          }
+
+
+          @if (currentStatus === 'responder_en_route') {
+
+            <button
+              type="button"
+              class="action-button primary"
+              [disabled]="actionLoading"
+              (click)="markArrived()"
+            >
+
+              @if (actionLoading) {
+                <span class="button-spinner"></span>
+              } @else {
+                <i class="bi bi-geo-alt-fill"></i>
+              }
+
+              <span>
+                I've Arrived
+              </span>
+
+              <i class="bi bi-arrow-right"></i>
+
+            </button>
+
+          }
+
+
+          @if (currentStatus === 'on_scene') {
+
+            <button
+              type="button"
+              class="action-button warning"
+              [disabled]="actionLoading"
+              (click)="handOverIncident()"
+            >
+
+              @if (actionLoading) {
+                <span class="button-spinner"></span>
+              } @else {
+                <i class="bi bi-hospital-fill"></i>
+              }
+
+              <span>
+                Hand Over to Emergency Services
+              </span>
+
+              <i class="bi bi-arrow-right"></i>
+
+            </button>
+
+          }
+
+
+          @if (currentStatus === 'handed_over') {
+
+            <button
+              type="button"
+              class="action-button success"
+              [disabled]="actionLoading"
+              (click)="completeIncident()"
+            >
+
+              @if (actionLoading) {
+                <span class="button-spinner"></span>
+              } @else {
+                <i class="bi bi-check-circle-fill"></i>
+              }
+
+              <span>
+                Complete Response
+              </span>
+
+              <i class="bi bi-arrow-right"></i>
+
+            </button>
+
+          }
+
+
+          @if (currentStatus === 'completed') {
+
+            <div class="completed-message">
+
+              <i class="bi bi-check-circle-fill"></i>
+
+              <div>
+                <strong>Response Completed</strong>
+                <span>
+                  This incident has been successfully closed.
+                </span>
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+      </section>
+
+
+      <!-- SAFETY NOTE -->
+      <section class="safety-note">
+
+        <div class="safety-icon">
+          <i class="bi bi-shield-check"></i>
+        </div>
+
+        <div>
+
+          <h3>GoldenLink responder principle</h3>
+
+          <p>
+            Respond only when it is safe to do so.
+            Professional emergency services remain the primary
+            response for serious and life-threatening incidents.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- QUICK LINKS -->
+      <section class="quick-links">
+
+        <button
+          type="button"
+          (click)="goToAccidentRecords()"
+        >
+          <i class="bi bi-clock-history"></i>
+          Accident Records
+        </button>
+
+        <button
+          type="button"
+          (click)="openNearbyResponders()"
+        >
+          <i class="bi bi-people-fill"></i>
+          Nearby Responders
+        </button>
+
+      </section>
+
+    </div>
+
+  }
 
 </div>

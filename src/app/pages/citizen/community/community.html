@@ -1,199 +1,582 @@
 <div class="community-page">
 
-  <div class="community-container">
+  <!-- =========================
+       HEADER
+  ========================== -->
 
-    <!-- HEADER -->
+  <section class="community-header">
 
-    <section class="page-header">
+    <div class="header-content">
+
+      <div class="header-icon">
+        <i class="bi bi-people-fill"></i>
+      </div>
 
       <div>
 
-        <span class="page-badge">
-          <i class="bi bi-people-fill"></i>
+        <p class="eyebrow">
+          <i class="bi bi-globe2"></i>
           GoldenLink Network
-        </span>
+        </p>
 
         <h1>Our Community</h1>
 
-        <p>
+        <p class="header-description">
           Together, ordinary people can become a stronger first-response network.
         </p>
 
       </div>
 
-      <div class="header-icon">
-        <i class="bi bi-globe2"></i>
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       HERO
+  ========================== -->
+
+  <section class="community-hero">
+
+    <div class="hero-content">
+
+      <div class="hero-badge">
+        <i class="bi bi-heart-fill"></i>
+        Community-powered response
       </div>
 
-    </section>
+      <h2>
+        Don't just report the accident.
+        <span>Activate the community.</span>
+      </h2>
+
+      <p>
+        GoldenLink connects people who are ready to help with incidents
+        happening around them.
+      </p>
+
+      <button
+        class="join-button"
+        type="button"
+        (click)="joinCommunity()"
+      >
+        <i class="bi bi-person-plus-fill"></i>
+        Join the Community
+      </button>
+
+    </div>
 
 
-    <!-- HERO MESSAGE -->
+    <!-- HERO VISUAL -->
 
-    <section class="community-hero">
+    <div class="hero-visual">
 
-      <div class="hero-content">
+      <div class="orbit orbit-one"></div>
 
-        <span class="hero-label">
-          <i class="bi bi-heart-fill"></i>
-          Community-powered response
+      <div class="orbit orbit-two"></div>
+
+      <div class="community-center">
+
+        <i class="bi bi-people-fill"></i>
+
+        <span>Community</span>
+
+      </div>
+
+
+      <div class="floating-icon icon-one">
+        <i class="bi bi-person-fill"></i>
+      </div>
+
+      <div class="floating-icon icon-two">
+        <i class="bi bi-heart-pulse-fill"></i>
+      </div>
+
+      <div class="floating-icon icon-three">
+        <i class="bi bi-geo-alt-fill"></i>
+      </div>
+
+      <div class="floating-icon icon-four">
+        <i class="bi bi-person-check-fill"></i>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       STATISTICS
+  ========================== -->
+
+  <section class="stats-section">
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        <i class="bi bi-people-fill"></i>
+      </div>
+
+      <div>
+
+        <span class="stat-label">
+          Total responders
+        </span>
+
+        <strong>
+          {{ totalResponders }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon available">
+        <i class="bi bi-broadcast-pin"></i>
+      </div>
+
+      <div>
+
+        <span class="stat-label">
+          Available now
+        </span>
+
+        <strong>
+          {{ totalAvailable }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon incidents">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+      </div>
+
+      <div>
+
+        <span class="stat-label">
+          Active incidents
+        </span>
+
+        <strong>
+          {{ totalIncidents }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon coverage">
+        <i class="bi bi-shield-check"></i>
+      </div>
+
+      <div>
+
+        <span class="stat-label">
+          Average coverage
+        </span>
+
+        <strong>
+          {{ averageCoverage }}%
+        </strong>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       COMMUNITY AREAS
+  ========================== -->
+
+  <section class="areas-section">
+
+    <div class="section-heading">
+
+      <div>
+
+        <span class="section-label">
+          NETWORK COVERAGE
         </span>
 
         <h2>
-          Don't just report the accident.
-          <span>Activate the community.</span>
+          Community Response Areas
         </h2>
 
+      </div>
+
+      <p>
+        See how GoldenLink responders are distributed across different areas.
+      </p>
+
+    </div>
+
+
+    <div class="areas-grid">
+
+      @for (area of communityAreas; track area.name) {
+
+        <article class="area-card">
+
+          <div class="area-top">
+
+            <div class="area-icon">
+
+              <i
+                class="bi"
+                [class]="area.icon"
+              ></i>
+
+            </div>
+
+            <div>
+
+              <h3>
+                {{ area.name }}
+              </h3>
+
+              <span>
+                GoldenLink Community
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="area-stats">
+
+            <div>
+
+              <strong>
+                {{ area.responders }}
+              </strong>
+
+              <span>
+                Responders
+              </span>
+
+            </div>
+
+
+            <div>
+
+              <strong>
+                {{ area.available }}
+              </strong>
+
+              <span>
+                Available
+              </span>
+
+            </div>
+
+
+            <div>
+
+              <strong>
+                {{ area.activeIncidents }}
+              </strong>
+
+              <span>
+                Incidents
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="coverage-section">
+
+            <div class="coverage-header">
+
+              <span>
+                Coverage
+              </span>
+
+              <strong>
+                {{ area.coverage }}%
+              </strong>
+
+            </div>
+
+            <div class="coverage-bar">
+
+              <div
+                class="coverage-fill"
+                [style.width.%]="area.coverage"
+              ></div>
+
+            </div>
+
+          </div>
+
+
+          <button
+            class="area-button"
+            type="button"
+            (click)="viewArea(area)"
+          >
+            View Community
+
+            <i class="bi bi-arrow-right"></i>
+
+          </button>
+
+        </article>
+
+      }
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       HOW IT WORKS
+  ========================== -->
+
+  <section class="how-section">
+
+    <div class="section-heading centered">
+
+      <span class="section-label">
+        HOW IT WORKS
+      </span>
+
+      <h2>
+        One community. Faster help.
+      </h2>
+
+      <p>
+        GoldenLink brings nearby people together when every second matters.
+      </p>
+
+    </div>
+
+
+    <div class="steps-grid">
+
+      <div class="step-card">
+
+        <div class="step-number">
+          01
+        </div>
+
+        <div class="step-icon">
+          <i class="bi bi-person-plus-fill"></i>
+        </div>
+
+        <h3>
+          Join
+        </h3>
+
         <p>
-          GoldenLink connects people who are ready to help with incidents
-          happening around them.
+          Register yourself with your basic information and verification certificate.
         </p>
 
-        <button
-          class="join-button"
-          (click)="joinCommunity()"
-        >
-          <i class="bi bi-person-plus-fill"></i>
-          Join the Community
-        </button>
-
       </div>
 
-      <div class="hero-visual">
 
-        <div class="community-orbit">
+      <div class="step-card">
 
-          <div class="orbit-center">
-            <i class="bi bi-heart-pulse-fill"></i>
-          </div>
-
-          <div class="orbit-person person-one">
-            <i class="bi bi-person-fill"></i>
-          </div>
-
-          <div class="orbit-person person-two">
-            <i class="bi bi-person-fill"></i>
-          </div>
-
-          <div class="orbit-person person-three">
-            <i class="bi bi-person-fill"></i>
-          </div>
-
-          <div class="orbit-person person-four">
-            <i class="bi bi-person-fill"></i>
-          </div>
-
+        <div class="step-number">
+          02
         </div>
 
-      </div>
-
-    </section>
-
-
-    <!-- NETWORK STATS -->
-
-    <section class="stats-grid">
-
-      <div class="stat-card">
-
-        <div class="stat-icon responders">
-          <i class="bi bi-people-fill"></i>
+        <div class="step-icon">
+          <i class="bi bi-geo-alt-fill"></i>
         </div>
 
-        <div>
-          <span>Total responders</span>
-          <strong>{{ totalResponders }}</strong>
-        </div>
+        <h3>
+          Stay Connected
+        </h3>
+
+        <p>
+          GoldenLink can identify nearby community responders when an emergency is reported.
+        </p>
 
       </div>
 
 
-      <div class="stat-card">
+      <div class="step-card">
 
-        <div class="stat-icon available">
-          <i class="bi bi-broadcast-pin"></i>
+        <div class="step-number">
+          03
         </div>
 
-        <div>
-          <span>Available now</span>
-          <strong>{{ totalAvailable }}</strong>
+        <div class="step-icon">
+          <i class="bi bi-heart-pulse-fill"></i>
         </div>
+
+        <h3>
+          Respond
+        </h3>
+
+        <p>
+          Nearby volunteers can accept the request and provide immediate assistance.
+        </p>
 
       </div>
 
 
-      <div class="stat-card">
+      <div class="step-card">
 
-        <div class="stat-icon incidents">
-          <i class="bi bi-exclamation-triangle-fill"></i>
+        <div class="step-number">
+          04
         </div>
 
-        <div>
-          <span>Active incidents</span>
-          <strong>{{ totalIncidents }}</strong>
-        </div>
-
-      </div>
-
-
-      <div class="stat-card">
-
-        <div class="stat-icon coverage">
+        <div class="step-icon">
           <i class="bi bi-shield-check"></i>
         </div>
 
-        <div>
-          <span>Network coverage</span>
-          <strong>{{ averageCoverage }}%</strong>
-        </div>
+        <h3>
+          Save Lives
+        </h3>
+
+        <p>
+          Faster community response helps bridge the critical gap before professional emergency services arrive.
+        </p>
 
       </div>
 
-    </section>
+    </div>
+
+  </section>
 
 
-    <!-- AREAS -->
+  <!-- =========================
+       FOOTER NOTE
+  ========================== -->
 
-    <section class="areas-section">
+  <section class="community-note">
 
-      <div class="section-heading">
+    <div class="note-icon">
+      <i class="bi bi-info-circle-fill"></i>
+    </div>
 
-        <div>
+    <div>
 
-          <h2>Community coverage</h2>
+      <h3>
+        Be part of the GoldenLink network
+      </h3>
 
-          <p>
-            A snapshot of GoldenLink's community network.
-          </p>
+      <p>
+        Your small action can make a big difference during an emergency.
+        Together we can build a faster and safer community response system.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- ==========================================================
+       JOIN COMMUNITY MODAL
+  =========================================================== -->
+
+  @if (showJoinForm) {
+
+    <div
+      class="join-overlay"
+      (click)="closeJoinForm()"
+    >
+
+      <div
+        class="join-modal"
+        (click)="$event.stopPropagation()"
+      >
+
+
+        <!-- =========================
+             MODAL HEADER
+        ========================== -->
+
+        <div class="modal-header">
+
+          <div>
+
+            <span class="modal-label">
+              GOLDENLINK COMMUNITY
+            </span>
+
+            <h2>
+              Join the Community
+            </h2>
+
+            <p>
+              Register as a community responder and help people around you during emergencies.
+            </p>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="close-button"
+            (click)="closeJoinForm()"
+            aria-label="Close"
+          >
+
+            <i class="bi bi-x-lg"></i>
+
+          </button>
 
         </div>
 
-        <span class="network-status">
-          <span></span>
-          Network active
-        </span>
 
-      </div>
+        <!-- =====================================================
+             SUCCESS SCREEN
+        ====================================================== -->
+
+        @if (submitted) {
+
+          <div class="success-container">
+
+            <div class="success-icon">
+              <i class="bi bi-check-lg"></i>
+            </div>
+
+            <span class="success-label">
+              APPLICATION RECEIVED
+            </span>
+
+            <h2>
+              Application Submitted Successfully!
+            </h2>
+
+            <p>
+              Thank you, {{ communityMember.name }}.
+              Your registration, photo and volunteer certificate
+              have been submitted successfully.
+            </p>
 
 
-      <div class="areas-grid">
+            <div class="verification-box">
 
-        @for (area of communityAreas; track area.name) {
-
-          <article class="area-card">
-
-            <div class="area-header">
-
-              <div class="area-icon">
-                <i [class]="'bi ' + area.icon"></i>
-              </div>
+              <i class="bi bi-shield-check"></i>
 
               <div>
 
-                <h3>{{ area.name }}</h3>
+                <strong>
+                  Mobile Verified
+                </strong>
 
                 <span>
-                  {{ area.responders }} registered responders
+                  +91 {{ communityMember.contactNumber }}
                 </span>
 
               </div>
@@ -201,42 +584,20 @@
             </div>
 
 
-            <div class="area-stats">
+            <div class="verification-box pending">
+
+              <i class="bi bi-hourglass-split"></i>
 
               <div>
-                <strong>{{ area.available }}</strong>
-                <span>Available</span>
-              </div>
 
-              <div>
-                <strong>{{ area.activeIncidents }}</strong>
-                <span>Incidents</span>
-              </div>
+                <strong>
+                  Certificate Verification Pending
+                </strong>
 
-              <div>
-                <strong>{{ area.coverage }}%</strong>
-                <span>Coverage</span>
-              </div>
-
-            </div>
-
-
-            <div class="coverage-section">
-
-              <div class="coverage-label">
-
-                <span>Community readiness</span>
-
-                <strong>{{ area.coverage }}%</strong>
-
-              </div>
-
-              <div class="progress-track">
-
-                <div
-                  class="progress-value"
-                  [style.width.%]="area.coverage"
-                ></div>
+                <span>
+                  Your certificate will be reviewed before your
+                  community membership is activated.
+                </span>
 
               </div>
 
@@ -244,132 +605,810 @@
 
 
             <button
-              class="area-button"
-              (click)="viewArea(area)"
+              type="button"
+              class="done-button"
+              (click)="resetForm()"
             >
-
-              View community
+              Done
 
               <i class="bi bi-arrow-right"></i>
 
             </button>
 
-          </article>
+          </div>
+
+        }
+
+
+        <!-- =====================================================
+             REGISTRATION FORM
+        ====================================================== -->
+
+        @if (!submitted && currentStep === 'registration') {
+
+          <form
+            class="community-form"
+            #communityForm="ngForm"
+            (ngSubmit)="sendOtp()"
+          >
+
+
+            <!-- NOTICE -->
+
+            <div class="form-notice">
+
+              <i class="bi bi-shield-check"></i>
+
+              <div>
+
+                <strong>
+                  Volunteer verification required
+                </strong>
+
+                <p>
+                  Please provide your photo and valid volunteer
+                  verification certificate. Your details will be
+                  reviewed before community access is activated.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <!-- =========================
+                 FORM GRID
+            ========================== -->
+
+            <div class="form-grid">
+
+
+              <!-- NAME -->
+
+              <div class="form-group full">
+
+                <label for="name">
+                  Full Name <span>*</span>
+                </label>
+
+                <div class="input-wrapper">
+
+                  <i class="bi bi-person"></i>
+
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Enter your full name"
+                    [(ngModel)]="communityMember.name"
+                    required
+                  />
+
+                </div>
+
+              </div>
+
+
+              <!-- DOB -->
+
+              <div class="form-group">
+
+                <label for="dob">
+                  Date of Birth <span>*</span>
+                </label>
+
+                <div class="input-wrapper">
+
+                  <i class="bi bi-calendar3"></i>
+
+                  <input
+                    id="dob"
+                    name="dob"
+                    type="date"
+                    [max]="maxDob"
+                    [(ngModel)]="communityMember.dob"
+                    required
+                  />
+
+                </div>
+
+              </div>
+
+
+              <!-- GENDER -->
+
+              <div class="form-group">
+
+                <label for="gender">
+                  Gender <span>*</span>
+                </label>
+
+                <div class="input-wrapper">
+
+                  <i class="bi bi-gender-ambiguous"></i>
+
+                  <select
+                    id="gender"
+                    name="gender"
+                    [(ngModel)]="communityMember.gender"
+                    required
+                  >
+
+                    <option value="">
+                      Select gender
+                    </option>
+
+                    <option value="Male">
+                      Male
+                    </option>
+
+                    <option value="Female">
+                      Female
+                    </option>
+
+                    <option value="Other">
+                      Other
+                    </option>
+
+                    <option value="Prefer not to say">
+                      Prefer not to say
+                    </option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+
+              <!-- PLACE -->
+
+              <div class="form-group">
+
+                <label for="place">
+                  Place <span>*</span>
+                </label>
+
+                <div class="input-wrapper">
+
+                  <i class="bi bi-geo-alt"></i>
+
+                  <input
+                    id="place"
+                    name="place"
+                    type="text"
+                    placeholder="City / Town / Area"
+                    [(ngModel)]="communityMember.place"
+                    required
+                  />
+
+                </div>
+
+              </div>
+
+
+              <!-- MOBILE -->
+
+              <div class="form-group">
+
+                <label for="contactNumber">
+                  Mobile Number <span>*</span>
+                </label>
+
+                <div class="mobile-wrapper">
+
+                  <div class="country-code">
+                    +91
+                  </div>
+
+                  <input
+                    id="contactNumber"
+                    name="contactNumber"
+                    type="tel"
+                    maxlength="10"
+                    minlength="10"
+                    pattern="[0-9]{10}"
+                    inputmode="numeric"
+                    placeholder="10-digit mobile number"
+                    [(ngModel)]="communityMember.contactNumber"
+                    (input)="onMobileInput($event)"
+                    required
+                  />
+
+                </div>
+
+                <small class="field-hint">
+                  OTP will be sent to this mobile number.
+                </small>
+
+              </div>
+
+
+              <!-- EMAIL -->
+
+              <div class="form-group">
+
+                <label for="email">
+                  Gmail Address <span>*</span>
+                </label>
+
+                <div class="input-wrapper">
+
+                  <i class="bi bi-envelope"></i>
+
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="example@gmail.com"
+                    [(ngModel)]="communityMember.email"
+                    pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
+                    required
+                  />
+
+                </div>
+
+                <small class="field-hint">
+                  Only Gmail addresses are accepted.
+                </small>
+
+              </div>
+
+
+              <!-- DESIGNATION -->
+
+              <div class="form-group">
+
+                <label for="designation">
+                  Designation <span>*</span>
+                </label>
+
+                <div class="input-wrapper">
+
+                  <i class="bi bi-briefcase"></i>
+
+                  <input
+                    id="designation"
+                    name="designation"
+                    type="text"
+                    placeholder="Student / Engineer / Driver..."
+                    [(ngModel)]="communityMember.designation"
+                    required
+                  />
+
+                </div>
+
+              </div>
+
+
+              <!-- VEHICLE -->
+
+              <div class="form-group">
+
+                <label for="vehicle">
+                  Vehicle Type <span>*</span>
+                </label>
+
+                <div class="input-wrapper">
+
+                  <i class="bi bi-car-front"></i>
+
+                  <select
+                    id="vehicle"
+                    name="vehicle"
+                    [(ngModel)]="communityMember.vehicle"
+                    required
+                  >
+
+                    <option value="">
+                      Select vehicle
+                    </option>
+
+                    <option value="None">
+                      No Vehicle
+                    </option>
+
+                    <option value="Two Wheeler">
+                      Two Wheeler
+                    </option>
+
+                    <option value="Car">
+                      Car
+                    </option>
+
+                    <option value="Auto / Taxi">
+                      Auto / Taxi
+                    </option>
+
+                    <option value="Van">
+                      Van
+                    </option>
+
+                    <option value="Truck">
+                      Truck
+                    </option>
+
+                    <option value="Other">
+                      Other
+                    </option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+
+              <!-- MARITAL STATUS -->
+
+              <div class="form-group">
+
+                <label for="maritalStatus">
+                  Marital Status <span>*</span>
+                </label>
+
+                <div class="input-wrapper">
+
+                  <i class="bi bi-heart"></i>
+
+                  <select
+                    id="maritalStatus"
+                    name="maritalStatus"
+                    [(ngModel)]="communityMember.maritalStatus"
+                    required
+                  >
+
+                    <option value="">
+                      Select status
+                    </option>
+
+                    <option value="Married">
+                      Married
+                    </option>
+
+                    <option value="Unmarried">
+                      Unmarried
+                    </option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+
+              <!-- PERSON PHOTO -->
+
+              <div class="form-group full">
+
+                <label for="personPhoto">
+                  Person Photo <span>*</span>
+                </label>
+
+                <label
+                  class="file-upload"
+                  for="personPhoto"
+                >
+
+                  <div class="upload-icon">
+
+                    <i class="bi bi-person-bounding-box"></i>
+
+                  </div>
+
+
+                  <div class="upload-content">
+
+                    @if (selectedPhotoName) {
+
+                      <strong>
+                        {{ selectedPhotoName }}
+                      </strong>
+
+                      <span>
+                        Photo selected successfully
+                      </span>
+
+                    } @else {
+
+                      <strong>
+                        Upload your photo
+                      </strong>
+
+                      <span>
+                        JPG, JPEG or PNG
+                      </span>
+
+                    }
+
+                  </div>
+
+
+                  <i class="bi bi-plus-circle upload-plus"></i>
+
+
+                  <input
+                    id="personPhoto"
+                    name="personPhoto"
+                    type="file"
+                    accept="image/jpeg,image/png"
+                    (change)="onPhotoSelected($event)"
+                  />
+
+                </label>
+
+              </div>
+
+
+              <!-- CERTIFICATE -->
+
+              <div class="form-group full">
+
+                <label for="certificate">
+                  Volunteer Verified Certificate <span>*</span>
+                </label>
+
+                <label
+                  class="file-upload certificate-upload"
+                  for="certificate"
+                >
+
+                  <div class="upload-icon certificate-icon">
+
+                    <i class="bi bi-patch-check-fill"></i>
+
+                  </div>
+
+
+                  <div class="upload-content">
+
+                    @if (selectedCertificateName) {
+
+                      <strong>
+                        {{ selectedCertificateName }}
+                      </strong>
+
+                      <span>
+                        Certificate selected successfully
+                      </span>
+
+                    } @else {
+
+                      <strong>
+                        Upload verified volunteer certificate
+                      </strong>
+
+                      <span>
+                        PDF, JPG, JPEG or PNG
+                      </span>
+
+                    }
+
+                  </div>
+
+
+                  <i class="bi bi-plus-circle upload-plus"></i>
+
+
+                  <input
+                    id="certificate"
+                    name="certificate"
+                    type="file"
+                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                    (change)="onCertificateSelected($event)"
+                  />
+
+                </label>
+
+              </div>
+
+
+              <!-- CAPTCHA -->
+
+              <div class="form-group full">
+
+                <label>
+                  Security Verification <span>*</span>
+                </label>
+
+
+                <div class="captcha-box">
+
+                  <div class="captcha-question">
+
+                    <span>
+                      CAPTCHA
+                    </span>
+
+                    <strong>
+                      {{ captchaFirst }} + {{ captchaSecond }} = ?
+                    </strong>
+
+                  </div>
+
+
+                  <input
+                    type="number"
+                    name="captcha"
+                    class="captcha-input"
+                    placeholder="Answer"
+                    [(ngModel)]="captchaAnswer"
+                    required
+                  />
+
+
+                  <button
+                    type="button"
+                    class="captcha-refresh"
+                    (click)="generateCaptcha()"
+                    title="Refresh CAPTCHA"
+                  >
+
+                    <i class="bi bi-arrow-clockwise"></i>
+
+                  </button>
+
+                </div>
+
+
+                @if (captchaError) {
+
+                  <small class="error-text">
+                    {{ captchaError }}
+                  </small>
+
+                }
+
+              </div>
+
+            </div>
+
+
+            <!-- FORM ACTIONS -->
+
+            <div class="form-actions">
+
+              <button
+                type="button"
+                class="cancel-button"
+                (click)="closeJoinForm()"
+              >
+                Cancel
+              </button>
+
+
+              <button
+                type="submit"
+                class="submit-button"
+                [disabled]="!communityForm.form.valid"
+              >
+
+                <i class="bi bi-shield-lock-fill"></i>
+
+                Verify & Send OTP
+
+              </button>
+
+            </div>
+
+          </form>
+
+        }
+
+
+        <!-- =====================================================
+             OTP VERIFICATION
+        ====================================================== -->
+
+        @if (!submitted && currentStep === 'otp') {
+
+          <div class="otp-container">
+
+
+            <div class="otp-icon">
+
+              <i class="bi bi-phone-fill"></i>
+
+            </div>
+
+
+            <span class="otp-label">
+              MOBILE VERIFICATION
+            </span>
+
+
+            <h2>
+              Verify Your Mobile Number
+            </h2>
+
+
+            <p>
+              Enter the 6-digit OTP sent to
+            </p>
+
+
+            <div class="otp-mobile-number">
+
+              <i class="bi bi-phone"></i>
+
+              +91 {{ communityMember.contactNumber }}
+
+            </div>
+
+
+            <!-- DEMO NOTICE -->
+
+            <div class="demo-otp-notice">
+
+              <i class="bi bi-info-circle-fill"></i>
+
+              <span>
+                Frontend demo mode:
+                {{ otpMessage }}
+              </span>
+
+            </div>
+
+
+            <!-- OTP -->
+
+            <div class="otp-input-area">
+
+              <label for="otp">
+                Enter OTP
+              </label>
+
+              <input
+                id="otp"
+                type="text"
+                maxlength="6"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                placeholder="••••••"
+                [value]="enteredOtp"
+                (input)="onOtpInput($event)"
+              />
+
+            </div>
+
+
+            <!-- TIMER -->
+
+            @if (otpSecondsRemaining > 0) {
+
+              <div class="otp-timer">
+
+                <i class="bi bi-clock"></i>
+
+                OTP expires in
+                <strong>
+                  {{ otpTimeDisplay }}
+                </strong>
+
+              </div>
+
+            } @else {
+
+              <div class="otp-expired">
+
+                <i class="bi bi-exclamation-circle"></i>
+
+                OTP has expired.
+
+              </div>
+
+            }
+
+
+            <!-- ERROR -->
+
+            @if (otpError) {
+
+              <div class="otp-error">
+
+                <i class="bi bi-exclamation-triangle-fill"></i>
+
+                {{ otpError }}
+
+              </div>
+
+            }
+
+
+            <!-- SUCCESS MESSAGE -->
+
+            @if (mobileVerified) {
+
+              <div class="otp-success">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                Mobile number verified successfully.
+
+              </div>
+
+            }
+
+
+            <!-- OTP ACTIONS -->
+
+            <div class="otp-actions">
+
+              <button
+                type="button"
+                class="change-mobile-button"
+                (click)="changeMobileNumber()"
+              >
+
+                <i class="bi bi-pencil"></i>
+
+                Change Number
+
+              </button>
+
+
+              @if (!mobileVerified) {
+
+                <button
+                  type="button"
+                  class="verify-otp-button"
+                  (click)="verifyOtp()"
+                >
+
+                  <i class="bi bi-check-circle-fill"></i>
+
+                  Verify OTP
+
+                </button>
+
+              } @else {
+
+                <button
+                  type="button"
+                  class="continue-button"
+                  (click)="submitCommunityForm()"
+                >
+
+                  Complete Registration
+
+                  <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+              }
+
+            </div>
+
+
+            <!-- RESEND -->
+
+            @if (!mobileVerified) {
+
+              <div class="resend-section">
+
+                <span>
+                  Didn't receive the OTP?
+                </span>
+
+                <button
+                  type="button"
+                  (click)="resendOtp()"
+                >
+                  Resend OTP
+                </button>
+
+              </div>
+
+            }
+
+          </div>
 
         }
 
       </div>
 
-    </section>
+    </div>
 
-
-    <!-- HOW COMMUNITY WORKS -->
-
-    <section class="how-section">
-
-      <div class="section-heading centered">
-
-        <span class="small-label">
-          HOW GOLDENLINK WORKS
-        </span>
-
-        <h2>One community. Different roles.</h2>
-
-        <p>
-          GoldenLink helps nearby people contribute according to their
-          availability and verified capabilities.
-        </p>
-
-      </div>
-
-
-      <div class="role-grid">
-
-        <div class="role-card">
-
-          <div class="role-number">01</div>
-
-          <i class="bi bi-telephone-forward-fill"></i>
-
-          <h3>Report</h3>
-
-          <p>
-            A citizen reports an accident and shares the essential location information.
-          </p>
-
-        </div>
-
-
-        <div class="role-card">
-
-          <div class="role-number">02</div>
-
-          <i class="bi bi-person-check-fill"></i>
-
-          <h3>Match</h3>
-
-          <p>
-            Suitable nearby responders can be identified based on their availability and profile.
-          </p>
-
-        </div>
-
-
-        <div class="role-card">
-
-          <div class="role-number">03</div>
-
-          <i class="bi bi-diagram-3-fill"></i>
-
-          <h3>Coordinate</h3>
-
-          <p>
-            Different people can receive different support roles instead of duplicating the same task.
-          </p>
-
-        </div>
-
-
-        <div class="role-card">
-
-          <div class="role-number">04</div>
-
-          <i class="bi bi-shield-fill-check"></i>
-
-          <h3>Handover</h3>
-
-          <p>
-            Community response transitions when appropriate professional responders arrive.
-          </p>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- FOOTER MESSAGE -->
-
-    <section class="community-note">
-
-      <div class="note-icon">
-        <i class="bi bi-lightbulb-fill"></i>
-      </div>
-
-      <div>
-
-        <h3>Every trained person can become part of the response network.</h3>
-
-        <p>
-          GoldenLink is designed to coordinate people around an incident,
-          not replace professional emergency services.
-        </p>
-
-      </div>
-
-    </section>
-
-  </div>
+  }
 
 </div>

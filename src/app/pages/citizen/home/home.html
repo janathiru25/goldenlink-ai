@@ -1,6 +1,6 @@
-<!-- =========================
+<!-- =========================================================
      HOME HERO
-========================== -->
+========================================================= -->
 
 <section class="home-hero">
 
@@ -57,7 +57,7 @@
           class="btn btn-responder"
         >
           <i class="bi bi-shield-check"></i>
-          Responder Dashboard
+          {{ t('responderDashboard') }}
         </a>
 
       </div>
@@ -70,9 +70,9 @@
 
 
 
-<!-- =========================
+<!-- =========================================================
      ACCIDENT REPORT
-========================== -->
+========================================================= -->
 
 <section class="accident-report-section">
 
@@ -80,35 +80,28 @@
 
     <div class="accident-report-card">
 
-      <!-- Icon -->
-
       <div class="accident-report-icon">
         <i class="bi bi-exclamation-triangle-fill"></i>
       </div>
 
 
-      <!-- Content -->
-
       <div class="accident-report-content">
 
         <span class="accident-report-badge">
           <i class="bi bi-lightning-fill"></i>
-          Emergency Response
+          {{ t('emergencyResponse') }}
         </span>
 
         <h2>
-          Witnessed an accident?
+          {{ t('witnessedAccident') }}
         </h2>
 
         <p>
-          Report the incident quickly and activate nearby
-          community responders during the critical Golden Hour.
+          {{ t('reportIncidentQuickly') }}
         </p>
 
       </div>
 
-
-      <!-- Action -->
 
       <div class="accident-report-action">
 
@@ -116,11 +109,13 @@
           routerLink="/report-accident"
           class="accident-report-btn"
         >
+
           <i class="bi bi-exclamation-triangle-fill"></i>
 
-          Report Accident
+          {{ t('reportAccident') }}
 
           <i class="bi bi-arrow-right"></i>
+
         </a>
 
       </div>
@@ -133,9 +128,9 @@
 
 
 
-<!-- =========================
+<!-- =========================================================
      COMMUNITY ACTIVATION
-========================== -->
+========================================================= -->
 
 <section class="activation-section">
 
@@ -144,14 +139,24 @@
     <div class="activation-header">
 
       <span class="section-badge">
+
         <i class="bi bi-people-fill"></i>
+
         {{ t('ActivateCommunity') }}
+
       </span>
 
+
       <h2>
+
         {{ t('HelpCanStart') }}
-        <span>{{ t('WithPeopleNearby') }}</span>
+
+        <span>
+          {{ t('WithPeopleNearby') }}
+        </span>
+
       </h2>
+
 
       <p>
         {{ t('GoldenlinkConnects') }}
@@ -160,7 +165,9 @@
     </div>
 
 
-    <!-- FEATURE GRID -->
+    <!-- =====================================================
+         FEATURE GRID
+    ====================================================== -->
 
     <div class="feature-grid">
 
@@ -267,33 +274,33 @@
 
 
 
-<!-- =========================
+<!-- =========================================================
      WORKFLOW
-========================== -->
+========================================================= -->
 
 <app-workflow-section></app-workflow-section>
 
 
 
-<!-- =========================
+<!-- =========================================================
      WHY GOLDENLINK
-========================== -->
+========================================================= -->
 
 <app-why-goldenlink></app-why-goldenlink>
 
 
 
-<!-- =========================
+<!-- =========================================================
      COMMUNITY PREVIEW
-========================== -->
+========================================================= -->
 
 <app-community-preview></app-community-preview>
 
 
 
-<!-- =========================
+<!-- =========================================================
      COMMUNITY RESPONDER
-========================== -->
+========================================================= -->
 
 <section class="responder-access-section">
 
@@ -302,8 +309,6 @@
     <div class="responder-access-card">
 
 
-      <!-- Icon -->
-
       <div class="responder-access-icon">
 
         <i class="bi bi-shield-check"></i>
@@ -311,34 +316,28 @@
       </div>
 
 
-      <!-- Content -->
-
       <div class="responder-access-content">
 
         <span class="responder-access-badge">
 
           <i class="bi bi-people-fill"></i>
 
-          Community Responder
+          {{ t('communityResponder') }}
 
         </span>
 
 
         <h2>
-          Ready to help during the Golden Hour?
+          {{ t('readyToHelp') }}
         </h2>
 
 
         <p>
-          Join the GoldenLink responder network. View nearby
-          incidents, accept response requests and coordinate
-          community support.
+          {{ t('joinResponderNetwork') }}
         </p>
 
       </div>
 
-
-      <!-- Button -->
 
       <div class="responder-access-action">
 
@@ -349,7 +348,7 @@
 
           <i class="bi bi-speedometer2"></i>
 
-          Responder Dashboard
+          {{ t('responderDashboard') }}
 
           <i class="bi bi-arrow-right"></i>
 
@@ -365,24 +364,24 @@
 
 
 
-<!-- =========================
+<!-- =========================================================
      EMERGENCY CTA
-========================== -->
+========================================================= -->
 
 <app-emergency-cta></app-emergency-cta>
 
 
 
-<!-- =========================
+<!-- =========================================================
      FOOTER
-========================== -->
+========================================================= -->
 
 <app-footer></app-footer>
 
 
 
-<!-- =========================
+<!-- =========================================================
      FLOATING EMERGENCY BUTTON
-========================== -->
+========================================================= -->
 
 <app-emergency-button></app-emergency-button>

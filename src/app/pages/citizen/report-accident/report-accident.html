@@ -1,10 +1,40 @@
+<!-- COMMUNITY RESPONSE SUCCESS MESSAGE -->
+<div *ngIf="submitted" class="success-overlay">
+  <div class="success-card">
+
+    <div class="success-icon">
+      <i class="bi bi-check-circle-fill"></i>
+    </div>
+
+    <h2>Community Response Activated Successfully!</h2>
+
+    <p>
+      Nearby responders have been notified.
+      Help is being coordinated for this incident.
+    </p>
+
+    <div class="success-status">
+      <i class="bi bi-geo-alt-fill"></i>
+      Responders are being searched near your location
+    </div>
+
+    <div class="success-loading">
+      <span></span>
+      Connecting you to nearby responders...
+    </div>
+
+  </div>
+</div>
+
+
 <div class="report-page">
 
   <div class="report-container">
+    <div class="report-page">
 
-    <!-- ================================================= -->
+  <div class="report-container">
+
     <!-- HEADER -->
-    <!-- ================================================= -->
 
     <div class="report-header">
 
@@ -27,9 +57,7 @@
     </div>
 
 
-    <!-- ================================================= -->
     <!-- PROGRESS -->
-    <!-- ================================================= -->
 
     <div class="progress-area">
 
@@ -49,18 +77,16 @@
     </div>
 
 
-    <!-- ================================================= -->
-    <!-- STEP 1 : LOCATION -->
-    <!-- ================================================= -->
+    <!-- ===================================================== -->
+    <!-- STEP 1 - LOCATION -->
+    <!-- ===================================================== -->
 
     @if (currentStep === 1) {
 
       <div class="report-card location-card">
 
         <div class="step-icon location-icon">
-
           <i class="bi bi-geo-alt-fill"></i>
-
         </div>
 
         <h2>
@@ -73,7 +99,7 @@
         </p>
 
 
-        <!-- LOCATION INFORMATION -->
+        <!-- LOCATION STATUS -->
 
         <div
           class="location-information"
@@ -86,21 +112,15 @@
 
               <i class="bi bi-crosshair spinning"></i>
 
-            }
-
-            @else if (locationCaptured) {
+            } @else if (locationCaptured) {
 
               <i class="bi bi-check-circle-fill"></i>
 
-            }
-
-            @else if (locationError) {
+            } @else if (locationError) {
 
               <i class="bi bi-exclamation-circle-fill"></i>
 
-            }
-
-            @else {
+            } @else {
 
               <i class="bi bi-geo-alt-fill"></i>
 
@@ -117,21 +137,15 @@
 
                 Detecting your location...
 
-              }
+              } @else if (locationCaptured) {
 
-              @else if (locationCaptured) {
+                Location detected successfully
 
-                Location detected
-
-              }
-
-              @else if (locationError) {
+              } @else if (locationError) {
 
                 Location detection failed
 
-              }
-
-              @else {
+              } @else {
 
                 Location required
 
@@ -148,16 +162,14 @@
         </div>
 
 
-        <!-- ================================================= -->
         <!-- GPS BUTTON -->
-        <!-- ================================================= -->
 
         <button
           type="button"
           class="location-button"
           [class.loading]="locationLoading"
           [class.success]="locationCaptured"
-          [disabled]="locationLoading"
+          [disabled]="locationLoading || locationCaptured"
           (click)="getLocation()">
 
           @if (locationLoading) {
@@ -166,17 +178,13 @@
 
             Detecting Location...
 
-          }
-
-          @else if (locationCaptured) {
+          } @else if (locationCaptured) {
 
             <i class="bi bi-check-circle-fill"></i>
 
             Location Captured
 
-          }
-
-          @else {
+          } @else {
 
             <i class="bi bi-crosshair"></i>
 
@@ -187,9 +195,7 @@
         </button>
 
 
-        <!-- ================================================= -->
         <!-- COORDINATES -->
-        <!-- ================================================= -->
 
         @if (
           latitude !== null &&
@@ -246,11 +252,12 @@
         }
 
 
-        <!-- ================================================= -->
         <!-- RETRY -->
-        <!-- ================================================= -->
 
-        @if (locationError && !locationLoading) {
+        @if (
+          locationError &&
+          !locationLoading
+        ) {
 
           <button
             type="button"
@@ -266,9 +273,7 @@
         }
 
 
-        <!-- ================================================= -->
         <!-- HELP -->
-        <!-- ================================================= -->
 
         <div class="location-help">
 
@@ -289,18 +294,16 @@
     }
 
 
-    <!-- ================================================= -->
-    <!-- STEP 2 : ACCIDENT TYPE -->
-    <!-- ================================================= -->
+    <!-- ===================================================== -->
+    <!-- STEP 2 - ACCIDENT TYPE -->
+    <!-- ===================================================== -->
 
     @if (currentStep === 2) {
 
       <div class="report-card">
 
         <div class="step-icon">
-
           <i class="bi bi-car-front-fill"></i>
-
         </div>
 
         <h2>
@@ -327,7 +330,9 @@
             </span>
 
             @if (incidentType === 'ROAD_ACCIDENT') {
+
               <i class="bi bi-check-circle-fill option-check"></i>
+
             }
 
           </button>
@@ -346,7 +351,9 @@
             </span>
 
             @if (incidentType === 'TWO_WHEELER') {
+
               <i class="bi bi-check-circle-fill option-check"></i>
+
             }
 
           </button>
@@ -365,7 +372,9 @@
             </span>
 
             @if (incidentType === 'PEDESTRIAN') {
+
               <i class="bi bi-check-circle-fill option-check"></i>
+
             }
 
           </button>
@@ -384,7 +393,9 @@
             </span>
 
             @if (incidentType === 'UNKNOWN') {
+
               <i class="bi bi-check-circle-fill option-check"></i>
+
             }
 
           </button>
@@ -396,18 +407,16 @@
     }
 
 
-    <!-- ================================================= -->
-    <!-- STEP 3 : PEOPLE -->
-    <!-- ================================================= -->
+    <!-- ===================================================== -->
+    <!-- STEP 3 - PEOPLE -->
+    <!-- ===================================================== -->
 
     @if (currentStep === 3) {
 
       <div class="report-card">
 
         <div class="step-icon">
-
           <i class="bi bi-people-fill"></i>
-
         </div>
 
         <h2>
@@ -457,8 +466,6 @@
         </div>
 
 
-        <!-- ADDITIONAL INFORMATION -->
-
         <div class="question">
 
           <h3>
@@ -479,18 +486,16 @@
     }
 
 
-    <!-- ================================================= -->
-    <!-- STEP 4 : SEVERITY -->
-    <!-- ================================================= -->
+    <!-- ===================================================== -->
+    <!-- STEP 4 - SEVERITY -->
+    <!-- ===================================================== -->
 
     @if (currentStep === 4) {
 
       <div class="report-card">
 
         <div class="step-icon success">
-
           <i class="bi bi-shield-check"></i>
-
         </div>
 
         <h2>
@@ -671,9 +676,9 @@
     }
 
 
-    <!-- ================================================= -->
+    <!-- ===================================================== -->
     <!-- NAVIGATION -->
-    <!-- ================================================= -->
+    <!-- ===================================================== -->
 
     <div class="navigation">
 

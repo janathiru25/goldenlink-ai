@@ -2,7 +2,7 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  z-index: 2000;
+  z-index: 3000;
 }
 
 /* =========================
@@ -16,8 +16,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
 
+  gap: 8px;
   padding: 0 13px;
 
   border: 1px solid #dce2ea;
@@ -31,7 +31,6 @@
   font-weight: 600;
 
   cursor: pointer;
-
   white-space: nowrap;
 
   transition:
@@ -48,7 +47,9 @@
 .language-button:focus {
   outline: none;
   border-color: #f9a825;
-  box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.15);
+
+  box-shadow:
+    0 0 0 3px rgba(249, 168, 37, 0.15);
 }
 
 .language-button > i:first-child {
@@ -63,6 +64,7 @@
 .language-text {
   display: inline-block;
 }
+
 
 /* =========================
    DROPDOWN
@@ -84,17 +86,20 @@
   border-radius: 14px;
 
   box-shadow:
-    0 15px 40px rgba(15, 23, 42, 0.15);
+    0 15px 40px rgba(15, 23, 42, 0.16);
 
   overflow: hidden;
+
+  z-index: 5000;
 }
 
+
 /* =========================
-   DROPDOWN TITLE
+   TITLE
 ========================= */
 
 .dropdown-title {
-  padding: 9px 11px 10px;
+  padding: 10px 11px;
 
   color: #64748b;
 
@@ -104,6 +109,7 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
+
 
 /* =========================
    LANGUAGE OPTION
@@ -123,7 +129,6 @@
   border-radius: 9px;
 
   background: transparent;
-
   color: #263449;
 
   text-align: left;
@@ -144,6 +149,7 @@
   background: #fff8e7;
 }
 
+
 /* =========================
    FLAG
 ========================= */
@@ -155,10 +161,14 @@
   align-items: center;
   justify-content: center;
 
-  font-size: 19px;
+  font-size: 14px;
+  font-weight: 700;
+
+  color: #334155;
 
   flex-shrink: 0;
 }
+
 
 /* =========================
    LANGUAGE INFO
@@ -186,8 +196,9 @@
   color: #64748b;
 }
 
+
 /* =========================
-   CHECK ICON
+   CHECK
 ========================= */
 
 .language-check {
@@ -197,6 +208,7 @@
 
   flex-shrink: 0;
 }
+
 
 /* =========================
    RESPONSIVE
@@ -214,33 +226,33 @@
   .language-text {
     display: none;
   }
-
 }
+
 
 @media (max-width: 700px) {
 
   .language-button {
     width: 40px;
     min-width: 40px;
-
     height: 40px;
   }
 
   .language-dropdown {
     width: 220px;
-
     right: -5px;
   }
-
 }
+
 
 @media (max-width: 500px) {
 
   .language-button {
     width: 38px;
     min-width: 38px;
-
     height: 38px;
   }
 
+  .language-dropdown {
+    width: 210px;
+  }
 }

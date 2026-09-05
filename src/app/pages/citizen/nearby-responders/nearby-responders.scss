@@ -630,3 +630,267 @@
   }
 
 }
+/* =====================================================
+   ACTIVE INCIDENT
+===================================================== */
+
+.incident-summary-card {
+  margin-bottom: 1rem;
+  padding: 1.25rem;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.incident-summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.incident-label {
+  display: block;
+  margin-bottom: 0.25rem;
+
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.incident-summary-header h2 {
+  margin: 0;
+
+  color: var(--primary);
+  font-size: 1.15rem;
+}
+
+.incident-severity {
+  padding: 0.4rem 0.8rem;
+
+  border-radius: 999px;
+
+  background: var(--success-light);
+  color: var(--success);
+
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.incident-severity.moderate {
+  background: var(--warning-light);
+  color: var(--accent-dark);
+}
+
+.incident-severity.critical {
+  background: #fdecec;
+  color: #c62828;
+}
+
+.incident-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 0.75rem;
+
+  margin-top: 1rem;
+  padding-top: 1rem;
+
+  border-top: 1px solid var(--border);
+}
+
+.incident-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.incident-summary-item > i {
+  color: var(--accent-dark);
+}
+
+.incident-summary-item span {
+  display: block;
+
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+
+.incident-summary-item strong {
+  display: block;
+
+  color: var(--primary);
+  font-size: 0.78rem;
+
+  word-break: break-word;
+}
+
+
+/* =====================================================
+   SELECTED RESPONDER
+===================================================== */
+
+.responder-card.selected-responder {
+  border-color: var(--success);
+
+  box-shadow:
+    0 0 0 2px rgba(30, 158, 90, 0.1),
+    var(--shadow-md);
+}
+
+
+/* =====================================================
+   ASSIGNMENT SUCCESS
+===================================================== */
+
+.assignment-success {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  margin-bottom: 1.5rem;
+  padding: 1.2rem 1.3rem;
+
+  border-radius: var(--radius-lg);
+
+  background: var(--success-light);
+  border: 1px solid rgba(30, 158, 90, 0.2);
+
+  animation: assignmentSlideIn 0.35s ease-out;
+}
+
+.assignment-success-icon {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--success);
+  color: #fff;
+
+  font-size: 1.4rem;
+}
+
+.assignment-success-content {
+  flex: 1;
+}
+
+.assignment-success-content h2 {
+  margin: 0;
+
+  color: var(--success);
+
+  font-size: 1.05rem;
+}
+
+.assignment-success-content p {
+  margin: 0.25rem 0;
+
+  color: var(--text);
+
+  font-size: 0.85rem;
+}
+
+.assignment-success-content small {
+  display: block;
+
+  margin-top: 0.45rem;
+
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.assignment-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+
+  margin-top: 0.6rem;
+}
+
+.assignment-info span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  color: var(--success);
+
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+@keyframes assignmentSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.spinning {
+  animation: responderSpin 1s linear infinite;
+}
+
+@keyframes responderSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+  .incident-summary-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .incident-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .assignment-success {
+    align-items: flex-start;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .assignment-success {
+    flex-direction: column;
+  }
+
+  .assignment-success-icon {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+  }
+
+}
