@@ -1,201 +1,360 @@
 <section class="incident-page">
 
+  <!-- PAGE HEADER -->
   <div class="page-header">
-    <div>
-      <span class="eyebrow">RESPONDER CENTER</span>
 
-      <h1>Incident Response</h1>
+    <div>
+
+      <span class="eyebrow">
+        {{ t('incidentResponderCenter') }}
+      </span>
+
+      <h1>
+        {{ t('incidentResponse') }}
+      </h1>
 
       <p>
-        Find nearby incidents and help your community during the golden hour.
+        {{ t('incidentResponseDescription') }}
       </p>
+
     </div>
+
 
     <div class="availability">
+
       <span class="availability-dot"></span>
-      Available to respond
+
+      {{ t('availableToRespond') }}
+
     </div>
+
   </div>
 
 
+  <!-- SUMMARY -->
   <div class="response-summary">
 
+
+    <!-- ACTIVE INCIDENTS -->
     <div class="summary-card">
+
       <div class="summary-icon emergency-icon">
+
         <i class="bi bi-exclamation-triangle-fill"></i>
+
       </div>
 
       <div>
-        <span>Active incidents</span>
-        <strong>{{ incidents.length }}</strong>
-      </div>
-    </div>
 
+        <span>
+          {{ t('activeIncidents') }}
+        </span>
 
-    <div class="summary-card">
-      <div class="summary-icon responder-icon">
-        <i class="bi bi-people-fill"></i>
-      </div>
-
-      <div>
-        <span>People needing help</span>
         <strong>
-          {{ incidents[0]?.people + incidents[1]?.people }}
+          {{ incidents.length }}
         </strong>
+
       </div>
+
     </div>
 
 
+    <!-- PEOPLE -->
     <div class="summary-card">
-      <div class="summary-icon distance-icon">
-        <i class="bi bi-geo-alt-fill"></i>
+
+      <div class="summary-icon responder-icon">
+
+        <i class="bi bi-people-fill"></i>
+
       </div>
 
       <div>
-        <span>Nearest incident</span>
-        <strong>1.2 km</strong>
+
+        <span>
+          {{ t('peopleNeedingHelp') }}
+        </span>
+
+        <strong>
+          {{ totalPeople }}
+        </strong>
+
       </div>
+
+    </div>
+
+
+    <!-- NEAREST -->
+    <div class="summary-card">
+
+      <div class="summary-icon distance-icon">
+
+        <i class="bi bi-geo-alt-fill"></i>
+
+      </div>
+
+      <div>
+
+        <span>
+          {{ t('nearestIncident') }}
+        </span>
+
+        <strong>
+          {{ nearestDistance.toFixed(1) }} km
+        </strong>
+
+      </div>
+
     </div>
 
   </div>
 
 
+  <!-- INCIDENT SECTION -->
   <div class="incident-section">
 
+
+    <!-- SECTION HEADING -->
     <div class="section-heading">
+
       <div>
-        <h2>Nearby incidents</h2>
-        <p>Choose an incident you can safely respond to.</p>
+
+        <h2>
+          {{ t('nearbyIncidents') }}
+        </h2>
+
+        <p>
+          {{ t('chooseIncidentSafely') }}
+        </p>
+
       </div>
 
+
+      <!-- FILTER TABS -->
       <div class="filter-tabs">
 
+
         <button
+          type="button"
           [class.active]="activeTab === 'ACTIVE'"
-          (click)="setTab('ACTIVE')">
-          Active
+          (click)="setTab('ACTIVE')"
+        >
+          {{ t('active') }}
         </button>
 
+
         <button
+          type="button"
           [class.active]="activeTab === 'RESPONDING'"
-          (click)="setTab('RESPONDING')">
-          Responding
+          (click)="setTab('RESPONDING')"
+        >
+          {{ t('responding') }}
         </button>
 
+
         <button
+          type="button"
           [class.active]="activeTab === 'HANDED_OVER'"
-          (click)="setTab('HANDED_OVER')">
-          Handed Over
+          (click)="setTab('HANDED_OVER')"
+        >
+          {{ t('handedOver') }}
         </button>
 
+
         <button
+          type="button"
           [class.active]="activeTab === 'ALL'"
-          (click)="setTab('ALL')">
-          All
+          (click)="setTab('ALL')"
+        >
+          {{ t('all') }}
         </button>
 
       </div>
+
     </div>
 
 
+    <!-- INCIDENT LIST -->
     <div class="incident-list">
 
-      @for (incident of filteredIncidents; track incident.id) {
+
+      @for (
+        incident of filteredIncidents;
+        track incident.id
+      ) {
 
         <article class="incident-card">
 
+
+          <!-- INCIDENT TOP -->
           <div class="incident-top">
+
 
             <div class="incident-type">
 
               <div class="incident-icon">
+
                 <i class="bi bi-car-front-fill"></i>
+
               </div>
 
+
               <div>
+
                 <span class="incident-id">
                   {{ incident.id }}
                 </span>
 
-                <h3>{{ incident.type }}</h3>
+                <h3>
+                  {{ getIncidentTypeLabel(incident.type) }}
+                </h3>
+
               </div>
 
             </div>
 
+
+            <!-- STATUS -->
             <span
               class="status"
-              [class]="getStatusClass(incident.status)">
+              [class]="getStatusClass(incident.status)"
+            >
               {{ getStatusLabel(incident.status) }}
             </span>
 
           </div>
 
 
+          <!-- DETAILS -->
           <div class="incident-details">
 
+
+            <!-- LOCATION -->
             <div>
+
               <i class="bi bi-geo-alt"></i>
-              <span>{{ incident.location }}</span>
+
+              <span>
+                {{ incident.location }}
+              </span>
+
             </div>
 
+
+            <!-- DISTANCE -->
             <div>
+
               <i class="bi bi-signpost-2"></i>
-              <span>{{ incident.distance }}</span>
+
+              <span>
+                {{ getDistanceText(incident.distanceKm) }}
+              </span>
+
             </div>
 
+
+            <!-- TIME -->
             <div>
+
               <i class="bi bi-clock"></i>
-              <span>{{ incident.reportedAt }}</span>
+
+              <span>
+                {{ getReportedTime(incident.reportedMinutesAgo) }}
+              </span>
+
             </div>
 
+
+            <!-- PEOPLE -->
             <div>
+
               <i class="bi bi-people"></i>
-              <span>{{ incident.people }} responders needed</span>
+
+              <span>
+                {{ getPeopleNeeded(incident.people) }}
+              </span>
+
             </div>
 
           </div>
 
 
+          <!-- DESCRIPTION -->
           <p class="incident-description">
-            {{ incident.description }}
+
+            {{ getIncidentDescription(incident) }}
+
           </p>
 
 
+          <!-- ACTIONS -->
           <div class="incident-actions">
 
+
+            <!-- VIEW -->
             <button
+              type="button"
               class="secondary-button"
-              (click)="viewIncident(incident)">
+              (click)="viewIncident(incident)"
+            >
+
               <i class="bi bi-eye"></i>
-              View Details
+
+              {{ t('viewDetails') }}
+
             </button>
 
+
+            <!-- ACTIVE -->
             @if (incident.status === 'ACTIVE') {
 
               <button
+                type="button"
                 class="primary-button"
-                (click)="acceptIncident(incident)">
+                (click)="acceptIncident(incident)"
+              >
+
                 <i class="bi bi-check-circle-fill"></i>
-                Accept Response
+
+                {{ t('acceptResponse') }}
+
               </button>
 
-            } @else if (incident.status === 'RESPONDING') {
+            }
+
+
+            <!-- RESPONDING -->
+            @else if (
+              incident.status === 'RESPONDING'
+            ) {
 
               <button
+                type="button"
                 class="responding-button"
-                (click)="viewIncident(incident)">
+                (click)="viewIncident(incident)"
+              >
+
                 <i class="bi bi-navigation-fill"></i>
-                View Response
+
+                {{ t('viewResponse') }}
 
               </button>
 
-            } @else {
+            }
+
+
+            <!-- HANDED OVER -->
+            @else {
 
               <button
+                type="button"
                 class="disabled-button"
-                disabled>
+                disabled
+              >
+
                 <i class="bi bi-check-circle"></i>
-                Handed Over
+
+                {{ t('handedOver') }}
+
               </button>
 
             }
@@ -207,16 +366,21 @@
       }
 
 
+      <!-- EMPTY -->
       @if (filteredIncidents.length === 0) {
 
         <div class="empty-state">
+
           <i class="bi bi-check-circle"></i>
 
-          <h3>No incidents here</h3>
+          <h3>
+            {{ t('noIncidentsHere') }}
+          </h3>
 
           <p>
-            There are no incidents matching this filter right now.
+            {{ t('noIncidentsMatchingFilter') }}
           </p>
+
         </div>
 
       }

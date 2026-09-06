@@ -3,8 +3,9 @@
 <div class="responders-page">
 
   <!-- LOADING SPINNER -->
+
   <app-loading-spinner
-    message="Finding nearby responders..."
+    [message]="t('nearbyFindingResponders')"
   ></app-loading-spinner>
 
 
@@ -26,13 +27,12 @@
         <div class="assignment-success-content">
 
           <h2>
-            Responder Assigned Successfully!
+            {{ t('nearbyResponderAssignedSuccessfully') }}
           </h2>
 
           <p>
             {{ selectedResponder?.name }}
-            has accepted the incident and is preparing
-            to respond.
+            {{ t('nearbyAcceptedIncidentPreparing') }}
           </p>
 
           <div class="assignment-info">
@@ -40,19 +40,20 @@
             <span>
               <i class="bi bi-person-check-fill"></i>
 
-              {{ selectedResponder?.role }}
+              {{ getResponderRole(selectedResponder?.role || '') }}
             </span>
 
             <span>
               <i class="bi bi-clock-fill"></i>
 
-              ETA {{ selectedResponder?.eta }}
+              {{ t('nearbyEta') }}
+              {{ selectedResponder?.eta }}
             </span>
 
           </div>
 
           <small>
-            Opening responder dashboard...
+            {{ t('nearbyOpeningDashboard') }}
           </small>
 
         </div>
@@ -72,16 +73,16 @@
 
         <span class="page-badge">
           <i class="bi bi-geo-alt-fill"></i>
-          Community Response
+
+          {{ t('nearbyCommunityResponse') }}
         </span>
 
         <h1>
-          Nearby Responders
+          {{ t('nearbyRespondersTitle') }}
         </h1>
 
         <p>
-          Find verified community responders who are
-          available to help nearby.
+          {{ t('nearbyRespondersDescription') }}
         </p>
 
       </div>
@@ -106,11 +107,11 @@
           <div>
 
             <span class="incident-label">
-              Active GoldenLink Incident
+              {{ t('nearbyActiveIncident') }}
             </span>
 
             <h2>
-              {{ activeIncident.accidentType }}
+              {{ getAccidentTypeLabel() }}
             </h2>
 
           </div>
@@ -137,10 +138,15 @@
             <i class="bi bi-hash"></i>
 
             <div>
-              <span>Incident ID</span>
+
+              <span>
+                {{ t('nearbyIncidentId') }}
+              </span>
+
               <strong>
                 {{ activeIncident.incidentId }}
               </strong>
+
             </div>
 
           </div>
@@ -151,10 +157,15 @@
             <i class="bi bi-people-fill"></i>
 
             <div>
-              <span>People affected</span>
+
+              <span>
+                {{ t('nearbyPeopleAffected') }}
+              </span>
+
               <strong>
                 {{ activeIncident.victims }}
               </strong>
+
             </div>
 
           </div>
@@ -165,10 +176,15 @@
             <i class="bi bi-geo-alt-fill"></i>
 
             <div>
-              <span>Location</span>
+
+              <span>
+                {{ t('location') }}
+              </span>
+
               <strong>
                 {{ getIncidentLocation() }}
               </strong>
+
             </div>
 
           </div>
@@ -195,11 +211,11 @@
         <div>
 
           <span class="location-label">
-            Searching near your location
+            {{ t('nearbySearchingLocation') }}
           </span>
 
           <strong>
-            Current accident area
+            {{ t('nearbyCurrentAccidentArea') }}
           </strong>
 
         </div>
@@ -210,7 +226,7 @@
       <div class="radius-selector">
 
         <span>
-          Radius
+          {{ t('nearbyRadius') }}
         </span>
 
         <select
@@ -255,7 +271,7 @@
         </strong>
 
         <span>
-          available now
+          {{ t('nearbyAvailableNow') }}
         </span>
 
       </div>
@@ -270,12 +286,12 @@
 
           <span></span>
 
-          Live availability
+          {{ t('nearbyLiveAvailability') }}
 
         </div>
 
         <p>
-          Verified responders in your selected area.
+          {{ t('nearbyVerifiedRespondersArea') }}
         </p>
 
       </div>
@@ -294,17 +310,18 @@
         <div>
 
           <h2>
-            People nearby
+            {{ t('nearbyPeopleNearby') }}
           </h2>
 
           <p>
-            Choose a suitable responder for assistance.
+            {{ t('nearbyChooseResponder') }}
           </p>
 
         </div>
 
         <span class="responder-count">
-          {{ responders.length }} found
+          {{ responders.length }}
+          {{ t('nearbyFound') }}
         </span>
 
       </div>
@@ -349,7 +366,7 @@
 
                       <i class="bi bi-patch-check-fill"></i>
 
-                      Verified
+                      {{ t('nearbyVerified') }}
 
                     </span>
 
@@ -359,7 +376,7 @@
 
 
                 <span class="responder-role">
-                  {{ responder.role }}
+                  {{ getResponderRole(responder.role) }}
                 </span>
 
               </div>
@@ -376,8 +393,8 @@
 
                 {{
                   responder.available
-                    ? 'Available'
-                    : 'Unavailable'
+                    ? t('available')
+                    : t('unavailable')
                 }}
 
               </div>
@@ -396,7 +413,7 @@
                 <div>
 
                   <span>
-                    Distance
+                    {{ t('nearbyDistance') }}
                   </span>
 
                   <strong>
@@ -415,7 +432,7 @@
                 <div>
 
                   <span>
-                    Estimated arrival
+                    {{ t('nearbyEstimatedArrival') }}
                   </span>
 
                   <strong>
@@ -434,7 +451,7 @@
                 <div>
 
                   <span>
-                    Community rating
+                    {{ t('nearbyCommunityRating') }}
                   </span>
 
                   <strong>
@@ -461,7 +478,7 @@
 
                   <i class="bi bi-check2"></i>
 
-                  {{ skill }}
+                  {{ getSkillLabel(skill) }}
 
                 </span>
 
@@ -490,9 +507,10 @@
 
                 <i class="bi bi-arrow-repeat spinning"></i>
 
-                Accepting Incident...
+                {{ t('nearbyAcceptingIncident') }}
 
               }
+
               @else if (
                 incidentAccepted &&
                 selectedResponder?.id === responder.id
@@ -500,21 +518,23 @@
 
                 <i class="bi bi-check-circle-fill"></i>
 
-                Incident Accepted
+                {{ t('nearbyIncidentAccepted') }}
 
               }
+
               @else if (responder.available) {
 
                 <i class="bi bi-hand-thumbs-up"></i>
 
-                Accept Incident
+                {{ t('nearbyAcceptIncident') }}
 
               }
+
               @else {
 
                 <i class="bi bi-person-x"></i>
 
-                Currently Unavailable
+                {{ t('nearbyCurrentlyUnavailable') }}
 
               }
 
@@ -545,14 +565,11 @@
       <div>
 
         <h3>
-          GoldenLink safety principle
+          {{ t('nearbySafetyPrinciple') }}
         </h3>
 
         <p>
-          GoldenLink connects you with registered
-          community responders. Professional emergency
-          services remain the primary response for
-          serious incidents.
+          {{ t('nearbySafetyDescription') }}
         </p>
 
       </div>

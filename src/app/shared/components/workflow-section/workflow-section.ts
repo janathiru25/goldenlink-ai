@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { TranslationService } from '../../../core/services/translation';
 
 @Component({
   selector: 'app-workflow-section',
@@ -9,49 +10,54 @@ import { Component } from '@angular/core';
 })
 export class WorkflowSection {
 
+  translation = inject(TranslationService);
+
+  t(key: string): string {
+    return this.translation.translate(key);
+  }
+
   workflowStages = [
     {
       number: '01',
       icon: 'bi-megaphone-fill',
-      title: 'Report',
-      description: 'An accident is reported with the essential location and situation details.',
+      titleKey: 'workflowReport',
+      descriptionKey: 'workflowReportDescription',
     },
     {
       number: '02',
       icon: 'bi-clipboard2-pulse-fill',
-      title: 'Triage',
-      description: 'Simple questions help identify the appropriate response pathway.',
+      titleKey: 'workflowTriage',
+      descriptionKey: 'workflowTriageDescription',
     },
     {
       number: '03',
       icon: 'bi-people-fill',
-      title: 'Match',
-      description: 'Nearby suitable responders are identified based on availability and skills.',
+      titleKey: 'workflowMatch',
+      descriptionKey: 'workflowMatchDescription',
     },
     {
       number: '04',
       icon: 'bi-chat-square-text-fill',
-      title: 'Guide',
-      description: 'Responders receive simple, approved step-by-step guidance.',
+      titleKey: 'workflowGuide',
+      descriptionKey: 'workflowGuideDescription',
     },
     {
       number: '05',
       icon: 'bi-diagram-3-fill',
-      title: 'Coordinate',
-      description: 'Different responders receive different tasks so the community works together.',
+      titleKey: 'workflowCoordinate',
+      descriptionKey: 'workflowCoordinateDescription',
     },
     {
       number: '06',
       icon: 'bi-hospital-fill',
-      title: 'Handover',
-      description: 'Professional emergency responders take over when they arrive.',
+      titleKey: 'workflowHandover',
+      descriptionKey: 'workflowHandoverDescription',
     },
     {
       number: '07',
       icon: 'bi-graph-up-arrow',
-      title: 'Learn',
-      description: 'Aggregate response data helps identify gaps and improve future readiness.',
+      titleKey: 'workflowLearn',
+      descriptionKey: 'workflowLearnDescription',
     },
   ];
-
 }

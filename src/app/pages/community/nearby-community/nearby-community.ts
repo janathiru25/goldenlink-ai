@@ -1,16 +1,25 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+
+import { TranslationService } from '../../../core/services/translation';
 
 interface Community {
   id: string;
   name: string;
   area: string;
-  distance: string;
+  distanceKm: number;
   members: number;
   activeMembers: number;
   status: 'ACTIVE' | 'QUIET';
-  description: string;
-  category: string;
+  descriptionKey:
+    | 'nearbyCommunityAnnaDescription'
+    | 'nearbyCommunityTnDescription'
+    | 'nearbyCommunityGuindyDescription'
+    | 'nearbyCommunityVelacheryDescription';
+  categoryKey:
+    | 'nearbyCommunitySafety'
+    | 'nearbyCommunityEmergencySupport'
+    | 'nearbyCommunityNeighbourhood';
   initials: string;
 }
 
@@ -23,98 +32,211 @@ interface Community {
 })
 export class NearbyCommunity {
 
+  readonly translation =
+    inject(TranslationService);
+
   activeFilter = 'ALL';
 
   communities: Community[] = [
+
     {
       id: 'COM-001',
       name: 'Anna Nagar Community',
       area: 'Anna Nagar, Chennai',
-      distance: '1.1 km',
+      distanceKm: 1.1,
       members: 284,
       activeMembers: 42,
       status: 'ACTIVE',
-      description: 'Local volunteers coordinating community safety and support.',
-      category: 'Community Safety',
+      descriptionKey:
+        'nearbyCommunityAnnaDescription',
+      categoryKey:
+        'nearbyCommunitySafety',
       initials: 'AN'
     },
+
     {
       id: 'COM-002',
       name: 'T Nagar Response Group',
       area: 'T Nagar, Chennai',
-      distance: '2.4 km',
+      distanceKm: 2.4,
       members: 196,
       activeMembers: 28,
       status: 'ACTIVE',
-      description: 'A neighbourhood group supporting local emergency response.',
-      category: 'Emergency Support',
+      descriptionKey:
+        'nearbyCommunityTnDescription',
+      categoryKey:
+        'nearbyCommunityEmergencySupport',
       initials: 'TN'
     },
+
     {
       id: 'COM-003',
       name: 'Guindy Volunteers',
       area: 'Guindy, Chennai',
-      distance: '3.2 km',
+      distanceKm: 3.2,
       members: 153,
       activeMembers: 12,
       status: 'QUIET',
-      description: 'Community volunteers sharing local information and support.',
-      category: 'Neighbourhood',
+      descriptionKey:
+        'nearbyCommunityGuindyDescription',
+      categoryKey:
+        'nearbyCommunityNeighbourhood',
       initials: 'GV'
     },
+
     {
       id: 'COM-004',
       name: 'Velachery Community',
       area: 'Velachery, Chennai',
-      distance: '4.6 km',
+      distanceKm: 4.6,
       members: 327,
       activeMembers: 36,
       status: 'ACTIVE',
-      description: 'Active community network helping residents coordinate safely.',
-      category: 'Community Safety',
+      descriptionKey:
+        'nearbyCommunityVelacheryDescription',
+      categoryKey:
+        'nearbyCommunitySafety',
       initials: 'VC'
     }
+
   ];
 
+
+  // -----------------------------------------
+  // Translation
+  // -----------------------------------------
+
+  t(key: string): string {
+    return this.translation.translate(key);
+  }
+
+
+  // -----------------------------------------
+  // Filter
+  // -----------------------------------------
+
   get filteredCommunities(): Community[] {
+
     if (this.activeFilter === 'ALL') {
       return this.communities;
     }
 
     return this.communities.filter(
-      community => community.status === this.activeFilter
+      community =>
+        community.status === this.activeFilter
     );
+
   }
+
 
   setFilter(filter: string): void {
-    this.activeFilter = filter;
+
+    this.activeFilter =
+      filter;
+
   }
 
-  getStatusLabel(status: Community['status']): string {
+
+  // -----------------------------------------
+  // Status
+  // -----------------------------------------
+
+  getStatusLabel(
+    status: Community['status']
+  ): string {
+
     return status === 'ACTIVE'
-      ? 'Active community'
-      : 'Currently quiet';
+      ? this.t('nearbyCommunityActive')
+      : this.t('nearbyCommunityQuiet');
+
   }
 
-  getStatusClass(status: Community['status']): string {
+
+  getStatusClass(
+    status: Community['status']
+  ): string {
+
     return status === 'ACTIVE'
       ? 'community-active'
       : 'community-quiet';
+
   }
 
-  viewCommunity(community: Community): void {
+
+  // -----------------------------------------
+  // Description
+  // -----------------------------------------
+
+  getDescription(
+    community: Community
+  ): string {
+
+    return this.t(
+      community.descriptionKey
+    );
+
+  }
+
+
+  // -----------------------------------------
+  // Category
+  // -----------------------------------------
+
+  getCategory(
+    community: Community
+  ): string {
+
+    return this.t(
+      community.categoryKey
+    );
+
+  }
+
+
+  // -----------------------------------------
+  // Distance
+  // -----------------------------------------
+
+  getDistance(
+    distanceKm: number
+  ): string {
+
+    return `${distanceKm.toFixed(1)} ${this.t('nearbyCommunityKm')}`;
+
+  }
+
+
+  // -----------------------------------------
+  // View community
+  // -----------------------------------------
+
+  viewCommunity(
+    community: Community
+  ): void {
+
     alert(
       `${community.name}\n\n` +
       `${community.area}\n` +
-      `${community.members} members\n` +
-      `${community.activeMembers} active now`
+      `${community.members} ${this.t('nearbyCommunityMembers')}\n` +
+      `${community.activeMembers} ${this.t('nearbyCommunityActiveNow')}`
     );
+
   }
 
-  joinCommunity(community: Community): void {
+
+  // -----------------------------------------
+  // Join community
+  // -----------------------------------------
+
+  joinCommunity(
+    community: Community
+  ): void {
+
     alert(
-      `Join ${community.name}\n\n` +
-      `This is currently a frontend demonstration.`
+      `${this.t('nearbyCommunityJoin')} ${community.name}\n\n` +
+      `${this.t('nearbyCommunityFrontendDemo')}`
     );
+
   }
+
 }

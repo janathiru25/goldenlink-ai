@@ -13,6 +13,7 @@ import {
 } from '../../core/models/incident';
 
 import { IncidentService } from '../../core/services/incident';
+import { TranslationService } from '../../core/services/translation';
 
 interface ChatMessage {
   sender: 'ai' | 'user';
@@ -40,6 +41,13 @@ export class AiAssistant {
 
   private readonly incidentService =
     inject(IncidentService);
+
+  readonly translation =
+    inject(TranslationService);
+
+  t(key: string): string {
+    return this.translation.translate(key);
+  }
 
 
   // ---------------------------------------------------------
@@ -83,14 +91,7 @@ export class AiAssistant {
   // QUESTIONS
   // ---------------------------------------------------------
 
-  questions = [
-    'Are you currently at the accident location?',
-    'How many people are injured?',
-    'Is anyone unconscious?',
-    'Is anyone bleeding heavily?',
-    'Is anyone having difficulty breathing?',
-    'Is anyone trapped inside a vehicle or unable to move?'
-  ];
+  questions: string[] = [];
 
 
   // ---------------------------------------------------------
@@ -99,7 +100,27 @@ export class AiAssistant {
 
   constructor() {
 
+    this.setQuestions();
+
     this.loadActiveIncident();
+
+  }
+
+
+  // ---------------------------------------------------------
+  // QUESTIONS TRANSLATION
+  // ---------------------------------------------------------
+
+  private setQuestions(): void {
+
+    this.questions = [
+      this.t('aiQuestionAtLocation'),
+      this.t('aiQuestionInjuredPeople'),
+      this.t('aiQuestionUnconscious'),
+      this.t('aiQuestionHeavyBleeding'),
+      this.t('aiQuestionBreathingDifficulty'),
+      this.t('aiQuestionTrapped')
+    ];
 
   }
 
@@ -112,7 +133,8 @@ export class AiAssistant {
 
     return {
 
-      incidentId: 'UNKNOWN',
+      incidentId:
+        'UNKNOWN',
 
       reportedAt:
         new Date().toISOString(),
@@ -121,7 +143,7 @@ export class AiAssistant {
         'reported',
 
       accidentType:
-        'Road Accident',
+        this.t('roadAccident'),
 
       severity:
         'moderate',
@@ -153,7 +175,7 @@ export class AiAssistant {
           0,
 
         address:
-          'Location unavailable'
+          this.t('locationUnavailable')
 
       },
 
@@ -174,7 +196,7 @@ export class AiAssistant {
         null,
 
       ambulanceStatus:
-        'Not requested',
+        this.t('aiNotRequested'),
 
       hospital:
         null
@@ -208,13 +230,13 @@ export class AiAssistant {
       );
 
       this.addAiMessage(
-        'Hello. I’m GoldenLink AI, your emergency-response assistant.'
+        this.t('aiWelcome')
       );
 
       setTimeout(() => {
 
         this.addAiMessage(
-          'There is currently no active incident. You can report an accident first, or ask me for general emergency-response guidance.'
+          this.t('aiNoActiveIncident')
         );
 
       }, 700);
@@ -277,13 +299,17 @@ export class AiAssistant {
   private startContextualConversation(): void {
 
     this.addAiMessage(
-      'Hello. I’m GoldenLink AI, your emergency-response assistant.'
+      this.t('aiWelcome')
     );
 
     setTimeout(() => {
 
       this.addAiMessage(
-        `I’m connected to incident #${this.incident.incidentId}. I can help you understand the current emergency and provide response-coordination guidance.`
+        this.t('aiConnectedToIncident')
+          .replace(
+            '{incidentId}',
+            this.incident.incidentId
+          )
       );
 
     }, 700);
@@ -294,7 +320,15 @@ export class AiAssistant {
       setTimeout(() => {
 
         this.addAiMessage(
-          `The current incident is assessed as ${this.getSeverityLabel().toUpperCase()} with ${this.confidence}% assessment confidence.`
+          this.t('aiExistingAssessment')
+            .replace(
+              '{severity}',
+              this.getSeverityLabel().toUpperCase()
+            )
+            .replace(
+              '{confidence}',
+              this.confidence.toString()
+            )
         );
 
       }, 1400);
@@ -307,7 +341,7 @@ export class AiAssistant {
     setTimeout(() => {
 
       this.addAiMessage(
-        'I’ll ask a few quick questions to help assess the incident.'
+        this.t('aiQuickAssessmentIntro')
       );
 
       setTimeout(() => {
@@ -575,7 +609,7 @@ export class AiAssistant {
 
 
     let response =
-      'I can help with emergency-response coordination. Stay in a safe location, avoid unnecessary movement of injured people, and follow instructions from emergency services.';
+      this.t('aiGeneralResponse');
 
 
     if (
@@ -583,7 +617,7 @@ export class AiAssistant {
     ) {
 
       response =
-        'If someone is bleeding heavily, seek emergency medical help immediately. If it is safe to do so, apply firm pressure to the wound with clean cloth or gauze until professional help arrives.';
+        this.t('aiBleedingResponse');
 
     }
 
@@ -594,7 +628,7 @@ export class AiAssistant {
     ) {
 
       response =
-        'If someone is unconscious or not responding, contact emergency services immediately. Check whether they are breathing and follow instructions from the emergency dispatcher.';
+        this.t('aiUnconsciousResponse');
 
     }
 
@@ -604,7 +638,7 @@ export class AiAssistant {
     ) {
 
       response =
-        'Difficulty breathing is an emergency warning sign. Contact emergency services immediately and keep the person in a safe position while waiting for professional assistance.';
+        this.t('aiBreathingResponse');
 
     }
 
@@ -614,7 +648,7 @@ export class AiAssistant {
     ) {
 
       response =
-        'Do not attempt to forcibly remove a trapped person unless there is immediate danger such as fire. Contact emergency services and wait for trained responders.';
+        this.t('aiTrappedResponse');
 
     }
 
@@ -624,7 +658,7 @@ export class AiAssistant {
     ) {
 
       response =
-        'The responder assigned to this incident can be viewed from the Responder Dashboard. Keep the accident location accessible and follow responder instructions when they arrive.';
+        this.t('aiResponderResponse');
 
     }
 
@@ -652,7 +686,19 @@ export class AiAssistant {
 
       answer.includes('yep') ||
 
-      answer.includes('true')
+      answer.includes('true') ||
+
+      answer.includes('ஆம்') ||
+
+      answer.includes('ஆமாம்') ||
+
+      answer.includes('ஆம்') ||
+
+      answer.includes('हाँ') ||
+
+      answer.includes('అవును') ||
+
+      answer.includes('അതെ')
 
     );
 
@@ -692,7 +738,9 @@ export class AiAssistant {
         94;
 
       this.assessmentSummary =
-        'The reported conditions indicate a critical emergency requiring immediate response coordination.';
+        this.t(
+          'aiCriticalAssessment'
+        );
 
     }
 
@@ -712,7 +760,9 @@ export class AiAssistant {
         90;
 
       this.assessmentSummary =
-        'Multiple victims have been reported. Prompt community and emergency assistance is recommended.';
+        this.t(
+          'aiSeriousAssessment'
+        );
 
     }
 
@@ -730,7 +780,9 @@ export class AiAssistant {
         86;
 
       this.assessmentSummary =
-        'The reported incident requires assistance and monitoring. Community response can be coordinated.';
+        this.t(
+          'aiModerateAssessment'
+        );
 
     }
 
@@ -747,9 +799,6 @@ export class AiAssistant {
           this.incident.incidentId,
 
           {
-
-            // IMPORTANT:
-            // Do NOT change the response status here.
 
             severity:
               this.severity,
@@ -804,13 +853,17 @@ export class AiAssistant {
     setTimeout(() => {
 
       this.addAiMessage(
-        'Thank you. I have completed the initial incident assessment.'
+        this.t('aiAssessmentCompleted')
       );
 
       setTimeout(() => {
 
         this.addAiMessage(
-          `The incident has been assessed as ${this.severity.toUpperCase()}. Help coordination can continue based on the current response status.`
+          this.t('aiAssessmentResult')
+            .replace(
+              '{severity}',
+              this.severity.toUpperCase()
+            )
         );
 
       }, 700);
@@ -826,15 +879,34 @@ export class AiAssistant {
 
   getSeverityLabel(): string {
 
-    return (
-
+    switch (
       this.severity
-        .charAt(0)
-        .toUpperCase() +
+    ) {
 
-      this.severity.slice(1)
+      case 'critical':
+        return this.t(
+          'severityCritical'
+        );
 
-    );
+      case 'serious':
+        return this.t(
+          'severitySerious'
+        );
+
+      case 'moderate':
+        return this.t(
+          'severityModerate'
+        );
+
+      case 'normal':
+        return this.t(
+          'severityNormal'
+        );
+
+      default:
+        return this.severity;
+
+    }
 
   }
 

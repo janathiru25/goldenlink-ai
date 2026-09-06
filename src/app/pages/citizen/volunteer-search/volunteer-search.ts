@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+
+import { TranslationService } from '../../../core/services/translation';
 
 interface Volunteer {
   id: string;
@@ -22,6 +24,9 @@ interface Volunteer {
   styleUrl: './volunteer-search.scss',
 })
 export class VolunteerSearch {
+
+  readonly translation =
+    inject(TranslationService);
 
   activeFilter = 'ALL';
 
@@ -76,38 +81,87 @@ export class VolunteerSearch {
     }
   ];
 
+
+  // -----------------------------------------
+  // Translation
+  // -----------------------------------------
+
+  t(key: string): string {
+    return this.translation.translate(key);
+  }
+
+
+  // -----------------------------------------
+  // Filtered volunteers
+  // -----------------------------------------
+
   get filteredVolunteers(): Volunteer[] {
+
     if (this.activeFilter === 'ALL') {
       return this.volunteers;
     }
 
     return this.volunteers.filter(
-      volunteer => volunteer.status === this.activeFilter
+      volunteer =>
+        volunteer.status === this.activeFilter
     );
+
   }
+
 
   setFilter(filter: string): void {
-    this.activeFilter = filter;
+
+    this.activeFilter =
+      filter;
+
   }
 
-  getStatusLabel(status: Volunteer['status']): string {
+
+  // -----------------------------------------
+  // Status label
+  // -----------------------------------------
+
+  getStatusLabel(
+    status: Volunteer['status']
+  ): string {
+
     switch (status) {
+
       case 'AVAILABLE':
-        return 'Available now';
+        return this.t(
+          'volunteerAvailableNow'
+        );
 
       case 'RESPONDING':
-        return 'Currently responding';
+        return this.t(
+          'volunteerCurrentlyResponding'
+        );
 
       case 'OFFLINE':
-        return 'Currently offline';
+        return this.t(
+          'volunteerCurrentlyOffline'
+        );
 
       default:
-        return 'Unknown';
+        return this.t(
+          'volunteerUnknown'
+        );
+
     }
+
   }
 
-  getStatusClass(status: Volunteer['status']): string {
+
+  // -----------------------------------------
+  // Status class
+  // -----------------------------------------
+
+  getStatusClass(
+    status: Volunteer['status']
+  ): string {
+
     switch (status) {
+
       case 'AVAILABLE':
         return 'status-available';
 
@@ -119,25 +173,46 @@ export class VolunteerSearch {
 
       default:
         return '';
+
     }
+
   }
 
-  requestHelp(volunteer: Volunteer): void {
+
+  // -----------------------------------------
+  // Request help
+  // -----------------------------------------
+
+  requestHelp(
+    volunteer: Volunteer
+  ): void {
+
     alert(
-      `Help request\n\n` +
+      `${this.t('volunteerHelpRequest')}\n\n` +
       `${volunteer.name}\n` +
       `${volunteer.role}\n` +
-      `Distance: ${volunteer.distance}\n\n` +
-      `This is currently a frontend demonstration.`
+      `${this.t('volunteerDistance')}: ${volunteer.distance}\n\n` +
+      `${this.t('volunteerFrontendDemo')}`
     );
+
   }
 
-  viewVolunteer(volunteer: Volunteer): void {
+
+  // -----------------------------------------
+  // View volunteer
+  // -----------------------------------------
+
+  viewVolunteer(
+    volunteer: Volunteer
+  ): void {
+
     alert(
       `${volunteer.name}\n\n` +
       `${volunteer.role}\n` +
-      `Rating: ${volunteer.rating}\n` +
-      `Incidents supported: ${volunteer.incidents}`
+      `${this.t('volunteerRating')}: ${volunteer.rating}\n` +
+      `${this.t('volunteerIncidentsSupported')}: ${volunteer.incidents}`
     );
+
   }
+
 }

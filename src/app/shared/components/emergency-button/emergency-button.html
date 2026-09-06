@@ -4,14 +4,14 @@
   type="button"
   class="emergency-button"
   (click)="openEmergency()"
-  aria-label="Emergency"
+  [attr.aria-label]="t('emergency')"
 >
   <span class="emergency-icon">
     <i class="bi bi-exclamation-triangle-fill"></i>
   </span>
 
   <span class="emergency-text">
-    Emergency
+    {{ t('emergency') }}
   </span>
 </button>
 
@@ -36,7 +36,7 @@
         type="button"
         class="close-button"
         (click)="closeEmergency()"
-        aria-label="Close"
+        [attr.aria-label]="t('close')"
       >
         <i class="bi bi-x-lg"></i>
       </button>
@@ -51,10 +51,12 @@
 
       <!-- Content -->
 
-      <h2>Emergency Assistance</h2>
+      <h2>
+        {{ t('emergencyAssistance') }}
+      </h2>
 
       <p>
-        Are you witnessing an accident or facing an emergency?
+        {{ t('emergencyQuestion') }}
       </p>
 
 
@@ -68,7 +70,7 @@
           (click)="reportAccident()"
         >
           <i class="bi bi-clipboard-plus"></i>
-          Report Accident
+          {{ t('reportAccident') }}
         </button>
 
 
@@ -78,7 +80,7 @@
           (click)="callEmergency()"
         >
           <i class="bi bi-telephone-fill"></i>
-          Call 112
+          {{ t('call112') }}
         </button>
 
 
@@ -87,7 +89,7 @@
           class="cancel-button"
           (click)="closeEmergency()"
         >
-          Cancel
+          {{ t('cancel') }}
         </button>
 
       </div>

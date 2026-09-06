@@ -7,56 +7,39 @@ import {
 import { CommonModule } from '@angular/common';
 
 import { Incident } from '../../../core/models/incident';
-
 import { IncidentService } from '../../../core/services/incident';
+import { TranslationService } from '../../../core/services/translation';
 
 interface AccidentRecord {
-
   id: string;
-
   type: string;
-
   location: string;
-
   reportedAt: string;
-
   severity: string;
-
   victims: number;
-
   status: string;
-
   responders: number;
-
   description: string;
-
   icon: string;
-
   incident: Incident;
-
 }
 
 @Component({
-
   selector: 'app-accident-records',
-
   standalone: true,
-
   imports: [
     CommonModule
   ],
-
   templateUrl: './accident-records.html',
-
   styleUrl: './accident-records.scss'
-
 })
-
-export class AccidentRecords
-  implements OnInit {
+export class AccidentRecords implements OnInit {
 
   private readonly incidentService =
     inject(IncidentService);
+
+  readonly translation =
+    inject(TranslationService);
 
   activeFilter = 'ALL';
 
@@ -64,25 +47,23 @@ export class AccidentRecords
 
   selectedIncident: AccidentRecord | null = null;
 
+  t(key: string): string {
+    return this.translation.translate(key);
+  }
+
   ngOnInit(): void {
-
     this.loadRecords();
-
   }
 
   loadRecords(): void {
-
     const incidents =
       this.incidentService.getIncidents();
 
     this.records =
       incidents.map(
         incident =>
-          this.convertIncidentToRecord(
-            incident
-          )
+          this.convertIncidentToRecord(incident)
       );
-
   }
 
   private convertIncidentToRecord(
@@ -90,12 +71,9 @@ export class AccidentRecords
   ): AccidentRecord {
 
     return {
+      id: incident.incidentId,
 
-      id:
-        incident.incidentId,
-
-      type:
-        incident.accidentType,
+      type: incident.accidentType,
 
       location:
         incident.location?.address ||
@@ -106,11 +84,9 @@ export class AccidentRecords
           incident.reportedAt
         ),
 
-      severity:
-        incident.severity,
+      severity: incident.severity,
 
-      victims:
-        incident.victims,
+      victims: incident.victims,
 
       status:
         this.convertStatus(
@@ -118,13 +94,11 @@ export class AccidentRecords
         ),
 
       responders:
-        this.getResponderCount(
-          incident
-        ),
+        this.getResponderCount(incident),
 
       description:
         incident.description ||
-        'Accident reported through GoldenLink.',
+        this.t('accidentRecordsDefaultDescription'),
 
       icon:
         this.getIncidentIcon(
@@ -132,45 +106,34 @@ export class AccidentRecords
         ),
 
       incident
-
     };
-
   }
 
   private convertStatus(
     status: string
   ): string {
 
-    switch (
-      status.toLowerCase()
-    ) {
+    switch (status.toLowerCase()) {
 
       case 'reported':
       case 'ai_assessing':
       case 'responder_search':
-
         return 'ACTIVE';
 
       case 'responder_assigned':
       case 'responder_en_route':
       case 'on_scene':
-
         return 'RESPONDING';
 
       case 'handed_over':
-
         return 'HANDED_OVER';
 
       case 'completed':
-
         return 'COMPLETED';
 
       default:
-
         return 'ACTIVE';
-
     }
-
   }
 
   private getResponderCount(
@@ -178,13 +141,10 @@ export class AccidentRecords
   ): number {
 
     if (!incident.responder) {
-
       return 0;
-
     }
 
     return 1;
-
   }
 
   private getIncidentIcon(
@@ -198,38 +158,29 @@ export class AccidentRecords
       type.includes('bike') ||
       type.includes('two')
     ) {
-
       return 'bi-bicycle';
-
     }
 
     if (
       type.includes('pedestrian') ||
       type.includes('person')
     ) {
-
       return 'bi-person-walking';
-
     }
 
     if (
       type.includes('fire')
     ) {
-
       return 'bi-fire';
-
     }
 
     if (
       type.includes('medical')
     ) {
-
       return 'bi-heart-pulse-fill';
-
     }
 
     return 'bi-car-front-fill';
-
   }
 
   get activeCount(): number {
@@ -239,7 +190,6 @@ export class AccidentRecords
         record.status === 'ACTIVE' ||
         record.status === 'RESPONDING'
     ).length;
-
   }
 
   get totalResponders(): number {
@@ -252,18 +202,14 @@ export class AccidentRecords
         total + record.responders,
       0
     );
-
   }
 
-  get filteredRecords():
-    AccidentRecord[] {
+  get filteredRecords(): AccidentRecord[] {
 
     if (
       this.activeFilter === 'ALL'
     ) {
-
       return this.records;
-
     }
 
     return this.records.filter(
@@ -271,7 +217,6 @@ export class AccidentRecords
         record.status ===
         this.activeFilter
     );
-
   }
 
   setFilter(
@@ -279,7 +224,6 @@ export class AccidentRecords
   ): void {
 
     this.activeFilter = filter;
-
   }
 
   getStatusLabel(
@@ -289,27 +233,30 @@ export class AccidentRecords
     switch (status) {
 
       case 'ACTIVE':
-
-        return 'Community response active';
+        return this.t(
+          'accidentRecordsCommunityResponseActive'
+        );
 
       case 'RESPONDING':
-
-        return 'Responders are on the way';
+        return this.t(
+          'accidentRecordsRespondersOnTheWay'
+        );
 
       case 'HANDED_OVER':
-
-        return 'Professional handover completed';
+        return this.t(
+          'accidentRecordsProfessionalHandoverCompleted'
+        );
 
       case 'COMPLETED':
-
-        return 'Response completed';
+        return this.t(
+          'accidentRecordsResponseCompleted'
+        );
 
       default:
-
-        return 'Unknown status';
-
+        return this.t(
+          'accidentRecordsUnknownStatus'
+        );
     }
-
   }
 
   getStatusClass(
@@ -319,27 +266,53 @@ export class AccidentRecords
     switch (status) {
 
       case 'ACTIVE':
-
         return 'status-active';
 
       case 'RESPONDING':
-
         return 'status-responding';
 
       case 'HANDED_OVER':
-
         return 'status-handed';
 
       case 'COMPLETED':
-
         return 'status-completed';
 
       default:
-
         return '';
-
     }
+  }
 
+  getStatusDisplay(
+    status: string
+  ): string {
+
+    switch (status) {
+
+      case 'ACTIVE':
+        return this.t(
+          'accidentRecordsActive'
+        );
+
+      case 'RESPONDING':
+        return this.t(
+          'accidentRecordsResponding'
+        );
+
+      case 'HANDED_OVER':
+        return this.t(
+          'accidentRecordsHandedOver'
+        );
+
+      case 'COMPLETED':
+        return this.t(
+          'accidentRecordsCompleted'
+        );
+
+      default:
+        return this.t(
+          'accidentRecordsUnknownStatus'
+        );
+    }
   }
 
   getSeverityLabel(
@@ -347,16 +320,39 @@ export class AccidentRecords
   ): string {
 
     if (!severity) {
-
-      return 'Unknown';
-
+      return this.t(
+        'accidentRecordsUnknown'
+      );
     }
 
-    return severity
-      .charAt(0)
-      .toUpperCase() +
-      severity.slice(1);
+    switch (severity.toLowerCase()) {
 
+      case 'critical':
+        return this.t(
+          'severityCritical'
+        );
+
+      case 'serious':
+        return this.t(
+          'severitySerious'
+        );
+
+      case 'moderate':
+        return this.t(
+          'severityModerate'
+        );
+
+      case 'normal':
+        return this.t(
+          'severityNormal'
+        );
+
+      default:
+        return severity
+          .charAt(0)
+          .toUpperCase() +
+          severity.slice(1);
+    }
   }
 
   getSeverityClass(
@@ -368,27 +364,20 @@ export class AccidentRecords
     ) {
 
       case 'critical':
-
         return 'severity-critical';
 
       case 'serious':
-
         return 'severity-serious';
 
       case 'moderate':
-
         return 'severity-moderate';
 
       case 'normal':
-
         return 'severity-normal';
 
       default:
-
         return '';
-
     }
-
   }
 
   private formatReportedTime(
@@ -396,9 +385,9 @@ export class AccidentRecords
   ): string {
 
     if (!reportedAt) {
-
-      return 'Unknown time';
-
+      return this.t(
+        'accidentRecordsUnknownTime'
+      );
     }
 
     const date =
@@ -409,9 +398,7 @@ export class AccidentRecords
         date.getTime()
       )
     ) {
-
       return reportedAt;
-
     }
 
     const now =
@@ -427,15 +414,18 @@ export class AccidentRecords
       );
 
     if (minutes < 1) {
-
-      return 'Just now';
-
+      return this.t(
+        'accidentRecordsJustNow'
+      );
     }
 
     if (minutes < 60) {
-
-      return `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
-
+      return this.t(
+        'accidentRecordsMinutesAgo'
+      ).replace(
+        '{count}',
+        minutes.toString()
+      );
     }
 
     const hours =
@@ -444,9 +434,12 @@ export class AccidentRecords
       );
 
     if (hours < 24) {
-
-      return `${hours} hour${hours === 1 ? '' : 's'} ago`;
-
+      return this.t(
+        'accidentRecordsHoursAgo'
+      ).replace(
+        '{count}',
+        hours.toString()
+      );
     }
 
     const days =
@@ -455,19 +448,21 @@ export class AccidentRecords
       );
 
     if (days === 1) {
-
-      return 'Yesterday';
-
+      return this.t(
+        'accidentRecordsYesterday'
+      );
     }
 
     if (days < 7) {
-
-      return `${days} days ago`;
-
+      return this.t(
+        'accidentRecordsDaysAgo'
+      ).replace(
+        '{count}',
+        days.toString()
+      );
     }
 
     return date.toLocaleDateString();
-
   }
 
   viewIncident(
@@ -476,14 +471,12 @@ export class AccidentRecords
 
     this.selectedIncident =
       record;
-
   }
 
   closeIncidentDetails(): void {
 
     this.selectedIncident =
       null;
-
   }
 
   getIncidentStatusText(
@@ -495,7 +488,6 @@ export class AccidentRecords
         incident.status
       )
     );
-
   }
 
   getIncidentStatusClass(
@@ -507,7 +499,6 @@ export class AccidentRecords
         incident.status
       )
     );
-
   }
 
   getResponderName(
@@ -519,9 +510,10 @@ export class AccidentRecords
         name?: string;
       } | null;
 
-    return responder?.name
-      ?? 'No responder assigned';
-
+    return responder?.name ??
+      this.t(
+        'accidentRecordsNoResponderAssigned'
+      );
   }
 
   getResponderRole(
@@ -533,9 +525,10 @@ export class AccidentRecords
         role?: string;
       } | null;
 
-    return responder?.role
-      ?? 'Community Responder';
-
+    return responder?.role ??
+      this.t(
+        'communityResponder'
+      );
   }
 
   getResponderEta(
@@ -547,9 +540,10 @@ export class AccidentRecords
         eta?: string;
       } | null;
 
-    return responder?.eta
-      ?? 'Not available';
-
+    return responder?.eta ??
+      this.t(
+        'unavailable'
+      );
   }
 
   getMapUrl(
@@ -557,13 +551,9 @@ export class AccidentRecords
   ): string {
 
     if (!incident.location) {
-
       return '#';
-
     }
 
     return `https://www.google.com/maps?q=${incident.location.latitude},${incident.location.longitude}`;
-
   }
-
 }

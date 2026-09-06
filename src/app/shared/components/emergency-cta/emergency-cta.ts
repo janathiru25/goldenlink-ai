@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+
+import { TranslationService } from '../../../core/services/translation';
 
 @Component({
   selector: 'app-emergency-cta',
@@ -8,4 +10,12 @@ import { RouterLink } from '@angular/router';
   templateUrl: './emergency-cta.html',
   styleUrl: './emergency-cta.scss',
 })
-export class EmergencyCta {}
+export class EmergencyCta {
+
+  translation = inject(TranslationService);
+
+  t(key: string): string {
+    return this.translation.translate(key);
+  }
+
+}

@@ -3,14 +3,19 @@
   <!-- SUCCESS MESSAGE -->
   @if (showSuccess) {
     <div class="success-toast">
+
       <div class="success-toast-icon">
         <i class="bi bi-check-circle-fill"></i>
       </div>
 
       <div>
         <strong>{{ successMessage }}</strong>
-        <span>Incident information has been updated.</span>
+
+        <span>
+          {{ t('responderIncidentInformationUpdated') }}
+        </span>
       </div>
+
     </div>
   }
 
@@ -24,11 +29,12 @@
         <i class="bi bi-shield-check"></i>
       </div>
 
-      <h1>No Active Incident</h1>
+      <h1>
+        {{ t('responderNoActiveIncident') }}
+      </h1>
 
       <p>
-        There is currently no active GoldenLink incident assigned
-        to this responder.
+        {{ t('responderNoActiveIncidentDescription') }}
       </p>
 
       <button
@@ -37,7 +43,8 @@
         (click)="openNearbyResponders()"
       >
         <i class="bi bi-people-fill"></i>
-        View Nearby Responders
+
+        {{ t('responderViewNearbyResponders') }}
       </button>
 
     </div>
@@ -53,14 +60,16 @@
 
           <span class="page-badge">
             <i class="bi bi-shield-check"></i>
-            Responder Dashboard
+
+            {{ t('responderDashboardTitle') }}
           </span>
 
-          <h1>Emergency Response</h1>
+          <h1>
+            {{ t('responderEmergencyResponse') }}
+          </h1>
 
           <p>
-            Manage your assigned GoldenLink incident and update
-            your response status.
+            {{ t('responderDashboardDescription') }}
           </p>
 
         </div>
@@ -90,7 +99,9 @@
 
         <div class="incident-banner-content">
 
-          <span>Active Incident</span>
+          <span>
+            {{ t('responderActiveIncident') }}
+          </span>
 
           <strong>
             {{ incident.incidentId }}
@@ -102,12 +113,14 @@
           class="severity-badge"
           [class]="severityClass"
         >
+
           <i
             class="bi"
             [class]="getSeverityIcon()"
           ></i>
 
           {{ severityLabel }}
+
         </div>
 
       </section>
@@ -119,16 +132,20 @@
         <div class="section-title">
 
           <div>
+
             <span class="section-label">
-              RESPONSE PROGRESS
+              {{ t('responderResponseProgress') }}
             </span>
 
-            <h2>{{ statusLabel }}</h2>
+            <h2>
+              {{ statusLabel }}
+            </h2>
+
           </div>
 
           <div class="live-badge">
             <span></span>
-            Live
+            {{ t('responderLive') }}
           </div>
 
         </div>
@@ -151,7 +168,9 @@
               <i class="bi bi-person-check-fill"></i>
             </div>
 
-            <span>Assigned</span>
+            <span>
+              {{ t('responderAssigned') }}
+            </span>
 
           </div>
 
@@ -173,7 +192,9 @@
               <i class="bi bi-car-front-fill"></i>
             </div>
 
-            <span>On the way</span>
+            <span>
+              {{ t('responderOnTheWay') }}
+            </span>
 
           </div>
 
@@ -194,7 +215,9 @@
               <i class="bi bi-geo-alt-fill"></i>
             </div>
 
-            <span>On scene</span>
+            <span>
+              {{ t('responderOnScene') }}
+            </span>
 
           </div>
 
@@ -214,15 +237,21 @@
               <i class="bi bi-check-lg"></i>
             </div>
 
-            <span>Complete</span>
+            <span>
+              {{ t('responderComplete') }}
+            </span>
 
           </div>
 
         </div>
 
+
         <p class="status-message">
+
           <i class="bi bi-info-circle-fill"></i>
+
           {{ statusMessage }}
+
         </p>
 
       </section>
@@ -242,8 +271,15 @@
             </div>
 
             <div>
-              <span>INCIDENT INFORMATION</span>
-              <h2>Accident Details</h2>
+
+              <span>
+                {{ t('responderIncidentInformation') }}
+              </span>
+
+              <h2>
+                {{ t('responderAccidentDetails') }}
+              </h2>
+
             </div>
 
           </div>
@@ -251,6 +287,7 @@
 
           <div class="details-grid">
 
+            <!-- ACCIDENT TYPE -->
             <div class="detail-item">
 
               <div class="detail-icon">
@@ -258,15 +295,21 @@
               </div>
 
               <div>
-                <span>Accident type</span>
+
+                <span>
+                  {{ t('responderAccidentType') }}
+                </span>
+
                 <strong>
-                  {{ incident.accidentType || 'Not specified' }}
+                  {{ accidentTypeLabel }}
                 </strong>
+
               </div>
 
             </div>
 
 
+            <!-- PEOPLE -->
             <div class="detail-item">
 
               <div class="detail-icon">
@@ -274,15 +317,21 @@
               </div>
 
               <div>
-                <span>People affected</span>
+
+                <span>
+                  {{ t('responderPeopleAffected') }}
+                </span>
+
                 <strong>
                   {{ victimLabel }}
                 </strong>
+
               </div>
 
             </div>
 
 
+            <!-- UNCONSCIOUS -->
             <div class="detail-item">
 
               <div class="detail-icon">
@@ -290,15 +339,21 @@
               </div>
 
               <div>
-                <span>Unconscious</span>
+
+                <span>
+                  {{ t('responderUnconscious') }}
+                </span>
+
                 <strong>
-                  {{ incident.unconscious ? 'Yes' : 'No' }}
+                  {{ yesNo(incident.unconscious) }}
                 </strong>
+
               </div>
 
             </div>
 
 
+            <!-- BLEEDING -->
             <div class="detail-item">
 
               <div class="detail-icon">
@@ -306,15 +361,21 @@
               </div>
 
               <div>
-                <span>Bleeding</span>
+
+                <span>
+                  {{ t('responderBleeding') }}
+                </span>
+
                 <strong>
-                  {{ incident.bleeding ? 'Yes' : 'No' }}
+                  {{ yesNo(incident.bleeding) }}
                 </strong>
+
               </div>
 
             </div>
 
 
+            <!-- BREATHING -->
             <div class="detail-item">
 
               <div class="detail-icon">
@@ -322,15 +383,21 @@
               </div>
 
               <div>
-                <span>Breathing difficulty</span>
+
+                <span>
+                  {{ t('responderBreathingDifficulty') }}
+                </span>
+
                 <strong>
-                  {{ incident.breathingDifficulty ? 'Yes' : 'No' }}
+                  {{ yesNo(incident.breathingDifficulty) }}
                 </strong>
+
               </div>
 
             </div>
 
 
+            <!-- TRAPPED -->
             <div class="detail-item">
 
               <div class="detail-icon">
@@ -338,10 +405,15 @@
               </div>
 
               <div>
-                <span>Trapped</span>
+
+                <span>
+                  {{ t('responderTrapped') }}
+                </span>
+
                 <strong>
-                  {{ incident.trapped ? 'Yes' : 'No' }}
+                  {{ yesNo(incident.trapped) }}
                 </strong>
+
               </div>
 
             </div>
@@ -354,8 +426,11 @@
             <div class="description-box">
 
               <span>
+
                 <i class="bi bi-chat-left-text-fill"></i>
-                Reporter description
+
+                {{ t('responderReporterDescription') }}
+
               </span>
 
               <p>
@@ -379,8 +454,15 @@
             </div>
 
             <div>
-              <span>ACCIDENT LOCATION</span>
-              <h2>Respond Here</h2>
+
+              <span>
+                {{ t('responderAccidentLocation') }}
+              </span>
+
+              <h2>
+                {{ t('responderRespondHere') }}
+              </h2>
+
             </div>
 
           </div>
@@ -394,7 +476,9 @@
 
             <div class="location-content">
 
-              <span>Reported location</span>
+              <span>
+                {{ t('responderReportedLocation') }}
+              </span>
 
               <strong>
                 {{ getLocationText() }}
@@ -415,8 +499,11 @@
             target="_blank"
             rel="noopener"
           >
+
             <i class="bi bi-map-fill"></i>
-            Open Location in Maps
+
+            {{ t('responderOpenLocationInMaps') }}
+
           </a>
 
         </section>
@@ -432,8 +519,15 @@
             </div>
 
             <div>
-              <span>ASSIGNMENT</span>
-              <h2>Responder</h2>
+
+              <span>
+                {{ t('responderAssignment') }}
+              </span>
+
+              <h2>
+                {{ t('responder') }}
+              </h2>
+
             </div>
 
           </div>
@@ -442,7 +536,9 @@
           <div class="responder-profile">
 
             <div class="responder-avatar">
+
               {{ responderName.substring(0, 2).toUpperCase() }}
+
             </div>
 
             <div class="responder-info">
@@ -456,15 +552,22 @@
               </span>
 
               <div class="responder-eta">
+
                 <i class="bi bi-clock-fill"></i>
-                ETA: {{ responderEta }}
+
+                {{ t('responderEta') }}:
+                {{ responderEta }}
+
               </div>
 
             </div>
 
             <div class="verified-badge">
+
               <i class="bi bi-patch-check-fill"></i>
-              Verified
+
+              {{ t('responderVerified') }}
+
             </div>
 
           </div>
@@ -483,26 +586,33 @@
 
             <div>
 
-              <span>OPTIONAL AI SUPPORT</span>
+              <span>
+                {{ t('responderOptionalAiSupport') }}
+              </span>
 
-              <h2>GoldenLink AI Assistant</h2>
+              <h2>
+                {{ t('responderGoldenLinkAiAssistant') }}
+              </h2>
 
               <p>
-                Get additional incident guidance and AI-assisted
-                emergency information.
+                {{ t('responderAiSupportDescription') }}
               </p>
 
             </div>
 
           </div>
 
+
           <button
             type="button"
             class="ai-button"
             (click)="openAI()"
           >
+
             <i class="bi bi-chat-dots-fill"></i>
-            Open AI Assistant
+
+            {{ t('responderOpenAiAssistant') }}
+
           </button>
 
         </section>
@@ -518,13 +628,15 @@
           <div>
 
             <span class="section-label">
-              RESPONSE CONTROL
+              {{ t('responderResponseControl') }}
             </span>
 
-            <h2>Update Response</h2>
+            <h2>
+              {{ t('responderUpdateResponse') }}
+            </h2>
 
             <p>
-              Keep the incident status updated as you respond.
+              {{ t('responderUpdateResponseDescription') }}
             </p>
 
           </div>
@@ -535,6 +647,7 @@
         <div class="action-buttons">
 
 
+          <!-- ON THE WAY -->
           @if (currentStatus === 'responder_assigned') {
 
             <button
@@ -545,13 +658,17 @@
             >
 
               @if (actionLoading) {
+
                 <span class="button-spinner"></span>
+
               } @else {
+
                 <i class="bi bi-car-front-fill"></i>
+
               }
 
               <span>
-                I'm On the Way
+                {{ t('responderImOnTheWay') }}
               </span>
 
               <i class="bi bi-arrow-right"></i>
@@ -561,6 +678,7 @@
           }
 
 
+          <!-- ARRIVED -->
           @if (currentStatus === 'responder_en_route') {
 
             <button
@@ -571,13 +689,17 @@
             >
 
               @if (actionLoading) {
+
                 <span class="button-spinner"></span>
+
               } @else {
+
                 <i class="bi bi-geo-alt-fill"></i>
+
               }
 
               <span>
-                I've Arrived
+                {{ t('responderIveArrived') }}
               </span>
 
               <i class="bi bi-arrow-right"></i>
@@ -587,6 +709,7 @@
           }
 
 
+          <!-- HANDOVER -->
           @if (currentStatus === 'on_scene') {
 
             <button
@@ -597,13 +720,17 @@
             >
 
               @if (actionLoading) {
+
                 <span class="button-spinner"></span>
+
               } @else {
+
                 <i class="bi bi-hospital-fill"></i>
+
               }
 
               <span>
-                Hand Over to Emergency Services
+                {{ t('responderHandOverEmergencyServices') }}
               </span>
 
               <i class="bi bi-arrow-right"></i>
@@ -613,6 +740,7 @@
           }
 
 
+          <!-- COMPLETE -->
           @if (currentStatus === 'handed_over') {
 
             <button
@@ -623,13 +751,17 @@
             >
 
               @if (actionLoading) {
+
                 <span class="button-spinner"></span>
+
               } @else {
+
                 <i class="bi bi-check-circle-fill"></i>
+
               }
 
               <span>
-                Complete Response
+                {{ t('responderCompleteResponse') }}
               </span>
 
               <i class="bi bi-arrow-right"></i>
@@ -639,6 +771,7 @@
           }
 
 
+          <!-- COMPLETED -->
           @if (currentStatus === 'completed') {
 
             <div class="completed-message">
@@ -646,10 +779,15 @@
               <i class="bi bi-check-circle-fill"></i>
 
               <div>
-                <strong>Response Completed</strong>
+
+                <strong>
+                  {{ t('responderResponseCompleted') }}
+                </strong>
+
                 <span>
-                  This incident has been successfully closed.
+                  {{ t('responderIncidentSuccessfullyClosed') }}
                 </span>
+
               </div>
 
             </div>
@@ -670,12 +808,12 @@
 
         <div>
 
-          <h3>GoldenLink responder principle</h3>
+          <h3>
+            {{ t('responderSafetyPrinciple') }}
+          </h3>
 
           <p>
-            Respond only when it is safe to do so.
-            Professional emergency services remain the primary
-            response for serious and life-threatening incidents.
+            {{ t('responderSafetyNote') }}
           </p>
 
         </div>
@@ -690,16 +828,23 @@
           type="button"
           (click)="goToAccidentRecords()"
         >
+
           <i class="bi bi-clock-history"></i>
-          Accident Records
+
+          {{ t('responderAccidentRecords') }}
+
         </button>
+
 
         <button
           type="button"
           (click)="openNearbyResponders()"
         >
+
           <i class="bi bi-people-fill"></i>
-          Nearby Responders
+
+          {{ t('responderViewNearbyResponders') }}
+
         </button>
 
       </section>

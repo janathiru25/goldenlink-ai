@@ -6,17 +6,16 @@
 
       <span class="section-label">
         <i class="bi bi-stars"></i>
-        Why GoldenLink?
+        {{ t('whyGoldenLink') }}
       </span>
 
       <h2>
-        Don't just report.
-        <span>Coordinate.</span>
+        {{ t('dontJustReport') }}
+        <span>{{ t('coordinate') }}</span>
       </h2>
 
       <p>
-        GoldenLink is designed to close the coordination gap between
-        an accident happening and effective help reaching the victim.
+        {{ t('whyGoldenLinkDescription') }}
       </p>
 
     </div>
@@ -24,7 +23,7 @@
 
     <div class="feature-grid">
 
-      @for (feature of features; track feature.title) {
+      @for (feature of features; track feature.titleKey) {
 
         <article class="feature-card">
 
@@ -35,11 +34,11 @@
           <div class="feature-content">
 
             <h3>
-              {{ feature.title }}
+              {{ t(feature.titleKey) }}
             </h3>
 
             <p>
-              {{ feature.description }}
+              {{ t(feature.descriptionKey) }}
             </p>
 
           </div>
@@ -60,17 +59,15 @@
       <div>
 
         <span class="innovation-label">
-          OUR CORE INNOVATION
+          {{ t('ourCoreInnovation') }}
         </span>
 
         <h3>
-          A coordination layer for the Golden Hour.
+          {{ t('coordinationLayerGoldenHour') }}
         </h3>
 
         <p>
-          Existing systems can call, inform or guide.
-          GoldenLink focuses on coordinating nearby people
-          into specific, safe actions.
+          {{ t('existingSystemsCanCall') }}
         </p>
 
       </div>

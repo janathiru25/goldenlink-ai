@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { TranslationService } from '../../../core/services/translation';
 
 @Component({
   selector: 'app-responder-profile',
@@ -9,6 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './responder-profile.scss',
 })
 export class ResponderProfile {
+  translation = inject(TranslationService);
 
   isAvailable = true;
 
@@ -24,11 +27,15 @@ export class ResponderProfile {
     distance: '3.2 km'
   };
 
+  t(key: string): string {
+    return this.translation.translate(key);
+  }
+
   toggleAvailability(): void {
     this.isAvailable = !this.isAvailable;
   }
 
   editProfile(): void {
-    alert('Profile editing will be available soon.');
+    alert(this.t('profileEditingSoon'));
   }
 }

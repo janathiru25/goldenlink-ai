@@ -4,26 +4,42 @@
   <div class="community-header">
 
     <div>
+
       <span class="section-eyebrow">
+
         <i class="bi bi-globe2"></i>
-        GOLDENLINK COMMUNITY
+
+        {{ t('nearbyCommunityGoldenLinkCommunity') }}
+
       </span>
 
-      <h1>Communities Near You</h1>
+
+      <h1>
+        {{ t('nearbyCommunityTitle') }}
+      </h1>
+
 
       <p>
-        Find nearby GoldenLink communities and connect with people
-        who can coordinate support when it matters.
+        {{ t('nearbyCommunityDescription') }}
       </p>
+
     </div>
 
+
     <div class="community-summary">
+
       <i class="bi bi-people-fill"></i>
 
       <div>
+
         <strong>960+</strong>
-        <span>community members nearby</span>
+
+        <span>
+          {{ t('nearbyCommunityMembersNearby') }}
+        </span>
+
       </div>
+
     </div>
 
   </div>
@@ -35,18 +51,31 @@
     <div class="map-content">
 
       <div class="map-icon">
+
         <i class="bi bi-geo-alt-fill"></i>
+
       </div>
 
-      <h2>Your nearby community network</h2>
+
+      <h2>
+        {{ t('nearbyCommunityNetwork') }}
+      </h2>
+
 
       <p>
-        Communities are shown based on your selected location.
+        {{ t('nearbyCommunityLocationDescription') }}
       </p>
 
-      <button type="button" class="btn btn-accent">
+
+      <button
+        type="button"
+        class="btn btn-accent"
+      >
+
         <i class="bi bi-crosshair"></i>
-        Use My Location
+
+        {{ t('nearbyCommunityUseMyLocation') }}
+
       </button>
 
     </div>
@@ -80,8 +109,9 @@
       [class.active]="activeFilter === 'ALL'"
       (click)="setFilter('ALL')"
     >
-      All communities
+      {{ t('nearbyCommunityAll') }}
     </button>
+
 
     <button
       type="button"
@@ -89,9 +119,13 @@
       [class.active]="activeFilter === 'ACTIVE'"
       (click)="setFilter('ACTIVE')"
     >
+
       <i class="bi bi-circle-fill"></i>
-      Active now
+
+      {{ t('nearbyCommunityActiveNowFilter') }}
+
     </button>
+
 
     <button
       type="button"
@@ -99,7 +133,7 @@
       [class.active]="activeFilter === 'QUIET'"
       (click)="setFilter('QUIET')"
     >
-      Quiet
+      {{ t('nearbyCommunityQuietFilter') }}
     </button>
 
   </div>
@@ -109,11 +143,16 @@
   <div class="results-heading">
 
     <div>
-      <h2>Nearby communities</h2>
+
+      <h2>
+        {{ t('nearbyCommunityNearbyCommunities') }}
+      </h2>
 
       <p>
-        {{ filteredCommunities.length }} communities available
+        {{ filteredCommunities.length }}
+        {{ t('nearbyCommunityCommunitiesAvailable') }}
       </p>
+
     </div>
 
   </div>
@@ -127,31 +166,43 @@
       *ngFor="let community of filteredCommunities"
     >
 
+      <!-- Card Header -->
       <div class="community-card-top">
 
         <div class="community-avatar">
           {{ community.initials }}
         </div>
 
+
         <div class="community-title">
 
           <div class="title-line">
 
-            <h3>{{ community.name }}</h3>
+            <h3>
+              {{ community.name }}
+            </h3>
+
 
             <span
               class="status-badge"
               [ngClass]="getStatusClass(community.status)"
             >
+
               <i class="bi bi-circle-fill"></i>
+
               {{ getStatusLabel(community.status) }}
+
             </span>
 
           </div>
 
+
           <p>
+
             <i class="bi bi-geo-alt"></i>
+
             {{ community.area }}
+
           </p>
 
         </div>
@@ -161,13 +212,17 @@
 
       <!-- Description -->
       <p class="community-description">
-        {{ community.description }}
+
+        {{ getDescription(community) }}
+
       </p>
 
 
       <!-- Category -->
       <span class="category">
-        {{ community.category }}
+
+        {{ getCategory(community) }}
+
       </span>
 
 
@@ -175,18 +230,41 @@
       <div class="community-stats">
 
         <div>
-          <strong>{{ community.distance }}</strong>
-          <span>Distance</span>
+
+          <strong>
+            {{ getDistance(community.distanceKm) }}
+          </strong>
+
+          <span>
+            {{ t('nearbyCommunityDistance') }}
+          </span>
+
         </div>
 
-        <div>
-          <strong>{{ community.members }}</strong>
-          <span>Members</span>
-        </div>
 
         <div>
-          <strong>{{ community.activeMembers }}</strong>
-          <span>Active now</span>
+
+          <strong>
+            {{ community.members }}
+          </strong>
+
+          <span>
+            {{ t('nearbyCommunityMembers') }}
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <strong>
+            {{ community.activeMembers }}
+          </strong>
+
+          <span>
+            {{ t('nearbyCommunityActiveNow') }}
+          </span>
+
         </div>
 
       </div>
@@ -200,16 +278,22 @@
           class="btn btn-outline-primary"
           (click)="viewCommunity(community)"
         >
-          View Community
+
+          {{ t('nearbyCommunityViewCommunity') }}
+
         </button>
+
 
         <button
           type="button"
           class="btn btn-accent"
           (click)="joinCommunity(community)"
         >
+
           <i class="bi bi-person-plus"></i>
-          Join
+
+          {{ t('nearbyCommunityJoin') }}
+
         </button>
 
       </div>
@@ -227,10 +311,14 @@
 
     <i class="bi bi-globe2"></i>
 
-    <h3>No communities found</h3>
+
+    <h3>
+      {{ t('nearbyCommunityNoCommunities') }}
+    </h3>
+
 
     <p>
-      Try changing the community filter.
+      {{ t('nearbyCommunityChangeFilter') }}
     </p>
 
   </div>

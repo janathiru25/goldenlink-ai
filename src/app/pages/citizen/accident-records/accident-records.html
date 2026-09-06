@@ -9,13 +9,15 @@
 
         <span class="page-badge">
           <i class="bi bi-clock-history"></i>
-          GoldenLink History
+          {{ t('accidentRecordsGoldenLinkHistory') }}
         </span>
 
-        <h1>Accident Records</h1>
+        <h1>
+          {{ t('accidentRecordsTitle') }}
+        </h1>
 
         <p>
-          Track the incidents you have reported and their response status.
+          {{ t('accidentRecordsDescription') }}
         </p>
 
       </div>
@@ -37,8 +39,13 @@
         </div>
 
         <div>
-          <span>Total Reports</span>
-          <strong>{{ records.length }}</strong>
+          <span>
+            {{ t('accidentRecordsTotalReports') }}
+          </span>
+
+          <strong>
+            {{ records.length }}
+          </strong>
         </div>
 
       </div>
@@ -51,8 +58,13 @@
         </div>
 
         <div>
-          <span>Active</span>
-          <strong>{{ activeCount }}</strong>
+          <span>
+            {{ t('accidentRecordsActive') }}
+          </span>
+
+          <strong>
+            {{ activeCount }}
+          </strong>
         </div>
 
       </div>
@@ -65,8 +77,13 @@
         </div>
 
         <div>
-          <span>Responders</span>
-          <strong>{{ totalResponders }}</strong>
+          <span>
+            {{ t('responders') }}
+          </span>
+
+          <strong>
+            {{ totalResponders }}
+          </strong>
         </div>
 
       </div>
@@ -79,7 +96,7 @@
 
       <div class="filter-title">
         <i class="bi bi-funnel"></i>
-        Filter incidents
+        {{ t('accidentRecordsFilterIncidents') }}
       </div>
 
       <div class="filter-buttons">
@@ -90,8 +107,9 @@
           [class.active]="activeFilter === 'ALL'"
           (click)="setFilter('ALL')"
         >
-          All
+          {{ t('all') }}
         </button>
+
 
         <button
           type="button"
@@ -99,8 +117,9 @@
           [class.active]="activeFilter === 'ACTIVE'"
           (click)="setFilter('ACTIVE')"
         >
-          Active
+          {{ t('accidentRecordsActive') }}
         </button>
+
 
         <button
           type="button"
@@ -108,8 +127,9 @@
           [class.active]="activeFilter === 'RESPONDING'"
           (click)="setFilter('RESPONDING')"
         >
-          Responding
+          {{ t('accidentRecordsResponding') }}
         </button>
+
 
         <button
           type="button"
@@ -117,8 +137,9 @@
           [class.active]="activeFilter === 'HANDED_OVER'"
           (click)="setFilter('HANDED_OVER')"
         >
-          Handed Over
+          {{ t('accidentRecordsHandedOver') }}
         </button>
+
 
         <button
           type="button"
@@ -126,7 +147,7 @@
           [class.active]="activeFilter === 'COMPLETED'"
           (click)="setFilter('COMPLETED')"
         >
-          Completed
+          {{ t('accidentRecordsCompleted') }}
         </button>
 
       </div>
@@ -146,7 +167,9 @@
 
             <div class="incident-icon">
 
-              <i [class]="'bi ' + record.icon"></i>
+              <i
+                [class]="'bi ' + record.icon"
+              ></i>
 
             </div>
 
@@ -179,7 +202,7 @@
                     <i class="bi bi-check-circle"></i>
                   }
 
-                  {{ record.status.replace('_', ' ') }}
+                  {{ getStatusDisplay(record.status) }}
 
                 </span>
 
@@ -225,12 +248,14 @@
 
             </div>
 
+
             <div class="meta-item">
 
               <i class="bi bi-people"></i>
 
               <span>
-                {{ record.responders }} responders
+                {{ record.responders }}
+                {{ t('responders') }}
               </span>
 
             </div>
@@ -261,7 +286,7 @@
           >
 
             <span>
-              View Incident
+              {{ t('accidentRecordsViewIncident') }}
             </span>
 
             <i class="bi bi-arrow-right"></i>
@@ -283,11 +308,11 @@
           </div>
 
           <h2>
-            No incidents found
+            {{ t('accidentRecordsNoIncidentsFound') }}
           </h2>
 
           <p>
-            There are no accident records in this category.
+            {{ t('accidentRecordsNoRecordsCategory') }}
           </p>
 
         </div>
@@ -326,11 +351,11 @@
           <div>
 
             <span>
-              GoldenLink Incident
+              {{ t('accidentRecordsGoldenLinkIncident') }}
             </span>
 
             <h2>
-              Incident Details
+              {{ t('accidentRecordsIncidentDetails') }}
             </h2>
 
           </div>
@@ -340,7 +365,7 @@
         <button
           type="button"
           class="modal-close"
-          aria-label="Close incident details"
+          [attr.aria-label]="t('accidentRecordsCloseIncidentDetails')"
           (click)="closeIncidentDetails()"
         >
           <i class="bi bi-x-lg"></i>
@@ -352,7 +377,9 @@
       <!-- INCIDENT ID -->
       <div class="incident-reference">
 
-        <span>Incident ID</span>
+        <span>
+          {{ t('accidentRecordsIncidentId') }}
+        </span>
 
         <strong>
           {{ selectedIncident.id }}
@@ -371,12 +398,16 @@
 
           <i class="bi bi-activity"></i>
 
-          {{ selectedIncident.incident.status.replace('_', ' ') }}
+          {{ getStatusDisplay(
+            selectedIncident.incident.status
+          ) }}
 
         </span>
 
         <span>
-          {{ getIncidentStatusText(selectedIncident.incident) }}
+          {{ getIncidentStatusText(
+            selectedIncident.incident
+          ) }}
         </span>
 
       </div>
@@ -394,7 +425,9 @@
 
           <div>
 
-            <span>Accident Type</span>
+            <span>
+              {{ t('accidentRecordsAccidentType') }}
+            </span>
 
             <strong>
               {{ selectedIncident.incident.accidentType }}
@@ -409,20 +442,30 @@
         <div class="detail-item">
 
           <div class="detail-icon">
+
             <i
               class="bi"
-              [ngClass]="getSeverityClass(selectedIncident.incident.severity)"
+              [ngClass]="getSeverityClass(
+                selectedIncident.incident.severity
+              )"
             ></i>
+
           </div>
 
           <div>
 
-            <span>Severity</span>
+            <span>
+              {{ t('accidentRecordsSeverity') }}
+            </span>
 
             <strong
-              [ngClass]="getSeverityClass(selectedIncident.incident.severity)"
+              [ngClass]="getSeverityClass(
+                selectedIncident.incident.severity
+              )"
             >
-              {{ getSeverityLabel(selectedIncident.incident.severity) }}
+              {{ getSeverityLabel(
+                selectedIncident.incident.severity
+              ) }}
             </strong>
 
           </div>
@@ -439,11 +482,20 @@
 
           <div>
 
-            <span>Victims</span>
+            <span>
+              {{ t('accidentRecordsVictims') }}
+            </span>
 
             <strong>
+
               {{ selectedIncident.incident.victims }}
-              {{ selectedIncident.incident.victims === 1 ? 'person' : 'people' }}
+
+              {{
+                selectedIncident.incident.victims === 1
+                  ? t('person')
+                  : t('people')
+              }}
+
             </strong>
 
           </div>
@@ -460,7 +512,9 @@
 
           <div>
 
-            <span>Reported</span>
+            <span>
+              {{ t('reported') }}
+            </span>
 
             <strong>
               {{ selectedIncident.reportedAt }}
@@ -478,14 +532,16 @@
 
         <h3>
           <i class="bi bi-heart-pulse"></i>
-          Victim Information
+          {{ t('accidentRecordsVictimInformation') }}
         </h3>
 
         <div class="condition-list">
 
           <div
             class="condition"
-            [class.active]="selectedIncident.incident.unconscious"
+            [class.active]="
+              selectedIncident.incident.unconscious
+            "
           >
 
             <i
@@ -498,7 +554,7 @@
             ></i>
 
             <span>
-              Someone is unconscious
+              {{ t('accidentRecordsSomeoneUnconscious') }}
             </span>
 
           </div>
@@ -506,7 +562,9 @@
 
           <div
             class="condition"
-            [class.active]="selectedIncident.incident.bleeding"
+            [class.active]="
+              selectedIncident.incident.bleeding
+            "
           >
 
             <i
@@ -519,7 +577,7 @@
             ></i>
 
             <span>
-              Heavy bleeding reported
+              {{ t('accidentRecordsHeavyBleeding') }}
             </span>
 
           </div>
@@ -527,7 +585,9 @@
 
           <div
             class="condition"
-            [class.active]="selectedIncident.incident.breathingDifficulty"
+            [class.active]="
+              selectedIncident.incident.breathingDifficulty
+            "
           >
 
             <i
@@ -540,7 +600,7 @@
             ></i>
 
             <span>
-              Breathing difficulty
+              {{ t('breathingDifficulty') }}
             </span>
 
           </div>
@@ -548,7 +608,9 @@
 
           <div
             class="condition"
-            [class.active]="selectedIncident.incident.trapped"
+            [class.active]="
+              selectedIncident.incident.trapped
+            "
           >
 
             <i
@@ -561,7 +623,7 @@
             ></i>
 
             <span>
-              Person trapped or unable to move
+              {{ t('accidentRecordsPersonTrapped') }}
             </span>
 
           </div>
@@ -578,7 +640,7 @@
 
           <h3>
             <i class="bi bi-geo-alt-fill"></i>
-            Incident Location
+            {{ t('accidentRecordsIncidentLocation') }}
           </h3>
 
           <a
@@ -586,7 +648,7 @@
             target="_blank"
             rel="noopener noreferrer"
           >
-            Open in Maps
+            {{ t('accidentRecordsOpenInMaps') }}
             <i class="bi bi-box-arrow-up-right"></i>
           </a>
 
@@ -617,7 +679,7 @@
 
         <h3>
           <i class="bi bi-person-badge-fill"></i>
-          Responder
+          {{ t('responder') }}
         </h3>
 
         <div class="responder-box">
@@ -631,15 +693,22 @@
           <div class="responder-info">
 
             <strong>
-              {{ getResponderName(selectedIncident.incident) }}
+              {{ getResponderName(
+                selectedIncident.incident
+              ) }}
             </strong>
 
             <span>
-              {{ getResponderRole(selectedIncident.incident) }}
+              {{ getResponderRole(
+                selectedIncident.incident
+              ) }}
             </span>
 
             <small>
-              ETA: {{ getResponderEta(selectedIncident.incident) }}
+              {{ t('eta') }}:
+              {{ getResponderEta(
+                selectedIncident.incident
+              ) }}
             </small>
 
           </div>
@@ -654,7 +723,7 @@
 
         <h3>
           <i class="bi bi-chat-left-text-fill"></i>
-          Report Description
+          {{ t('accidentRecordsReportDescription') }}
         </h3>
 
         <p>
@@ -678,11 +747,11 @@
             <div>
 
               <h3>
-                AI Assessment
+                {{ t('accidentRecordsAiAssessment') }}
               </h3>
 
               <span>
-                GoldenLink AI analysis
+                {{ t('accidentRecordsGoldenLinkAiAnalysis') }}
               </span>
 
             </div>
@@ -694,15 +763,13 @@
             <div class="ai-severity">
 
               <span>
-                Severity
+                {{ t('accidentRecordsSeverity') }}
               </span>
 
               <strong>
-                {{
-                  getSeverityLabel(
-                    selectedIncident.incident.aiAssessment.severity
-                  )
-                }}
+                {{ getSeverityLabel(
+                  selectedIncident.incident.aiAssessment.severity
+                ) }}
               </strong>
 
             </div>
@@ -710,13 +777,14 @@
             <div class="ai-confidence">
 
               <span>
-                Confidence
+                {{ t('accidentRecordsConfidence') }}
               </span>
 
               <strong>
                 {{
-                  (selectedIncident.incident.aiAssessment.confidence * 100)
-                    | number:'1.0-0'
+                  (
+                    selectedIncident.incident.aiAssessment.confidence * 100
+                  ) | number:'1.0-0'
                 }}%
               </strong>
 
@@ -725,7 +793,9 @@
           </div>
 
           <p class="ai-summary">
-            {{ selectedIncident.incident.aiAssessment.summary }}
+            {{
+              selectedIncident.incident.aiAssessment.summary
+            }}
           </p>
 
         </div>
@@ -741,7 +811,7 @@
           class="close-button"
           (click)="closeIncidentDetails()"
         >
-          Close Details
+          {{ t('accidentRecordsCloseDetails') }}
         </button>
 
       </div>

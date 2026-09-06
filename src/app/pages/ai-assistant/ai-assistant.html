@@ -6,23 +6,25 @@
     <div class="d-flex align-items-center justify-content-between mb-4">
 
       <div>
+
         <div class="d-flex align-items-center gap-2 mb-1">
 
           <span class="ai-status-dot"></span>
 
           <span class="text-success fw-semibold small">
-            GOLDENLINK AI
+            {{ t('aiGoldenLinkAi') }}
           </span>
 
         </div>
 
         <h1 class="fw-bold mb-1">
-          Emergency Assistant
+          {{ t('aiEmergencyAssistant') }}
         </h1>
 
         <p class="text-muted mb-0">
-          AI-assisted incident assessment and response coordination
+          {{ t('aiAssistantDescription') }}
         </p>
+
       </div>
 
 
@@ -34,7 +36,7 @@
 
         <i class="bi bi-arrow-left me-2"></i>
 
-        Back
+        {{ t('back') }}
 
       </button>
 
@@ -46,9 +48,7 @@
     <div class="row g-4">
 
 
-      <!-- =================================================
-           CHAT
-      ================================================== -->
+      <!-- CHAT -->
 
       <div class="col-lg-7">
 
@@ -70,11 +70,11 @@
               <div>
 
                 <h5 class="mb-0 fw-bold">
-                  GoldenLink AI
+                  {{ t('aiGoldenLinkAi') }}
                 </h5>
 
                 <small class="text-success">
-                  Emergency-response assistant
+                  {{ t('aiEmergencyResponseAssistant') }}
                 </small>
 
               </div>
@@ -84,9 +84,7 @@
           </div>
 
 
-          <!-- =================================================
-               CHAT BODY
-          ================================================== -->
+          <!-- CHAT BODY -->
 
           <div class="chat-body">
 
@@ -155,10 +153,7 @@
           </div>
 
 
-          <!-- =================================================
-               QUICK ANSWERS
-               Only shown while assessment questions are active
-          ================================================== -->
+          <!-- QUICK ANSWERS -->
 
           @if (
             !assessmentComplete &&
@@ -167,6 +162,7 @@
 
             <div class="quick-actions px-3 pt-3">
 
+
               @if (currentQuestion === 0) {
 
                 <button
@@ -174,7 +170,7 @@
                   class="btn btn-outline-success btn-sm"
                   (click)="quickAnswer('Yes')"
                 >
-                  Yes
+                  {{ t('yes') }}
                 </button>
 
 
@@ -183,7 +179,7 @@
                   class="btn btn-outline-secondary btn-sm"
                   (click)="quickAnswer('No')"
                 >
-                  No
+                  {{ t('no') }}
                 </button>
 
               }
@@ -199,7 +195,7 @@
                   class="btn btn-outline-danger btn-sm"
                   (click)="quickAnswer('Yes')"
                 >
-                  Yes
+                  {{ t('yes') }}
                 </button>
 
 
@@ -208,7 +204,7 @@
                   class="btn btn-outline-secondary btn-sm"
                   (click)="quickAnswer('No')"
                 >
-                  No
+                  {{ t('no') }}
                 </button>
 
               }
@@ -218,12 +214,7 @@
           }
 
 
-          <!-- =================================================
-               AI SEARCH / CHAT INPUT
-
-               IMPORTANT:
-               This is ALWAYS visible.
-          ================================================== -->
+          <!-- AI SEARCH / CHAT INPUT -->
 
           <div class="chat-input p-3">
 
@@ -233,7 +224,7 @@
                 type="text"
                 class="form-control"
                 [(ngModel)]="userMessage"
-                placeholder="Ask GoldenLink AI anything..."
+                [placeholder]="t('aiAskAnythingPlaceholder')"
                 autocomplete="off"
                 (keyup.enter)="sendMessage()"
               />
@@ -243,7 +234,7 @@
                 type="button"
                 class="btn btn-success"
                 (click)="sendMessage()"
-                aria-label="Send message"
+                [attr.aria-label]="t('aiSendMessage')"
               >
 
                 <i class="bi bi-send-fill"></i>
@@ -258,17 +249,14 @@
               <i class="bi bi-stars text-success"></i>
 
               <small class="text-muted">
-                Ask about this incident, emergency response,
-                bleeding, breathing difficulty, responders,
-                or what to do while waiting for help.
+                {{ t('aiInputHelp') }}
               </small>
 
             </div>
 
 
             <small class="text-muted d-block mt-2">
-              GoldenLink AI provides response coordination assistance,
-              not medical diagnosis.
+              {{ t('aiDisclaimer') }}
             </small>
 
           </div>
@@ -278,10 +266,7 @@
       </div>
 
 
-
-      <!-- =================================================
-           ASSESSMENT
-      ================================================== -->
+      <!-- ASSESSMENT -->
 
       <div class="col-lg-5">
 
@@ -299,7 +284,7 @@
               <div>
 
                 <span class="text-muted small">
-                  INCIDENT
+                  {{ t('incident') }}
                 </span>
 
                 <h5 class="fw-bold mb-0">
@@ -310,15 +295,13 @@
 
 
               <span class="badge bg-light text-dark">
-                AI Assessment
+                {{ t('aiAssessment') }}
               </span>
 
             </div>
 
 
-            <!-- =================================================
-                 WAITING
-            ================================================== -->
+            <!-- WAITING -->
 
             @if (!assessmentComplete) {
 
@@ -333,13 +316,12 @@
                 </div>
 
                 <h5 class="fw-bold">
-                  Assessment in progress
+                  {{ t('aiAssessmentInProgress') }}
                 </h5>
 
                 <p class="text-muted small mb-0">
 
-                  Answer the questions to help GoldenLink
-                  understand the emergency.
+                  {{ t('aiAssessmentWaitingDescription') }}
 
                 </p>
 
@@ -348,9 +330,7 @@
             }
 
 
-            <!-- =================================================
-                 ASSESSMENT RESULT
-            ================================================== -->
+            <!-- ASSESSMENT RESULT -->
 
             @if (assessmentComplete) {
 
@@ -396,7 +376,7 @@
                   <div>
 
                     <small>
-                      AI INCIDENT ASSESSMENT
+                      {{ t('aiIncidentAssessment') }}
                     </small>
 
                     <h2 class="fw-bold mb-0">
@@ -418,7 +398,7 @@
                     <div class="stat-box">
 
                       <small class="text-muted">
-                        Victims
+                        {{ t('victims') }}
                       </small>
 
                       <strong>
@@ -435,7 +415,7 @@
                     <div class="stat-box">
 
                       <small class="text-muted">
-                        Confidence
+                        {{ t('confidence') }}
                       </small>
 
                       <strong>
@@ -452,7 +432,7 @@
                 <!-- CONDITIONS -->
 
                 <h6 class="fw-bold mb-3">
-                  Reported conditions
+                  {{ t('aiReportedConditions') }}
                 </h6>
 
 
@@ -464,7 +444,7 @@
                   <div class="condition-item">
 
                     <span>
-                      Unconscious
+                      {{ t('unconscious') }}
                     </span>
 
                     @if (incident.unconscious) {
@@ -472,7 +452,7 @@
                       <span
                         class="text-danger fw-semibold"
                       >
-                        Yes
+                        {{ t('yes') }}
                       </span>
 
                     }
@@ -482,7 +462,7 @@
                       <span
                         class="text-success fw-semibold"
                       >
-                        No
+                        {{ t('no') }}
                       </span>
 
                     }
@@ -495,7 +475,7 @@
                   <div class="condition-item">
 
                     <span>
-                      Bleeding
+                      {{ t('bleeding') }}
                     </span>
 
                     @if (incident.bleeding) {
@@ -503,7 +483,7 @@
                       <span
                         class="text-danger fw-semibold"
                       >
-                        Yes
+                        {{ t('yes') }}
                       </span>
 
                     }
@@ -513,7 +493,7 @@
                       <span
                         class="text-success fw-semibold"
                       >
-                        No
+                        {{ t('no') }}
                       </span>
 
                     }
@@ -526,7 +506,7 @@
                   <div class="condition-item">
 
                     <span>
-                      Breathing difficulty
+                      {{ t('breathingDifficulty') }}
                     </span>
 
                     @if (
@@ -536,7 +516,7 @@
                       <span
                         class="text-danger fw-semibold"
                       >
-                        Yes
+                        {{ t('yes') }}
                       </span>
 
                     }
@@ -546,7 +526,7 @@
                       <span
                         class="text-success fw-semibold"
                       >
-                        No
+                        {{ t('no') }}
                       </span>
 
                     }
@@ -559,7 +539,7 @@
                   <div class="condition-item">
 
                     <span>
-                      Trapped
+                      {{ t('trapped') }}
                     </span>
 
                     @if (incident.trapped) {
@@ -567,7 +547,7 @@
                       <span
                         class="text-danger fw-semibold"
                       >
-                        Yes
+                        {{ t('yes') }}
                       </span>
 
                     }
@@ -577,7 +557,7 @@
                       <span
                         class="text-success fw-semibold"
                       >
-                        No
+                        {{ t('no') }}
                       </span>
 
                     }
@@ -587,9 +567,7 @@
                 </div>
 
 
-                <!-- =================================================
-                     SUMMARY
-                ================================================== -->
+                <!-- SUMMARY -->
 
                 <div class="summary-box mt-4">
 
@@ -605,7 +583,7 @@
                       <strong
                         class="d-block mb-1"
                       >
-                        AI assessment
+                        {{ t('aiAssessment') }}
                       </strong>
 
                       <p
@@ -621,9 +599,7 @@
                 </div>
 
 
-                <!-- =================================================
-                     RESPONSE BUTTON
-                ================================================== -->
+                <!-- RESPONSE BUTTON -->
 
                 <button
                   type="button"
@@ -635,7 +611,7 @@
                     class="bi bi-broadcast me-2"
                   ></i>
 
-                  Activate Community Response
+                  {{ t('aiActivateCommunityResponse') }}
 
                 </button>
 
@@ -648,9 +624,7 @@
         </div>
 
 
-        <!-- =================================================
-             SAFETY NOTE
-        ================================================== -->
+        <!-- SAFETY NOTE -->
 
         <div
           class="alert alert-light border mt-3 small"
@@ -660,8 +634,7 @@
             class="bi bi-shield-check text-success me-2"
           ></i>
 
-          Stay in a safe location and follow instructions
-          from emergency services.
+          {{ t('aiSafetyNote') }}
 
         </div>
 

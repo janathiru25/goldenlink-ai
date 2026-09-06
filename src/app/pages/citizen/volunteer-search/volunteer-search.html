@@ -2,32 +2,56 @@
 
   <!-- Header -->
   <div class="volunteer-header">
+
     <div>
+
       <span class="section-eyebrow">
+
         <i class="bi bi-people-fill"></i>
-        GOLDENLINK COMMUNITY
+
+        {{ t('volunteerGoldenLinkCommunity') }}
+
       </span>
 
-      <h1>Find Nearby Volunteers</h1>
+
+      <h1>
+        {{ t('volunteerSearchTitle') }}
+      </h1>
+
 
       <p>
-        Connect with trusted community responders who are nearby
-        and available to help.
+        {{ t('volunteerSearchDescription') }}
       </p>
+
     </div>
 
+
     <div class="location-card">
+
       <i class="bi bi-geo-alt-fill"></i>
 
       <div>
-        <small>Your location</small>
-        <strong>Chennai, Tamil Nadu</strong>
+
+        <small>
+          {{ t('volunteerYourLocation') }}
+        </small>
+
+        <strong>
+          Chennai, Tamil Nadu
+        </strong>
+
       </div>
 
-      <button class="location-button" type="button">
-        Change
+
+      <button
+        class="location-button"
+        type="button"
+      >
+        {{ t('volunteerChange') }}
       </button>
+
     </div>
+
   </div>
 
 
@@ -35,18 +59,27 @@
   <div class="search-panel">
 
     <div class="search-box">
+
       <i class="bi bi-search"></i>
 
       <input
         type="text"
-        placeholder="Search volunteers, skills or area..."
-        aria-label="Search volunteers"
+        [placeholder]="t('volunteerSearchPlaceholder')"
+        [attr.aria-label]="t('volunteerSearchAriaLabel')"
       />
+
     </div>
 
-    <button class="btn btn-primary search-button" type="button">
+
+    <button
+      class="btn btn-primary search-button"
+      type="button"
+    >
+
       <i class="bi bi-search"></i>
-      Search
+
+      {{ t('volunteerSearchButton') }}
+
     </button>
 
   </div>
@@ -61,8 +94,9 @@
       [class.active]="activeFilter === 'ALL'"
       (click)="setFilter('ALL')"
     >
-      All
+      {{ t('volunteerAll') }}
     </button>
+
 
     <button
       type="button"
@@ -70,9 +104,13 @@
       [class.active]="activeFilter === 'AVAILABLE'"
       (click)="setFilter('AVAILABLE')"
     >
+
       <i class="bi bi-circle-fill"></i>
-      Available
+
+      {{ t('volunteerAvailable') }}
+
     </button>
+
 
     <button
       type="button"
@@ -80,7 +118,7 @@
       [class.active]="activeFilter === 'RESPONDING'"
       (click)="setFilter('RESPONDING')"
     >
-      Responding
+      {{ t('volunteerResponding') }}
     </button>
 
   </div>
@@ -90,16 +128,25 @@
   <div class="results-summary">
 
     <div>
-      <h2>Nearby responders</h2>
+
+      <h2>
+        {{ t('volunteerNearbyResponders') }}
+      </h2>
 
       <p>
-        {{ filteredVolunteers.length }} community members found
+        {{ filteredVolunteers.length }}
+        {{ t('volunteerMembersFound') }}
       </p>
+
     </div>
 
+
     <div class="trust-note">
+
       <i class="bi bi-shield-check"></i>
-      Community verified
+
+      {{ t('volunteerCommunityVerified') }}
+
     </div>
 
   </div>
@@ -119,19 +166,29 @@
           {{ volunteer.initials }}
         </div>
 
+
         <div class="volunteer-main">
 
           <div class="name-row">
-            <h3>{{ volunteer.name }}</h3>
+
+            <h3>
+              {{ volunteer.name }}
+            </h3>
+
 
             <span
               class="status-badge"
               [ngClass]="getStatusClass(volunteer.status)"
             >
+
               <i class="bi bi-circle-fill"></i>
+
               {{ getStatusLabel(volunteer.status) }}
+
             </span>
+
           </div>
+
 
           <p class="role">
             {{ volunteer.role }}
@@ -146,30 +203,59 @@
       <div class="volunteer-details">
 
         <div class="detail-item">
+
           <i class="bi bi-geo-alt"></i>
 
           <div>
-            <small>Distance</small>
-            <strong>{{ volunteer.distance }}</strong>
+
+            <small>
+              {{ t('volunteerDistance') }}
+            </small>
+
+            <strong>
+              {{ volunteer.distance }}
+            </strong>
+
           </div>
+
         </div>
 
+
         <div class="detail-item">
+
           <i class="bi bi-stopwatch"></i>
 
           <div>
-            <small>Response</small>
-            <strong>{{ volunteer.responseTime }}</strong>
+
+            <small>
+              {{ t('volunteerResponse') }}
+            </small>
+
+            <strong>
+              {{ volunteer.responseTime }}
+            </strong>
+
           </div>
+
         </div>
 
+
         <div class="detail-item">
+
           <i class="bi bi-star-fill"></i>
 
           <div>
-            <small>Rating</small>
-            <strong>{{ volunteer.rating }}</strong>
+
+            <small>
+              {{ t('volunteerRating') }}
+            </small>
+
+            <strong>
+              {{ volunteer.rating }}
+            </strong>
+
           </div>
+
         </div>
 
       </div>
@@ -192,9 +278,14 @@
       <div class="card-footer">
 
         <span class="incident-count">
+
           <i class="bi bi-check-circle"></i>
-          {{ volunteer.incidents }} responses
+
+          {{ volunteer.incidents }}
+          {{ t('volunteerResponses') }}
+
         </span>
+
 
         <div class="card-actions">
 
@@ -203,8 +294,9 @@
             class="btn btn-outline-primary"
             (click)="viewVolunteer(volunteer)"
           >
-            View
+            {{ t('volunteerView') }}
           </button>
+
 
           <button
             type="button"
@@ -212,8 +304,11 @@
             [disabled]="volunteer.status !== 'AVAILABLE'"
             (click)="requestHelp(volunteer)"
           >
+
             <i class="bi bi-hand-thumbs-up"></i>
-            Request Help
+
+            {{ t('volunteerRequestHelp') }}
+
           </button>
 
         </div>
@@ -230,13 +325,19 @@
     class="empty-state"
     *ngIf="filteredVolunteers.length === 0"
   >
+
     <i class="bi bi-people"></i>
 
-    <h3>No volunteers found</h3>
+
+    <h3>
+      {{ t('volunteerNoVolunteers') }}
+    </h3>
+
 
     <p>
-      Try another filter or search area.
+      {{ t('volunteerTryAnotherFilter') }}
     </p>
+
   </div>
 
 </section>

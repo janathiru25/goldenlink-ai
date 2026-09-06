@@ -3,20 +3,26 @@
   <div class="page-header">
 
     <div>
-      <span class="eyebrow">RESPONDER ACCOUNT</span>
+      <span class="eyebrow">
+        {{ t('responderAccount') }}
+      </span>
 
-      <h1>My Profile</h1>
+      <h1>
+        {{ t('myProfile') }}
+      </h1>
 
       <p>
-        Manage your responder information and availability.
+        {{ t('responderProfileDescription') }}
       </p>
     </div>
 
     <button
       class="edit-button"
-      (click)="editProfile()">
+      type="button"
+      (click)="editProfile()"
+    >
       <i class="bi bi-pencil"></i>
-      Edit Profile
+      {{ t('editProfile') }}
     </button>
 
   </div>
@@ -34,26 +40,39 @@
           {{ responder.name.charAt(0) }}
         </div>
 
-        <h2>{{ responder.name }}</h2>
+        <h2>
+          {{ responder.name }}
+        </h2>
 
-        <p class="role">{{ responder.role }}</p>
+        <p class="role">
+          {{ responder.role }}
+        </p>
 
         <div
           class="availability-status"
-          [class.unavailable]="!isAvailable">
+          [class.unavailable]="!isAvailable"
+        >
 
           <span></span>
 
-          {{ isAvailable ? 'Available to respond' : 'Currently unavailable' }}
+          {{
+            isAvailable
+              ? t('availableToRespond')
+              : t('currentlyUnavailable')
+          }}
 
         </div>
 
 
         <div class="profile-id">
 
-          <span>Responder ID</span>
+          <span>
+            {{ t('responderId') }}
+          </span>
 
-          <strong>{{ responder.responderId }}</strong>
+          <strong>
+            {{ responder.responderId }}
+          </strong>
 
         </div>
 
@@ -67,27 +86,44 @@
       <div class="availability-card">
 
         <div>
-          <span class="card-label">Responder availability</span>
+
+          <span class="card-label">
+            {{ t('responderAvailability') }}
+          </span>
 
           <h3>
-            {{ isAvailable ? 'You are available' : 'You are unavailable' }}
+            {{
+              isAvailable
+                ? t('youAreAvailable')
+                : t('youAreUnavailable')
+            }}
           </h3>
 
           <p>
-            {{ isAvailable
-              ? 'You can receive nearby emergency response requests.'
-              : 'You will not receive new response requests.' }}
+            {{
+              isAvailable
+                ? t('availableDescription')
+                : t('unavailableDescription')
+            }}
           </p>
+
         </div>
 
+
         <button
+          type="button"
           class="availability-toggle"
           [class.off]="!isAvailable"
-          (click)="toggleAvailability()">
+          (click)="toggleAvailability()"
+        >
 
           <span></span>
 
-          {{ isAvailable ? 'Available' : 'Unavailable' }}
+          {{
+            isAvailable
+              ? t('available')
+              : t('unavailable')
+          }}
 
         </button>
 
@@ -97,29 +133,47 @@
       <div class="stats-grid">
 
         <div class="stat-card">
+
           <i class="bi bi-check-circle-fill"></i>
 
-          <span>Responses</span>
+          <span>
+            {{ t('responses') }}
+          </span>
 
-          <strong>{{ responder.responses }}</strong>
+          <strong>
+            {{ responder.responses }}
+          </strong>
+
         </div>
 
 
         <div class="stat-card">
+
           <i class="bi bi-shield-check"></i>
 
-          <span>Successful</span>
+          <span>
+            {{ t('successful') }}
+          </span>
 
-          <strong>{{ responder.successfulResponses }}</strong>
+          <strong>
+            {{ responder.successfulResponses }}
+          </strong>
+
         </div>
 
 
         <div class="stat-card">
+
           <i class="bi bi-star-fill"></i>
 
-          <span>Rating</span>
+          <span>
+            {{ t('rating') }}
+          </span>
 
-          <strong>{{ responder.rating }}</strong>
+          <strong>
+            {{ responder.rating }}
+          </strong>
+
         </div>
 
       </div>
@@ -127,7 +181,9 @@
 
       <div class="information-card">
 
-        <h2>Responder Information</h2>
+        <h2>
+          {{ t('responderInformation') }}
+        </h2>
 
 
         <div class="info-row">
@@ -137,8 +193,15 @@
           </div>
 
           <div>
-            <span>Current area</span>
-            <strong>{{ responder.location }}</strong>
+
+            <span>
+              {{ t('currentArea') }}
+            </span>
+
+            <strong>
+              {{ responder.location }}
+            </strong>
+
           </div>
 
         </div>
@@ -151,8 +214,15 @@
           </div>
 
           <div>
-            <span>Joined GoldenLink AI</span>
-            <strong>{{ responder.joined }}</strong>
+
+            <span>
+              {{ t('joinedGoldenLink') }}
+            </span>
+
+            <strong>
+              {{ responder.joined }}
+            </strong>
+
           </div>
 
         </div>
@@ -165,8 +235,15 @@
           </div>
 
           <div>
-            <span>Response radius</span>
-            <strong>{{ responder.distance }}</strong>
+
+            <span>
+              {{ t('responseRadius') }}
+            </span>
+
+            <strong>
+              {{ responder.distance }}
+            </strong>
+
           </div>
 
         </div>
@@ -181,12 +258,15 @@
         </div>
 
         <div>
-          <h3>Respond safely</h3>
+
+          <h3>
+            {{ t('respondSafely') }}
+          </h3>
 
           <p>
-            Only respond when it is safe to do so. Follow emergency
-            instructions and never put yourself at risk.
+            {{ t('respondSafelyDescription') }}
           </p>
+
         </div>
 
       </div>

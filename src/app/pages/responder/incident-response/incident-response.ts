@@ -1,15 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { TranslationService } from '../../../core/services/translation';
 
 interface Incident {
   id: string;
-  type: string;
+  type: 'ROAD_ACCIDENT' | 'TWO_WHEELER_ACCIDENT' | 'PEDESTRIAN_INCIDENT';
   location: string;
-  distance: string;
-  reportedAt: string;
+  distanceKm: number;
+  reportedMinutesAgo: number;
   status: 'ACTIVE' | 'RESPONDING' | 'HANDED_OVER';
   people: number;
-  description: string;
+  descriptionKey:
+    | 'incidentRoadAccidentDescription'
+    | 'incidentTwoWheelerDescription'
+    | 'incidentPedestrianDescription';
 }
 
 @Component({
@@ -21,105 +26,328 @@ interface Incident {
 })
 export class IncidentResponse {
 
-  activeTab = 'ACTIVE';
+  readonly translation =
+    inject(TranslationService);
+
+  activeTab =
+    'ACTIVE';
 
   incidents: Incident[] = [
+
     {
       id: 'GL-2026-001',
-      type: 'Road Accident',
+      type: 'ROAD_ACCIDENT',
       location: 'Anna Salai, Chennai',
-      distance: '1.2 km away',
-      reportedAt: '4 minutes ago',
+      distanceKm: 1.2,
+      reportedMinutesAgo: 4,
       status: 'ACTIVE',
       people: 3,
-      description: 'Road accident reported. Community assistance is required.'
+      descriptionKey:
+        'incidentRoadAccidentDescription'
     },
+
     {
       id: 'GL-2026-002',
-      type: 'Two-Wheeler Accident',
+      type: 'TWO_WHEELER_ACCIDENT',
       location: 'RS Puram, Coimbatore',
-      distance: '2.4 km away',
-      reportedAt: '12 minutes ago',
+      distanceKm: 2.4,
+      reportedMinutesAgo: 12,
       status: 'RESPONDING',
       people: 2,
-      description: 'Responders are currently moving toward the incident.'
+      descriptionKey:
+        'incidentTwoWheelerDescription'
     },
+
     {
       id: 'GL-2026-003',
-      type: 'Pedestrian Incident',
+      type: 'PEDESTRIAN_INCIDENT',
       location: 'Trichy Road, Coimbatore',
-      distance: '3.1 km away',
-      reportedAt: '28 minutes ago',
+      distanceKm: 3.1,
+      reportedMinutesAgo: 28,
       status: 'HANDED_OVER',
       people: 4,
-      description: 'Professional emergency responders have taken over.'
+      descriptionKey:
+        'incidentPedestrianDescription'
     }
+
   ];
 
+
+  // --------------------------------------------------
+  // Translation
+  // --------------------------------------------------
+
+  t(key: string): string {
+    return this.translation.translate(key);
+  }
+
+
+  // --------------------------------------------------
+  // Filtered incidents
+  // --------------------------------------------------
+
   get filteredIncidents(): Incident[] {
+
     if (this.activeTab === 'ALL') {
       return this.incidents;
     }
 
     return this.incidents.filter(
-      incident => incident.status === this.activeTab
+      incident =>
+        incident.status === this.activeTab
     );
+
   }
+
+
+  // --------------------------------------------------
+  // Summary
+  // --------------------------------------------------
+
+  get totalPeople(): number {
+
+    return this.incidents.reduce(
+      (total, incident) =>
+        total + incident.people,
+      0
+    );
+
+  }
+
+
+  get nearestDistance(): number {
+
+    if (!this.incidents.length) {
+      return 0;
+    }
+
+    return Math.min(
+      ...this.incidents.map(
+        incident => incident.distanceKm
+      )
+    );
+
+  }
+
+
+  // --------------------------------------------------
+  // Tabs
+  // --------------------------------------------------
 
   setTab(tab: string): void {
-    this.activeTab = tab;
+
+    this.activeTab =
+      tab;
+
   }
 
-  acceptIncident(incident: Incident): void {
-    incident.status = 'RESPONDING';
 
-    alert(
-      `Incident accepted\n\n` +
-      `${incident.id}\n` +
-      `${incident.type}\n` +
-      `${incident.location}`
-    );
-  }
+  // --------------------------------------------------
+  // Incident type
+  // --------------------------------------------------
 
-  viewIncident(incident: Incident): void {
-    alert(
-      `${incident.type}\n\n` +
-      `Location: ${incident.location}\n` +
-      `Distance: ${incident.distance}\n` +
-      `Reported: ${incident.reportedAt}\n\n` +
-      `${incident.description}`
-    );
-  }
+  getIncidentTypeLabel(
+    type: Incident['type']
+  ): string {
 
-  getStatusLabel(status: Incident['status']): string {
-    switch (status) {
-      case 'ACTIVE':
-        return 'Needs responder';
+    switch (type) {
 
-      case 'RESPONDING':
-        return 'Responder on the way';
+      case 'ROAD_ACCIDENT':
 
-      case 'HANDED_OVER':
-        return 'Professional handover';
+        return this.t('roadAccident');
+
+      case 'TWO_WHEELER_ACCIDENT':
+
+        return this.t('twoWheelerAccident');
+
+      case 'PEDESTRIAN_INCIDENT':
+
+        return this.t('pedestrianIncident');
 
       default:
-        return 'Unknown';
+
+        return this.t('notSure');
+
     }
+
   }
 
-  getStatusClass(status: Incident['status']): string {
+
+  // --------------------------------------------------
+  // Description
+  // --------------------------------------------------
+
+  getIncidentDescription(
+    incident: Incident
+  ): string {
+
+    return this.t(
+      incident.descriptionKey
+    );
+
+  }
+
+
+  // --------------------------------------------------
+  // Distance
+  // --------------------------------------------------
+
+  getDistanceText(
+    distanceKm: number
+  ): string {
+
+    return `${distanceKm.toFixed(1)} ${this.t('kmAway')}`;
+
+  }
+
+
+  // --------------------------------------------------
+  // Reported time
+  // --------------------------------------------------
+
+  getReportedTime(
+    minutes: number
+  ): string {
+
+    if (minutes === 1) {
+
+      return this.t(
+        'oneMinuteAgo'
+      );
+
+    }
+
+    return `${minutes} ${this.t('minutesAgo')}`;
+
+  }
+
+
+  // --------------------------------------------------
+  // People
+  // --------------------------------------------------
+
+  getPeopleNeeded(
+    people: number
+  ): string {
+
+    if (people === 1) {
+
+      return `1 ${this.t('responderNeeded')}`;
+
+    }
+
+    return `${people} ${this.t('respondersNeeded')}`;
+
+  }
+
+
+  // --------------------------------------------------
+  // Accept incident
+  // --------------------------------------------------
+
+  acceptIncident(
+    incident: Incident
+  ): void {
+
+    incident.status =
+      'RESPONDING';
+
+    alert(
+      `${this.t('incidentAccepted')}\n\n` +
+      `${incident.id}\n` +
+      `${this.getIncidentTypeLabel(incident.type)}\n` +
+      `${incident.location}`
+    );
+
+  }
+
+
+  // --------------------------------------------------
+  // View incident
+  // --------------------------------------------------
+
+  viewIncident(
+    incident: Incident
+  ): void {
+
+    alert(
+      `${this.getIncidentTypeLabel(incident.type)}\n\n` +
+      `${this.t('location')}: ${incident.location}\n` +
+      `${this.t('distance')}: ${this.getDistanceText(incident.distanceKm)}\n` +
+      `${this.t('reported')}: ${this.getReportedTime(incident.reportedMinutesAgo)}\n\n` +
+      `${this.getIncidentDescription(incident)}`
+    );
+
+  }
+
+
+  // --------------------------------------------------
+  // Status label
+  // --------------------------------------------------
+
+  getStatusLabel(
+    status: Incident['status']
+  ): string {
+
     switch (status) {
+
       case 'ACTIVE':
+
+        return this.t(
+          'incidentNeedsResponder'
+        );
+
+      case 'RESPONDING':
+
+        return this.t(
+          'incidentResponderOnTheWay'
+        );
+
+      case 'HANDED_OVER':
+
+        return this.t(
+          'incidentProfessionalHandover'
+        );
+
+      default:
+
+        return this.t(
+          'unknown'
+        );
+
+    }
+
+  }
+
+
+  // --------------------------------------------------
+  // Status class
+  // --------------------------------------------------
+
+  getStatusClass(
+    status: Incident['status']
+  ): string {
+
+    switch (status) {
+
+      case 'ACTIVE':
+
         return 'status-active';
 
       case 'RESPONDING':
+
         return 'status-responding';
 
       case 'HANDED_OVER':
+
         return 'status-handed';
 
       default:
+
         return '';
+
     }
+
   }
+
 }

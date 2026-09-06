@@ -7,17 +7,16 @@
 
       <span class="section-badge">
         <i class="bi bi-people-fill"></i>
-        Community Response
+        {{ t('communityResponse') }}
       </span>
 
       <h2>
-        The right people
-        <span>can make a difference.</span>
+        {{ t('rightPeople') }}
+        <span>{{ t('canMakeDifference') }}</span>
       </h2>
 
       <p class="community-description">
-        GoldenLink helps connect people near an incident with
-        useful community support during the Golden Hour.
+        {{ t('communityPreviewDescription') }}
       </p>
 
       <div class="community-actions">
@@ -27,7 +26,7 @@
           class="community-button primary-button"
         >
           <i class="bi bi-people-fill"></i>
-          Explore Community
+          {{ t('exploreCommunity') }}
         </a>
 
         <a
@@ -35,7 +34,7 @@
           class="community-button secondary-button"
         >
           <i class="bi bi-person-plus-fill"></i>
-          Become a Responder
+          {{ t('becomeResponder') }}
         </a>
 
       </div>
@@ -53,12 +52,15 @@
         </div>
 
         <div class="card-content">
-          <h3>Nearby Help</h3>
+
+          <h3>
+            {{ t('nearbyHelp') }}
+          </h3>
 
           <p>
-            Discover registered community responders
-            who may be close to an incident.
+            {{ t('nearbyHelpDescription') }}
           </p>
+
         </div>
 
       </div>
@@ -71,12 +73,15 @@
         </div>
 
         <div class="card-content">
-          <h3>Trusted Responders</h3>
+
+          <h3>
+            {{ t('trustedResponders') }}
+          </h3>
 
           <p>
-            Responders can have profiles showing their
-            skills, availability and experience.
+            {{ t('trustedRespondersDescription') }}
           </p>
+
         </div>
 
       </div>
@@ -89,12 +94,15 @@
         </div>
 
         <div class="card-content">
-          <h3>Local Support</h3>
+
+          <h3>
+            {{ t('localSupport') }}
+          </h3>
 
           <p>
-            Guidance can be made easier to understand
-            through local languages and clear instructions.
+            {{ t('localSupportDescription') }}
           </p>
+
         </div>
 
       </div>
@@ -107,12 +115,15 @@
         </div>
 
         <div class="card-content">
-          <h3>Clear Roles</h3>
+
+          <h3>
+            {{ t('clearRoles') }}
+          </h3>
 
           <p>
-            Different responders can receive appropriate
-            tasks instead of everyone doing the same thing.
+            {{ t('clearRolesDescription') }}
           </p>
+
         </div>
 
       </div>

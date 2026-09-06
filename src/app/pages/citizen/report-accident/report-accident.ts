@@ -15,6 +15,7 @@ import {
 } from '../../../core/models/incident';
 
 import { IncidentService } from '../../../core/services/incident';
+import { TranslationService } from '../../../core/services/translation';
 
 @Component({
   selector: 'app-report-accident',
@@ -32,15 +33,33 @@ import { IncidentService } from '../../../core/services/incident';
 export class ReportAccident {
 
   private readonly router = inject(Router);
-  private readonly incidentService = inject(IncidentService);
-  private readonly ngZone = inject(NgZone);
-  private readonly changeDetector = inject(ChangeDetectorRef);
+
+  private readonly incidentService =
+    inject(IncidentService);
+
+  private readonly ngZone =
+    inject(NgZone);
+
+  private readonly changeDetector =
+    inject(ChangeDetectorRef);
+
+  readonly translation =
+    inject(TranslationService);
+
+  // ============================================================
+  // TRANSLATION
+  // ============================================================
+
+  t(key: string): string {
+    return this.translation.translate(key);
+  }
 
   // ============================================================
   // STEPS
   // ============================================================
 
   currentStep = 1;
+
   totalSteps = 4;
 
   submitted = false;
@@ -111,32 +130,32 @@ export class ReportAccident {
   victimOptions = [
     {
       value: 1,
-      label: '1 Person',
+      labelKey: 'onePerson',
       icon: 'bi-person'
     },
     {
       value: 2,
-      label: '2 People',
+      labelKey: 'twoPeople',
       icon: 'bi-people'
     },
     {
       value: 3,
-      label: '3 People',
+      labelKey: 'threePeople',
       icon: 'bi-people'
     },
     {
       value: 4,
-      label: '4 People',
+      labelKey: 'fourPeople',
       icon: 'bi-people'
     },
     {
       value: 5,
-      label: '5 People',
+      labelKey: 'fivePeople',
       icon: 'bi-people-fill'
     },
     {
       value: 6,
-      label: '5+ People',
+      labelKey: 'fivePlusPeople',
       icon: 'bi-people-fill'
     }
   ];
@@ -147,29 +166,29 @@ export class ReportAccident {
 
   severityOptions: {
     value: IncidentSeverity;
-    label: string;
-    description: string;
+    labelKey: string;
+    descriptionKey: string;
     icon: string;
   }[] = [
 
     {
       value: 'normal',
-      label: 'Normal',
-      description: 'No immediate danger is visible.',
+      labelKey: 'severityNormal',
+      descriptionKey: 'severityNormalDescription',
       icon: 'bi-check-circle'
     },
 
     {
       value: 'moderate',
-      label: 'Moderate',
-      description: 'Medical or community assistance may be required.',
+      labelKey: 'severityModerate',
+      descriptionKey: 'severityModerateDescription',
       icon: 'bi-exclamation-circle'
     },
 
     {
       value: 'critical',
-      label: 'Critical',
-      description: 'Immediate emergency response is required.',
+      labelKey: 'severityCritical',
+      descriptionKey: 'severityCriticalDescription',
       icon: 'bi-exclamation-triangle-fill'
     }
 
@@ -182,7 +201,12 @@ export class ReportAccident {
   // ============================================================
 
   get progressPercentage(): number {
-    return (this.currentStep / this.totalSteps) * 100;
+
+    return (
+      this.currentStep /
+      this.totalSteps
+    ) * 100;
+
   }
 
   // ============================================================
@@ -221,7 +245,8 @@ export class ReportAccident {
     }
 
     if (
-      this.currentStep < this.totalSteps
+      this.currentStep <
+      this.totalSteps
     ) {
 
       this.currentStep++;
@@ -261,8 +286,7 @@ export class ReportAccident {
       step <= this.totalSteps
     ) {
 
-      this.currentStep =
-        step;
+      this.currentStep = step;
 
     }
 
@@ -343,23 +367,18 @@ export class ReportAccident {
 
           this.longitude = lng;
 
-          this.location.latitude =
-            lat;
+          this.location.latitude = lat;
 
-          this.location.longitude =
-            lng;
+          this.location.longitude = lng;
 
           this.location.address =
             `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
 
-          this.locationLoading =
-            false;
+          this.locationLoading = false;
 
-          this.locationCaptured =
-            true;
+          this.locationCaptured = true;
 
-          this.locationError =
-            false;
+          this.locationError = false;
 
           this.locationStatus =
             `Location captured successfully: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
@@ -385,14 +404,11 @@ export class ReportAccident {
 
         this.ngZone.run(() => {
 
-          this.locationLoading =
-            false;
+          this.locationLoading = false;
 
-          this.locationCaptured =
-            false;
+          this.locationCaptured = false;
 
-          this.locationError =
-            true;
+          this.locationError = true;
 
           let message =
             'Unable to detect your location.';
@@ -451,23 +467,16 @@ export class ReportAccident {
     this.longitude = null;
 
     this.location = {
-
       latitude: 0,
-
       longitude: 0,
-
       address: ''
-
     };
 
-    this.locationCaptured =
-      false;
+    this.locationCaptured = false;
 
-    this.locationError =
-      false;
+    this.locationError = false;
 
-    this.locationLoading =
-      false;
+    this.locationLoading = false;
 
     this.locationStatus =
       'Click the button to detect your current location.';
@@ -511,23 +520,30 @@ export class ReportAccident {
 
   getVictimLabel(): string {
 
-    if (
-      this.accident.victims === 1
-    ) {
+    switch (this.accident.victims) {
 
-      return '1 Person';
+      case 1:
+        return this.t('onePerson');
+
+      case 2:
+        return this.t('twoPeople');
+
+      case 3:
+        return this.t('threePeople');
+
+      case 4:
+        return this.t('fourPeople');
+
+      case 5:
+        return this.t('fivePeople');
+
+      case 6:
+        return this.t('fivePlusPeople');
+
+      default:
+        return `${this.accident.victims} ${this.t('people')}`;
 
     }
-
-    if (
-      this.accident.victims >= 6
-    ) {
-
-      return '5+ People';
-
-    }
-
-    return `${this.accident.victims} People`;
 
   }
 
@@ -594,8 +610,12 @@ export class ReportAccident {
 
     this.syncFormValues();
 
-    const severity =
-      this.selectedSeverity as IncidentSeverity;
+    if (!this.selectedSeverity) {
+      return;
+    }
+
+    const severity: IncidentSeverity =
+      this.selectedSeverity;
 
     const incidentData:
       Omit<
@@ -649,8 +669,7 @@ export class ReportAccident {
 
         severity,
 
-        confidence:
-          1,
+        confidence: 1,
 
         summary:
           this.getSeveritySummary(
@@ -659,21 +678,19 @@ export class ReportAccident {
 
       },
 
-      responder:
-        null,
+      responder: null,
 
       ambulanceStatus:
         severity === 'critical'
           ? 'requested'
           : 'not_requested',
 
-      hospital:
-        null
+      hospital: null
 
     };
 
     // ==========================================================
-    // CREATE INCIDENT IN INCIDENT SERVICE
+    // CREATE INCIDENT
     // ==========================================================
 
     const incident =
@@ -693,13 +710,16 @@ export class ReportAccident {
 
     this.submitted = true;
 
-// Show "Community Response Activated Successfully"
-// before moving to Nearby Responders
-setTimeout(() => {
-  this.router.navigate([
-    '/nearby-responders'
-  ]);
-}, 2500);
+    // Show success screen first,
+    // then move to Nearby Responders.
+
+    setTimeout(() => {
+
+      this.router.navigate([
+        '/nearby-responders'
+      ]);
+
+    }, 2500);
 
   }
 
@@ -715,19 +735,27 @@ setTimeout(() => {
 
       case 'critical':
 
-        return 'Critical incident requiring immediate emergency response.';
+        return this.t(
+          'severityCriticalSummary'
+        );
 
       case 'moderate':
 
-        return 'Moderate incident requiring prompt community assistance.';
+        return this.t(
+          'severityModerateSummary'
+        );
 
       case 'normal':
 
-        return 'Normal incident with no immediate critical danger reported.';
+        return this.t(
+          'severityNormalSummary'
+        );
 
       default:
 
-        return 'Incident reported through GoldenLink.';
+        return this.t(
+          'incidentReportedThroughGoldenLink'
+        );
 
     }
 
@@ -741,18 +769,29 @@ setTimeout(() => {
 
     if (!this.selectedSeverity) {
 
-      return 'Not selected';
+      return this.t(
+        'notSelected'
+      );
 
     }
 
-    return (
+    const selected =
+      this.severityOptions.find(
+        option =>
+          option.value ===
+          this.selectedSeverity
+      );
 
-      this.selectedSeverity
-        .charAt(0)
-        .toUpperCase() +
+    if (!selected) {
 
-      this.selectedSeverity.slice(1)
+      return this.t(
+        'notSelected'
+      );
 
+    }
+
+    return this.t(
+      selected.labelKey
     );
 
   }
@@ -760,9 +799,7 @@ setTimeout(() => {
   getSeverityClass(): string {
 
     if (!this.selectedSeverity) {
-
       return '';
-
     }
 
     return `severity-${this.selectedSeverity}`;

@@ -1,6 +1,8 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+import { TranslationService } from '../../../core/services/translation';
 
 interface CommunityArea {
   name: string;
@@ -33,6 +35,12 @@ interface CommunityMember {
   styleUrl: './community.scss',
 })
 export class Community implements OnDestroy {
+
+  readonly translation = inject(TranslationService);
+
+  t(key: string): string {
+    return this.translation.translate(key);
+  }
 
   communityAreas: CommunityArea[] = [
     {
@@ -69,10 +77,6 @@ export class Community implements OnDestroy {
     }
   ];
 
-  /* =========================
-     REGISTRATION STATE
-  ========================= */
-
   showJoinForm = false;
   submitted = false;
 
@@ -90,25 +94,13 @@ export class Community implements OnDestroy {
   otpSecondsRemaining = 300;
   private otpTimer: ReturnType<typeof setInterval> | null = null;
 
-  /* =========================
-     CAPTCHA
-  ========================= */
-
   captchaFirst = 0;
   captchaSecond = 0;
   captchaAnswer = '';
   captchaError = '';
 
-  /* =========================
-     FILE NAMES
-  ========================= */
-
   selectedPhotoName = '';
   selectedCertificateName = '';
-
-  /* =========================
-     MEMBER FORM
-  ========================= */
 
   communityMember: CommunityMember = {
     certificateName: '',
@@ -123,11 +115,6 @@ export class Community implements OnDestroy {
     gender: '',
     designation: ''
   };
-
-
-  /* =========================
-     STATISTICS
-  ========================= */
 
   get totalResponders(): number {
     return this.communityAreas.reduce(
@@ -159,11 +146,6 @@ export class Community implements OnDestroy {
     return Math.round(total / this.communityAreas.length);
   }
 
-
-  /* =========================
-     JOIN COMMUNITY
-  ========================= */
-
   joinCommunity(): void {
     this.resetRegistrationData();
 
@@ -184,11 +166,6 @@ export class Community implements OnDestroy {
     this.mobileVerified = false;
   }
 
-
-  /* =========================
-     MOBILE NUMBER
-  ========================= */
-
   onMobileInput(event: Event): void {
     const input = event.target as HTMLInputElement;
 
@@ -200,8 +177,6 @@ export class Community implements OnDestroy {
 
     input.value = numbersOnly;
 
-    // If mobile changes after verification,
-    // verification must be done again.
     if (this.mobileVerified) {
       this.mobileVerified = false;
       this.otpSent = false;
@@ -212,32 +187,17 @@ export class Community implements OnDestroy {
     }
   }
 
-
-  /* =========================
-     DATE OF BIRTH
-  ========================= */
-
   get maxDob(): string {
     const today = new Date();
 
     return today.toISOString().split('T')[0];
   }
 
-
-  /* =========================
-     GMAIL VALIDATION
-  ========================= */
-
   isGmailValid(): boolean {
     const email = this.communityMember.email.trim();
 
     return /^[a-zA-Z0-9._%+-]+@gmail\.com$/i.test(email);
   }
-
-
-  /* =========================
-     PHOTO UPLOAD
-  ========================= */
 
   onPhotoSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -256,21 +216,18 @@ export class Community implements OnDestroy {
     ];
 
     if (!allowedTypes.includes(file.type)) {
-      alert('Please upload a JPG, JPEG or PNG image.');
+      alert(this.t('communityPhotoFormatError'));
+
       input.value = '';
       this.selectedPhotoName = '';
       this.communityMember.photoName = '';
+
       return;
     }
 
     this.selectedPhotoName = file.name;
     this.communityMember.photoName = file.name;
   }
-
-
-  /* =========================
-     CERTIFICATE UPLOAD
-  ========================= */
 
   onCertificateSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -290,21 +247,18 @@ export class Community implements OnDestroy {
     ];
 
     if (!allowedTypes.includes(file.type)) {
-      alert('Please upload a PDF, JPG, JPEG or PNG certificate.');
+      alert(this.t('communityCertificateFormatError'));
+
       input.value = '';
       this.selectedCertificateName = '';
       this.communityMember.certificateName = '';
+
       return;
     }
 
     this.selectedCertificateName = file.name;
     this.communityMember.certificateName = file.name;
   }
-
-
-  /* =========================
-     CAPTCHA
-  ========================= */
 
   generateCaptcha(): void {
     this.captchaFirst = Math.floor(Math.random() * 9) + 1;
@@ -317,9 +271,14 @@ export class Community implements OnDestroy {
   verifyCaptcha(): boolean {
     const answer = Number(this.captchaAnswer);
 
-    if (!this.captchaAnswer || answer !== this.captchaFirst + this.captchaSecond) {
-      this.captchaError = 'Incorrect CAPTCHA. Please try again.';
+    if (
+      !this.captchaAnswer ||
+      answer !== this.captchaFirst + this.captchaSecond
+    ) {
+      this.captchaError = this.t('communityIncorrectCaptcha');
+
       this.generateCaptcha();
+
       return false;
     }
 
@@ -328,13 +287,7 @@ export class Community implements OnDestroy {
     return true;
   }
 
-
-  /* =========================
-     SEND OTP
-  ========================= */
-
   sendOtp(): void {
-
     if (!this.isRegistrationValid()) {
       return;
     }
@@ -342,25 +295,6 @@ export class Community implements OnDestroy {
     if (!this.verifyCaptcha()) {
       return;
     }
-
-    /*
-     * FRONTEND DEMO OTP
-     *
-     * IMPORTANT:
-     * This will be replaced by the backend API.
-     *
-     * Real flow:
-     *
-     * Angular
-     *    ↓
-     * POST /api/auth/send-otp
-     *    ↓
-     * Backend
-     *    ↓
-     * SMS provider
-     *    ↓
-     * +91 mobile
-     */
 
     this.otpCode = this.generateDemoOtp();
 
@@ -371,23 +305,13 @@ export class Community implements OnDestroy {
     this.otpError = '';
 
     this.otpMessage =
-      `Demo OTP sent to +91 ${this.communityMember.contactNumber}`;
+      `${this.t('communityDemoOtpSentTo')} +91 ${this.communityMember.contactNumber}`;
 
     this.startOtpTimer();
 
-    /*
-     * DEVELOPMENT ONLY
-     *
-     * The OTP is shown in the UI so you can test the frontend.
-     * Remove this message when backend OTP is integrated.
-     */
-    this.otpMessage += ` — Demo OTP: ${this.otpCode}`;
+    this.otpMessage +=
+      ` — ${this.t('communityDemoOtp')}: ${this.otpCode}`;
   }
-
-
-  /* =========================
-     DEMO OTP GENERATOR
-  ========================= */
 
   private generateDemoOtp(): string {
     return Math.floor(
@@ -395,13 +319,7 @@ export class Community implements OnDestroy {
     ).toString();
   }
 
-
-  /* =========================
-     OTP TIMER
-  ========================= */
-
   private startOtpTimer(): void {
-
     this.stopOtpTimer();
 
     this.otpSecondsRemaining = 300;
@@ -414,14 +332,13 @@ export class Community implements OnDestroy {
         this.stopOtpTimer();
 
         this.otpError =
-          'OTP expired. Please request a new OTP.';
+          this.t('communityOtpExpiredRequest');
       }
 
     }, 1000);
   }
 
   private stopOtpTimer(): void {
-
     if (this.otpTimer) {
       clearInterval(this.otpTimer);
       this.otpTimer = null;
@@ -429,7 +346,6 @@ export class Community implements OnDestroy {
   }
 
   get otpTimeDisplay(): string {
-
     const minutes = Math.floor(
       this.otpSecondsRemaining / 60
     );
@@ -440,13 +356,7 @@ export class Community implements OnDestroy {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   }
 
-
-  /* =========================
-     OTP INPUT
-  ========================= */
-
   onOtpInput(event: Event): void {
-
     const input = event.target as HTMLInputElement;
 
     const numbersOnly = input.value
@@ -460,43 +370,25 @@ export class Community implements OnDestroy {
     this.otpError = '';
   }
 
-
-  /* =========================
-     VERIFY OTP
-  ========================= */
-
   verifyOtp(): void {
 
     if (this.enteredOtp.length !== 6) {
-
       this.otpError =
-        'Please enter the 6-digit OTP.';
+        this.t('communityEnterSixDigitOtp');
 
       return;
     }
 
     if (this.otpSecondsRemaining <= 0) {
-
       this.otpError =
-        'OTP expired. Please request a new OTP.';
+        this.t('communityOtpExpiredRequest');
 
       return;
     }
 
-    /*
-     * FRONTEND DEMO VERIFICATION
-     *
-     * Real implementation will call:
-     *
-     * POST /api/auth/verify-otp
-     *
-     * Backend will verify the OTP.
-     */
-
     if (this.enteredOtp !== this.otpCode) {
-
       this.otpError =
-        'Incorrect OTP. Please check the OTP and try again.';
+        this.t('communityIncorrectOtp');
 
       return;
     }
@@ -508,15 +400,10 @@ export class Community implements OnDestroy {
     this.otpError = '';
 
     this.otpMessage =
-      'Mobile number verified successfully.';
+      this.t('communityMobileVerified');
 
     this.stopOtpTimer();
   }
-
-
-  /* =========================
-     RESEND OTP
-  ========================= */
 
   resendOtp(): void {
 
@@ -531,14 +418,9 @@ export class Community implements OnDestroy {
     this.startOtpTimer();
 
     this.otpMessage =
-      `New demo OTP sent to +91 ${this.communityMember.contactNumber}` +
-      ` — Demo OTP: ${this.otpCode}`;
+      `${this.t('communityNewDemoOtpSentTo')} +91 ${this.communityMember.contactNumber}` +
+      ` — ${this.t('communityDemoOtp')}: ${this.otpCode}`;
   }
-
-
-  /* =========================
-     CHANGE MOBILE
-  ========================= */
 
   changeMobileNumber(): void {
 
@@ -559,92 +441,81 @@ export class Community implements OnDestroy {
     this.generateCaptcha();
   }
 
-
-  /* =========================
-     FORM VALIDATION
-  ========================= */
-
   isRegistrationValid(): boolean {
 
     if (!this.communityMember.name.trim()) {
-      alert('Please enter your name.');
+      alert(this.t('communityEnterName'));
       return false;
     }
 
     if (!this.communityMember.dob) {
-      alert('Please select your date of birth.');
+      alert(this.t('communitySelectDob'));
       return false;
     }
 
     if (!this.communityMember.gender) {
-      alert('Please select your gender.');
+      alert(this.t('communitySelectGender'));
       return false;
     }
 
     if (!this.communityMember.place.trim()) {
-      alert('Please enter your place.');
+      alert(this.t('communityEnterPlace'));
       return false;
     }
 
     if (!this.communityMember.contactNumber) {
-      alert('Please enter your mobile number.');
+      alert(this.t('communityEnterMobile'));
       return false;
     }
 
     if (!/^[0-9]{10}$/.test(this.communityMember.contactNumber)) {
-      alert('Mobile number must contain exactly 10 digits.');
+      alert(this.t('communityMobileTenDigits'));
       return false;
     }
 
     if (!this.communityMember.email.trim()) {
-      alert('Please enter your Gmail address.');
+      alert(this.t('communityEnterGmail'));
       return false;
     }
 
     if (!this.isGmailValid()) {
-      alert('Please enter a valid Gmail address ending with @gmail.com.');
+      alert(this.t('communityValidGmail'));
       return false;
     }
 
     if (!this.communityMember.vehicle) {
-      alert('Please select your vehicle type.');
+      alert(this.t('communitySelectVehicle'));
       return false;
     }
 
     if (!this.communityMember.maritalStatus) {
-      alert('Please select your marital status.');
+      alert(this.t('communitySelectMaritalStatus'));
       return false;
     }
 
     if (!this.communityMember.designation.trim()) {
-      alert('Please enter your designation.');
+      alert(this.t('communityEnterDesignation'));
       return false;
     }
 
     if (!this.communityMember.photoName) {
-      alert('Please upload your photo.');
+      alert(this.t('communityUploadPhoto'));
       return false;
     }
 
     if (!this.communityMember.certificateName) {
-      alert('Please upload your volunteer verification certificate.');
+      alert(this.t('communityUploadCertificate'));
       return false;
     }
 
     return true;
   }
 
-
-  /* =========================
-     FINAL REGISTRATION
-  ========================= */
-
   submitCommunityForm(): void {
 
     if (!this.mobileVerified) {
-
       this.otpError =
-        'Please verify your mobile number before submitting.';
+        this.t('communityVerifyMobileBeforeSubmit');
 
       return;
     }
@@ -667,14 +538,6 @@ export class Community implements OnDestroy {
         new Date().toISOString()
     };
 
-    /*
-     * TEMPORARY FRONTEND STORAGE
-     *
-     * This is only for the frontend demo.
-     * The real application will send this data
-     * to the backend API.
-     */
-
     const existingMembers = JSON.parse(
       localStorage.getItem(
         'goldenlink_community_members'
@@ -692,11 +555,6 @@ export class Community implements OnDestroy {
 
     this.submitted = true;
   }
-
-
-  /* =========================
-     RESET
-  ========================= */
 
   resetRegistrationData(): void {
 
@@ -738,7 +596,6 @@ export class Community implements OnDestroy {
     this.stopOtpTimer();
   }
 
-
   resetForm(): void {
 
     this.resetRegistrationData();
@@ -748,26 +605,16 @@ export class Community implements OnDestroy {
     this.showJoinForm = false;
   }
 
-
-  /* =========================
-     AREA
-  ========================= */
-
   viewArea(area: CommunityArea): void {
 
     alert(
-      `${area.name} Community\n\n` +
-      `Responders: ${area.responders}\n` +
-      `Available: ${area.available}\n` +
-      `Active incidents: ${area.activeIncidents}\n` +
-      `Coverage: ${area.coverage}%`
+      `${area.name} ${this.t('communityWord')}\n\n` +
+      `${this.t('communityResponders')}: ${area.responders}\n` +
+      `${this.t('communityAvailable')}: ${area.available}\n` +
+      `${this.t('communityActiveIncidents')}: ${area.activeIncidents}\n` +
+      `${this.t('communityCoverage')}: ${area.coverage}%`
     );
   }
-
-
-  /* =========================
-     DESTROY
-  ========================= */
 
   ngOnDestroy(): void {
     this.stopOtpTimer();

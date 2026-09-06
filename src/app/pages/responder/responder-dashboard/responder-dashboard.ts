@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 
 import { Incident } from '../../../core/models/incident';
 import { IncidentService } from '../../../core/services/incident';
+import { TranslationService } from '../../../core/services/translation';
 
 @Component({
   selector: 'app-responder-dashboard',
@@ -18,27 +19,25 @@ import { IncidentService } from '../../../core/services/incident';
 })
 export class ResponderDashboard implements OnDestroy {
 
-  // --------------------------------------------------
-  // Angular services
-  // --------------------------------------------------
-
   private readonly incidentService =
     inject(IncidentService);
 
   private readonly router =
     inject(Router);
 
+  readonly translation =
+    inject(TranslationService);
 
-  // --------------------------------------------------
-  // Incident state
-  // --------------------------------------------------
+  t(key: string): string {
+    return this.translation.translate(key);
+  }
 
   incident: Incident | null = null;
 
   currentStatus = 'responder_assigned';
 
   statusMessage =
-    'You have been assigned to this incident.';
+    this.t('responderAssignedMessage');
 
   actionLoading = false;
 
@@ -46,17 +45,7 @@ export class ResponderDashboard implements OnDestroy {
 
   successMessage = '';
 
-
-  // --------------------------------------------------
-  // Refresh timer
-  // --------------------------------------------------
-
   private refreshTimer?: ReturnType<typeof setInterval>;
-
-
-  // --------------------------------------------------
-  // Constructor
-  // --------------------------------------------------
 
   constructor() {
 
@@ -68,11 +57,6 @@ export class ResponderDashboard implements OnDestroy {
 
   }
 
-
-  // --------------------------------------------------
-  // Destroy
-  // --------------------------------------------------
-
   ngOnDestroy(): void {
 
     if (this.refreshTimer) {
@@ -80,11 +64,6 @@ export class ResponderDashboard implements OnDestroy {
     }
 
   }
-
-
-  // --------------------------------------------------
-  // Load active incident
-  // --------------------------------------------------
 
   private loadIncident(): void {
 
@@ -106,11 +85,6 @@ export class ResponderDashboard implements OnDestroy {
 
   }
 
-
-  // --------------------------------------------------
-  // Status message
-  // --------------------------------------------------
-
   private updateStatusMessage(
     status: string
   ): void {
@@ -120,68 +94,67 @@ export class ResponderDashboard implements OnDestroy {
       case 'responder_assigned':
 
         this.statusMessage =
-          'You have been assigned to this incident.';
+          this.t('responderAssignedMessage');
 
         break;
-
 
       case 'responder_en_route':
 
         this.statusMessage =
-          'You are on the way to the accident location.';
+          this.t('responderEnRouteMessage');
 
         break;
-
 
       case 'on_scene':
 
         this.statusMessage =
-          'You have arrived at the accident location.';
+          this.t('responderOnSceneMessage');
 
         break;
-
 
       case 'handed_over':
 
         this.statusMessage =
-          'The incident has been handed over to emergency services.';
+          this.t('responderHandedOverMessage');
 
         break;
-
 
       case 'completed':
 
         this.statusMessage =
-          'This incident has been successfully completed.';
+          this.t('responderCompletedMessage');
 
         break;
-
 
       default:
 
         this.statusMessage =
-          'Incident response is active.';
+          this.t('responderActiveMessage');
 
     }
 
   }
-
-
-  // --------------------------------------------------
-  // Severity
-  // --------------------------------------------------
 
   get severityLabel(): string {
 
     if (!this.incident) {
-      return 'Unknown';
+      return this.t('unknown');
     }
 
-    return this.incident.severity.charAt(0).toUpperCase()
-      + this.incident.severity.slice(1);
+    const severity =
+      this.incident.severity;
+
+    const severityKey =
+      `responderSeverity${severity.charAt(0).toUpperCase()}${severity.slice(1)}`;
+
+    const translated =
+      this.t(severityKey);
+
+    return translated === severityKey
+      ? severity.charAt(0).toUpperCase() + severity.slice(1)
+      : translated;
 
   }
-
 
   get severityClass(): string {
 
@@ -193,59 +166,43 @@ export class ResponderDashboard implements OnDestroy {
 
   }
 
-
-  // --------------------------------------------------
-  // Status label
-  // --------------------------------------------------
-
   get statusLabel(): string {
 
     switch (this.currentStatus) {
 
       case 'responder_assigned':
 
-        return 'Responder Assigned';
-
+        return this.t('responderAssigned');
 
       case 'responder_en_route':
 
-        return 'On the Way';
-
+        return this.t('responderOnTheWay');
 
       case 'on_scene':
 
-        return 'On Scene';
-
+        return this.t('responderOnScene');
 
       case 'handed_over':
 
-        return 'Handed Over';
-
+        return this.t('responderHandedOver');
 
       case 'completed':
 
-        return 'Completed';
-
+        return this.t('responderComplete');
 
       default:
 
-        return 'Active Response';
+        return this.t('responderActiveResponse');
 
     }
 
   }
-
-
-  // --------------------------------------------------
-  // Responder information
-  // --------------------------------------------------
 
   get hasResponder(): boolean {
 
     return !!this.incident?.responder;
 
   }
-
 
   get responderName(): string {
 
@@ -255,10 +212,9 @@ export class ResponderDashboard implements OnDestroy {
       } | null;
 
     return responder?.name
-      ?? 'Assigned Responder';
+      ?? this.t('responderAssignedResponder');
 
   }
-
 
   get responderRole(): string {
 
@@ -268,10 +224,9 @@ export class ResponderDashboard implements OnDestroy {
       } | null;
 
     return responder?.role
-      ?? 'Community Responder';
+      ?? this.t('responderCommunityResponder');
 
   }
-
 
   get responderEta(): string {
 
@@ -281,30 +236,98 @@ export class ResponderDashboard implements OnDestroy {
       } | null;
 
     return responder?.eta
-      ?? 'Available';
+      ?? this.t('available');
 
   }
-
-
-  // --------------------------------------------------
-  // Victim information
-  // --------------------------------------------------
 
   get victimLabel(): string {
 
     const count =
       this.incident?.victims ?? 0;
 
-    return count === 1
-      ? '1 person'
-      : `${count} people`;
+    switch (count) {
+
+      case 1:
+        return this.t('onePerson');
+
+      case 2:
+        return this.t('twoPeople');
+
+      case 3:
+        return this.t('threePeople');
+
+      case 4:
+        return this.t('fourPeople');
+
+      case 5:
+        return this.t('fivePeople');
+
+      default:
+
+        if (count > 5) {
+          return this.t('fivePlusPeople');
+        }
+
+        return `0 ${this.t('people')}`;
+
+    }
 
   }
 
+  get accidentTypeLabel(): string {
 
-  // --------------------------------------------------
-  // Response actions
-  // --------------------------------------------------
+    if (!this.incident?.accidentType) {
+      return this.t('responderNotSpecified');
+    }
+
+    const type =
+      String(this.incident.accidentType)
+        .trim()
+        .toUpperCase()
+        .replace(/[\s-]+/g, '_');
+
+    switch (type) {
+
+      case 'ROAD':
+      case 'ROAD_ACCIDENT':
+      case 'CAR':
+      case 'CAR_ACCIDENT':
+
+        return this.t('roadAccident');
+
+      case 'TWO_WHEELER':
+      case 'TWO_WHEELER_ACCIDENT':
+      case 'TWO_WHEELER_INCIDENT':
+      case 'BIKE':
+      case 'MOTORCYCLE':
+
+        return this.t('twoWheelerAccident');
+
+      case 'PEDESTRIAN':
+      case 'PEDESTRIAN_INCIDENT':
+
+        return this.t('pedestrianIncident');
+
+      case 'NOT_SURE':
+      case 'UNKNOWN':
+
+        return this.t('notSure');
+
+      default:
+
+        return this.incident.accidentType;
+
+    }
+
+  }
+
+  yesNo(value: boolean | null | undefined): string {
+
+    return value
+      ? this.t('yes')
+      : this.t('no');
+
+  }
 
   startResponse(): void {
 
@@ -317,11 +340,10 @@ export class ResponderDashboard implements OnDestroy {
 
     this.updateIncidentStatus(
       'responder_en_route',
-      'You are now marked as on the way.'
+      this.t('responderMarkedOnTheWay')
     );
 
   }
-
 
   markArrived(): void {
 
@@ -334,11 +356,10 @@ export class ResponderDashboard implements OnDestroy {
 
     this.updateIncidentStatus(
       'on_scene',
-      'Arrival has been recorded successfully.'
+      this.t('responderArrivalRecorded')
     );
 
   }
-
 
   handOverIncident(): void {
 
@@ -351,11 +372,10 @@ export class ResponderDashboard implements OnDestroy {
 
     this.updateIncidentStatus(
       'handed_over',
-      'Incident handed over successfully.'
+      this.t('responderIncidentHandedOver')
     );
 
   }
-
 
   completeIncident(): void {
 
@@ -368,15 +388,10 @@ export class ResponderDashboard implements OnDestroy {
 
     this.updateIncidentStatus(
       'completed',
-      'Response completed successfully.'
+      this.t('responderResponseCompletedSuccessfully')
     );
 
   }
-
-
-  // --------------------------------------------------
-  // Update incident status
-  // --------------------------------------------------
 
   private updateIncidentStatus(
     status: string,
@@ -429,11 +444,6 @@ export class ResponderDashboard implements OnDestroy {
 
   }
 
-
-  // --------------------------------------------------
-  // Navigation
-  // --------------------------------------------------
-
   openNearbyResponders(): void {
 
     this.router.navigate([
@@ -441,7 +451,6 @@ export class ResponderDashboard implements OnDestroy {
     ]);
 
   }
-
 
   goToAccidentRecords(): void {
 
@@ -451,7 +460,6 @@ export class ResponderDashboard implements OnDestroy {
 
   }
 
-
   openAI(): void {
 
     this.router.navigate([
@@ -460,29 +468,22 @@ export class ResponderDashboard implements OnDestroy {
 
   }
 
-
-  // --------------------------------------------------
-  // Location
-  // --------------------------------------------------
-
   getLocationText(): string {
 
     return this.incident?.location?.address
-      || 'Current accident location';
+      || this.t('responderCurrentAccidentLocation');
 
   }
-
 
   getCoordinates(): string {
 
     if (!this.incident?.location) {
-      return 'Location unavailable';
+      return this.t('responderLocationUnavailable');
     }
 
     return `${this.incident.location.latitude.toFixed(6)}, ${this.incident.location.longitude.toFixed(6)}`;
 
   }
-
 
   getMapUrl(): string {
 
@@ -500,11 +501,6 @@ export class ResponderDashboard implements OnDestroy {
 
   }
 
-
-  // --------------------------------------------------
-  // Severity icon
-  // --------------------------------------------------
-
   getSeverityIcon(): string {
 
     switch (this.incident?.severity) {
@@ -513,16 +509,13 @@ export class ResponderDashboard implements OnDestroy {
 
         return 'bi-exclamation-octagon-fill';
 
-
       case 'serious':
 
         return 'bi-exclamation-triangle-fill';
 
-
       case 'moderate':
 
         return 'bi-exclamation-circle-fill';
-
 
       default:
 

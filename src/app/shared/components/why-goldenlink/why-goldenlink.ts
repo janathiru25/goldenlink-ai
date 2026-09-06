@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+
+import { TranslationService } from '../../../core/services/translation';
 
 @Component({
   selector: 'app-why-goldenlink',
@@ -9,43 +11,42 @@ import { Component } from '@angular/core';
 })
 export class WhyGoldenlink {
 
+  translation = inject(TranslationService);
+
+  t(key: string): string {
+    return this.translation.translate(key);
+  }
+
   features = [
     {
       icon: 'bi-people-fill',
-      title: 'Community Coordination',
-      description:
-        'Nearby people can be organised into simple roles instead of everyone trying to do the same thing.',
+      titleKey: 'communityCoordination',
+      descriptionKey: 'communityCoordinationDescription',
     },
     {
       icon: 'bi-geo-alt-fill',
-      title: 'Location-Aware Response',
-      description:
-        'The system uses incident and responder location to help connect an accident with nearby suitable responders.',
+      titleKey: 'locationAwareResponse',
+      descriptionKey: 'locationAwareResponseDescription',
     },
     {
       icon: 'bi-person-check-fill',
-      title: 'Suitable Responders',
-      description:
-        'Responder matching can consider availability, distance, skills and registered training.',
+      titleKey: 'suitableResponders',
+      descriptionKey: 'suitableRespondersDescription',
     },
     {
       icon: 'bi-translate',
-      title: 'Multilingual Guidance',
-      description:
-        'The interface can support English, Tamil and accessible regional communication.',
+      titleKey: 'multilingualGuidance',
+      descriptionKey: 'multilingualGuidanceDescription',
     },
     {
       icon: 'bi-list-check',
-      title: 'Simple Roles',
-      description:
-        'Each participant receives a clear task so the response is easier to understand and coordinate.',
+      titleKey: 'simpleRoles',
+      descriptionKey: 'simpleRolesDescription',
     },
     {
       icon: 'bi-shield-check',
-      title: 'Professional Handover',
-      description:
-        'GoldenLink supports the community response until appropriate professional responders take over.',
+      titleKey: 'professionalHandover',
+      descriptionKey: 'professionalHandoverDescription',
     },
   ];
-
 }

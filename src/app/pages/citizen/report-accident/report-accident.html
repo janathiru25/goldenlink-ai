@@ -1,74 +1,77 @@
-<!-- COMMUNITY RESPONSE SUCCESS MESSAGE -->
-<div *ngIf="submitted" class="success-overlay">
-  <div class="success-card">
-
-    <div class="success-icon">
-      <i class="bi bi-check-circle-fill"></i>
-    </div>
-
-    <h2>Community Response Activated Successfully!</h2>
-
-    <p>
-      Nearby responders have been notified.
-      Help is being coordinated for this incident.
-    </p>
-
-    <div class="success-status">
-      <i class="bi bi-geo-alt-fill"></i>
-      Responders are being searched near your location
-    </div>
-
-    <div class="success-loading">
-      <span></span>
-      Connecting you to nearby responders...
-    </div>
-
-  </div>
-</div>
-
-
 <div class="report-page">
 
-  <div class="report-container">
-    <div class="report-page">
+  <!-- Success Overlay -->
+  <div class="success-overlay" *ngIf="submitted">
+    <div class="success-card">
 
-  <div class="report-container">
+      <div class="success-icon">
+        <i class="bi bi-check-circle-fill"></i>
+      </div>
 
-    <!-- HEADER -->
-
-    <div class="report-header">
-
-      <a routerLink="/" class="back-link">
-        <i class="bi bi-arrow-left"></i>
-        Back to Home
-      </a>
-
-      <span class="report-badge">
-        <i class="bi bi-shield-check"></i>
-        GoldenLink AI
-      </span>
-
-      <h1>Report an Accident</h1>
+      <h2>
+        {{ t('communityResponseActivatedSuccessfully') }}
+      </h2>
 
       <p>
-        Help activate the nearby community response.
+        {{ t('nearbyRespondersNotified') }}
+      </p>
+
+      <p>
+        {{ t('helpCoordinatedForIncident') }}
       </p>
 
     </div>
+  </div>
 
 
+  <div class="report-container" *ngIf="!submitted">
+
+    <!-- ===================================================== -->
+    <!-- HEADER -->
+    <!-- ===================================================== -->
+
+    <header class="report-header">
+
+      <a routerLink="/" class="back-link">
+        <i class="bi bi-arrow-left"></i>
+        <span>{{ t('backToHome') }}</span>
+      </a>
+
+      <span class="report-badge">
+        <i class="bi bi-shield-fill-check"></i>
+        GoldenLink AI
+        <span>•</span>
+        {{ t('reportAccident') }}
+      </span>
+
+      <h1>
+        {{ t('reportAccident') }}
+      </h1>
+
+      <p>
+        {{ t('reportAccidentDescription') }}
+      </p>
+
+    </header>
+
+
+    <!-- ===================================================== -->
     <!-- PROGRESS -->
+    <!-- ===================================================== -->
 
     <div class="progress-area">
 
       <div class="progress-text">
-        Step {{ currentStep }} of {{ totalSteps }}
+        {{ t('step') }}
+        {{ currentStep }}
+        {{ t('of') }}
+        {{ totalSteps }}
       </div>
 
-      <div class="progress">
+      <div class="progress-track">
 
         <div
-          class="progress-bar"
+          class="progress-fill"
           [style.width.%]="progressPercentage">
         </div>
 
@@ -78,79 +81,79 @@
 
 
     <!-- ===================================================== -->
-    <!-- STEP 1 - LOCATION -->
+    <!-- REPORT CARD -->
     <!-- ===================================================== -->
 
-    @if (currentStep === 1) {
+    <div class="report-card">
 
-      <div class="report-card location-card">
 
-        <div class="step-icon location-icon">
+      <!-- =================================================== -->
+      <!-- STEP 1 : LOCATION -->
+      <!-- =================================================== -->
+
+      <section *ngIf="currentStep === 1">
+
+        <div class="step-icon">
           <i class="bi bi-geo-alt-fill"></i>
         </div>
 
         <h2>
-          Where did the accident happen?
+          {{ t('whereAccidentHappened') }}
         </h2>
 
         <p class="step-description">
-          Allow GoldenLink to detect your current GPS
-          location so nearby responders can find the accident.
+          {{ t('gpsLocationDescription') }}
         </p>
 
 
-        <!-- LOCATION STATUS -->
+        <!-- LOCATION INFORMATION -->
 
         <div
           class="location-information"
+          [class.detecting]="locationLoading"
           [class.success]="locationCaptured"
           [class.error]="locationError">
 
           <div class="location-information-icon">
 
-            @if (locationLoading) {
+            <i
+              class="bi"
+              [ngClass]="{
+                'bi-geo-alt-fill':
+                  !locationLoading &&
+                  !locationCaptured &&
+                  !locationError,
 
-              <i class="bi bi-crosshair spinning"></i>
+                'bi-arrow-repeat spinning':
+                  locationLoading,
 
-            } @else if (locationCaptured) {
+                'bi-check-circle-fill':
+                  locationCaptured,
 
-              <i class="bi bi-check-circle-fill"></i>
-
-            } @else if (locationError) {
-
-              <i class="bi bi-exclamation-circle-fill"></i>
-
-            } @else {
-
-              <i class="bi bi-geo-alt-fill"></i>
-
-            }
+                'bi-exclamation-circle-fill':
+                  locationError
+              }">
+            </i>
 
           </div>
 
 
           <div class="location-information-content">
 
-            <strong>
+            <strong *ngIf="!locationLoading && !locationCaptured && !locationError">
+              {{ t('detectingYourLocation') }}
+            </strong>
 
-              @if (locationLoading) {
+            <strong *ngIf="locationLoading">
+              {{ t('detectingYourLocation') }}
+            </strong>
 
-                Detecting your location...
+            <strong *ngIf="locationCaptured">
+              {{ t('locationDetectedSuccessfully') }}
+            </strong>
 
-              } @else if (locationCaptured) {
-
-                Location detected successfully
-
-              } @else if (locationError) {
-
-                Location detection failed
-
-              } @else {
-
-                Location required
-
-              }
-
+            <strong *ngIf="locationError">
+              {{ t('locationDetectionFailed') }}
             </strong>
 
             <span>
@@ -162,365 +165,629 @@
         </div>
 
 
-        <!-- GPS BUTTON -->
+        <!-- LOCATION BUTTON -->
 
         <button
           type="button"
           class="location-button"
-          [class.loading]="locationLoading"
-          [class.success]="locationCaptured"
-          [disabled]="locationLoading || locationCaptured"
+          [class.success-button]="locationCaptured"
+          *ngIf="!locationCaptured"
+          [disabled]="locationLoading"
           (click)="getLocation()">
 
-          @if (locationLoading) {
+          <i
+            class="bi"
+            [ngClass]="
+              locationLoading
+                ? 'bi-arrow-repeat spinning'
+                : 'bi-crosshair'
+            ">
+          </i>
 
-            <i class="bi bi-arrow-repeat spinning"></i>
-
-            Detecting Location...
-
-          } @else if (locationCaptured) {
-
-            <i class="bi bi-check-circle-fill"></i>
-
-            Location Captured
-
-          } @else {
-
-            <i class="bi bi-crosshair"></i>
-
-            Detect My Location
-
-          }
+          <span>
+            {{
+              locationLoading
+                ? t('detectingLocationButton')
+                : t('detectMyLocation')
+            }}
+          </span>
 
         </button>
 
 
         <!-- COORDINATES -->
 
-        @if (
-          latitude !== null &&
-          longitude !== null &&
-          locationCaptured
-        ) {
+        <div
+          class="coordinates-box"
+          *ngIf="
+            locationCaptured &&
+            latitude !== null &&
+            longitude !== null
+          ">
 
-          <div class="coordinates-box">
+          <div class="coordinate-item">
 
-            <div class="coordinates-header">
+            <span>
+              {{ t('latitude') }}
+            </span>
 
-              <i class="bi bi-broadcast-pin"></i>
-
-              <span>
-                GPS coordinates captured
-              </span>
-
-              <i class="bi bi-check-circle-fill"></i>
-
-            </div>
-
-
-            <div class="coordinates-grid">
-
-              <div class="coordinate-item">
-
-                <span>
-                  Latitude
-                </span>
-
-                <strong>
-                  {{ latitude | number:'1.5-6' }}
-                </strong>
-
-              </div>
-
-
-              <div class="coordinate-item">
-
-                <span>
-                  Longitude
-                </span>
-
-                <strong>
-                  {{ longitude | number:'1.5-6' }}
-                </strong>
-
-              </div>
-
-            </div>
+            <strong>
+              {{ latitude | number:'1.6-6' }}
+            </strong>
 
           </div>
 
-        }
+
+          <div class="coordinate-item">
+
+            <span>
+              {{ t('longitude') }}
+            </span>
+
+            <strong>
+              {{ longitude | number:'1.6-6' }}
+            </strong>
+
+          </div>
+
+        </div>
 
 
-        <!-- RETRY -->
+        <!-- LOCATION SUCCESS -->
 
-        @if (
-          locationError &&
-          !locationLoading
-        ) {
+        <div
+          class="location-success"
+          *ngIf="locationCaptured">
 
-          <button
-            type="button"
-            class="retry-button"
-            (click)="retryLocation()">
+          <i class="bi bi-check-circle-fill"></i>
 
-            <i class="bi bi-arrow-clockwise"></i>
+          <div>
 
-            Try Again
+            <strong>
+              {{ t('gpsCoordinatesCaptured') }}
+            </strong>
 
-          </button>
+            <span>
+              {{ t('locationDetectedSuccessfully') }}
+            </span>
 
-        }
+          </div>
+
+        </div>
 
 
-        <!-- HELP -->
+        <!-- LOCATION ERROR -->
 
-        <div class="location-help">
+        <div
+          class="location-error"
+          *ngIf="locationError">
 
-          <i class="bi bi-info-circle"></i>
+          <i class="bi bi-exclamation-circle-fill"></i>
 
           <span>
-
-            Click <strong>Detect My Location</strong>.
-            Your GPS coordinates will be captured automatically
-            when detection succeeds.
-
+            {{ locationStatus }}
           </span>
 
         </div>
 
-      </div>
 
-    }
+        <!-- RETRY -->
+
+        <button
+          type="button"
+          class="retry-button"
+          *ngIf="locationError"
+          (click)="retryLocation()">
+
+          <i class="bi bi-arrow-clockwise"></i>
+
+          <span>
+            {{ t('tryAgain') }}
+          </span>
+
+        </button>
 
 
-    <!-- ===================================================== -->
-    <!-- STEP 2 - ACCIDENT TYPE -->
-    <!-- ===================================================== -->
+        <!-- LOCATION HELP -->
 
-    @if (currentStep === 2) {
+        <div class="location-help">
 
-      <div class="report-card">
+          <i class="bi bi-info-circle-fill"></i>
+
+          <span>
+            {{ t('locationHelpBefore') }}
+
+            <strong>
+              {{ t('gpsLocation') }}
+            </strong>
+
+            {{ t('locationHelpAfter') }}
+          </span>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <div class="navigation">
+
+          <button
+            type="button"
+            class="continue-button"
+            [disabled]="!locationCaptured"
+            (click)="nextStep()">
+
+            <span>
+              {{ t('continue') }}
+            </span>
+
+            <i class="bi bi-arrow-right"></i>
+
+          </button>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================== -->
+      <!-- STEP 2 : ACCIDENT TYPE -->
+      <!-- =================================================== -->
+
+      <section *ngIf="currentStep === 2">
 
         <div class="step-icon">
           <i class="bi bi-car-front-fill"></i>
         </div>
 
         <h2>
-          What happened?
+          {{ t('whatHappened') }}
         </h2>
 
         <p class="step-description">
-          Select the option that best describes the incident.
+          {{ t('accidentTypeDescription') }}
         </p>
 
 
+        <!-- ACCIDENT OPTIONS -->
+
         <div class="options-grid">
+
+
+          <!-- ROAD ACCIDENT -->
 
           <button
             type="button"
             class="option-card"
-            [class.selected]="incidentType === 'ROAD_ACCIDENT'"
+            [class.selected]="
+              incidentType === 'ROAD_ACCIDENT'
+            "
             (click)="incidentType = 'ROAD_ACCIDENT'">
 
             <i class="bi bi-car-front-fill"></i>
 
             <span>
-              Road Accident
+              {{ t('roadAccident') }}
             </span>
 
-            @if (incidentType === 'ROAD_ACCIDENT') {
-
-              <i class="bi bi-check-circle-fill option-check"></i>
-
-            }
+            <i
+              class="bi bi-check-circle-fill selected-check"
+              *ngIf="
+                incidentType === 'ROAD_ACCIDENT'
+              ">
+            </i>
 
           </button>
 
 
+          <!-- TWO WHEELER ACCIDENT -->
+
           <button
             type="button"
             class="option-card"
-            [class.selected]="incidentType === 'TWO_WHEELER'"
-            (click)="incidentType = 'TWO_WHEELER'">
+            [class.selected]="
+              incidentType === 'TWO_WHEELER_ACCIDENT'
+            "
+            (click)="
+              incidentType = 'TWO_WHEELER_ACCIDENT'
+            ">
 
             <i class="bi bi-bicycle"></i>
 
             <span>
-              Two-Wheeler Accident
+              {{ t('twoWheelerAccident') }}
             </span>
 
-            @if (incidentType === 'TWO_WHEELER') {
-
-              <i class="bi bi-check-circle-fill option-check"></i>
-
-            }
+            <i
+              class="bi bi-check-circle-fill selected-check"
+              *ngIf="
+                incidentType === 'TWO_WHEELER_ACCIDENT'
+              ">
+            </i>
 
           </button>
 
 
+          <!-- PEDESTRIAN -->
+
           <button
             type="button"
             class="option-card"
-            [class.selected]="incidentType === 'PEDESTRIAN'"
-            (click)="incidentType = 'PEDESTRIAN'">
+            [class.selected]="
+              incidentType === 'PEDESTRIAN_INCIDENT'
+            "
+            (click)="
+              incidentType = 'PEDESTRIAN_INCIDENT'
+            ">
 
             <i class="bi bi-person-walking"></i>
 
             <span>
-              Pedestrian Incident
+              {{ t('pedestrianIncident') }}
             </span>
 
-            @if (incidentType === 'PEDESTRIAN') {
-
-              <i class="bi bi-check-circle-fill option-check"></i>
-
-            }
+            <i
+              class="bi bi-check-circle-fill selected-check"
+              *ngIf="
+                incidentType === 'PEDESTRIAN_INCIDENT'
+              ">
+            </i>
 
           </button>
 
 
+          <!-- NOT SURE -->
+
           <button
             type="button"
             class="option-card"
-            [class.selected]="incidentType === 'UNKNOWN'"
-            (click)="incidentType = 'UNKNOWN'">
+            [class.selected]="
+              incidentType === 'NOT_SURE'
+            "
+            (click)="incidentType = 'NOT_SURE'">
 
-            <i class="bi bi-question-circle"></i>
+            <i class="bi bi-question-circle-fill"></i>
 
             <span>
-              Not Sure
+              {{ t('notSure') }}
             </span>
 
-            @if (incidentType === 'UNKNOWN') {
-
-              <i class="bi bi-check-circle-fill option-check"></i>
-
-            }
+            <i
+              class="bi bi-check-circle-fill selected-check"
+              *ngIf="
+                incidentType === 'NOT_SURE'
+              ">
+            </i>
 
           </button>
 
         </div>
 
-      </div>
 
-    }
+        <!-- DESCRIPTION -->
+
+        <div class="question">
+
+          <h3>
+            {{ t('additionalInformation') }}
+          </h3>
+
+          <textarea
+            id="incidentDescription"
+            [(ngModel)]="description"
+            rows="5"
+            [placeholder]="
+              t('describeWhatYouCanSee')
+            ">
+          </textarea>
+
+        </div>
 
 
-    <!-- ===================================================== -->
-    <!-- STEP 3 - PEOPLE -->
-    <!-- ===================================================== -->
+        <!-- NAVIGATION -->
 
-    @if (currentStep === 3) {
+        <div class="navigation">
 
-      <div class="report-card">
+          <button
+            type="button"
+            class="previous-button"
+            (click)="previousStep()">
+
+            <i class="bi bi-arrow-left"></i>
+
+            <span>
+              {{ t('previous') }}
+            </span>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="continue-button"
+            [disabled]="!incidentType"
+            (click)="nextStep()">
+
+            <span>
+              {{ t('continue') }}
+            </span>
+
+            <i class="bi bi-arrow-right"></i>
+
+          </button>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================== -->
+      <!-- STEP 3 : PEOPLE AFFECTED -->
+      <!-- =================================================== -->
+
+      <section *ngIf="currentStep === 3">
 
         <div class="step-icon">
           <i class="bi bi-people-fill"></i>
         </div>
 
         <h2>
-          How many people are affected?
+          {{ t('howManyPeopleAffected') }}
         </h2>
 
         <p class="step-description">
-          Tell us approximately how many people are involved
-          in the accident.
+          {{ t('peopleAffectedDescription') }}
         </p>
 
 
+        <!-- VICTIM OPTIONS -->
+
         <div class="victim-options">
 
-          @for (
-            option of victimOptions;
-            track option.value
-          ) {
+          <button
+            type="button"
+            class="victim-card"
+            *ngFor="let option of victimOptions"
+            [class.selected]="
+              accident.victims === option.value
+            "
+            (click)="selectVictims(option.value)">
 
-            <button
-              type="button"
-              class="victim-card"
-              [class.selected]="accident.victims === option.value"
-              (click)="selectVictims(option.value)">
+            <i [class]="option.icon"></i>
 
-              <i
-                class="bi"
-                [class]="option.icon">
-              </i>
+            <span>
+              {{ t(option.labelKey) }}
+            </span>
 
-              <span>
-                {{ option.label }}
-              </span>
-
-              @if (
+            <i
+              class="bi bi-check-circle-fill selected-check"
+              *ngIf="
                 accident.victims === option.value
-              ) {
+              ">
+            </i>
 
-                <i class="bi bi-check-circle-fill selected-check"></i>
-
-              }
-
-            </button>
-
-          }
+          </button>
 
         </div>
 
+
+        <!-- ADDITIONAL INFORMATION -->
 
         <div class="question">
 
           <h3>
-            Additional information
+            {{ t('additionalInformation') }}
           </h3>
 
-          <textarea
-            [(ngModel)]="description"
-            class="form-control"
-            rows="4"
-            placeholder="Describe what you can see...">
-          </textarea>
+
+          <!-- UNCONSCIOUS -->
+
+          <label class="victim-card">
+
+            <input
+              type="checkbox"
+              [(ngModel)]="accident.unconscious">
+
+            <span>
+              {{ t('unconscious') }}
+            </span>
+
+          </label>
+
+
+          <!-- BLEEDING -->
+
+          <label class="victim-card">
+
+            <input
+              type="checkbox"
+              [(ngModel)]="accident.bleeding">
+
+            <span>
+              {{ t('bleeding') }}
+            </span>
+
+          </label>
+
+
+          <!-- BREATHING DIFFICULTY -->
+
+          <label class="victim-card">
+
+            <input
+              type="checkbox"
+              [(ngModel)]="
+                accident.breathingDifficulty
+              ">
+
+            <span>
+              {{ t('breathingDifficulty') }}
+            </span>
+
+          </label>
+
+
+          <!-- TRAPPED -->
+
+          <label class="victim-card">
+
+            <input
+              type="checkbox"
+              [(ngModel)]="accident.trapped">
+
+            <span>
+              {{ t('trapped') }}
+            </span>
+
+          </label>
 
         </div>
 
-      </div>
 
-    }
+        <!-- NAVIGATION -->
+
+        <div class="navigation">
+
+          <button
+            type="button"
+            class="previous-button"
+            (click)="previousStep()">
+
+            <i class="bi bi-arrow-left"></i>
+
+            <span>
+              {{ t('previous') }}
+            </span>
+
+          </button>
 
 
-    <!-- ===================================================== -->
-    <!-- STEP 4 - SEVERITY -->
-    <!-- ===================================================== -->
+          <button
+            type="button"
+            class="continue-button"
+            (click)="nextStep()">
 
-    @if (currentStep === 4) {
+            <span>
+              {{ t('continue') }}
+            </span>
 
-      <div class="report-card">
+            <i class="bi bi-arrow-right"></i>
 
-        <div class="step-icon success">
-          <i class="bi bi-shield-check"></i>
+          </button>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================== -->
+      <!-- STEP 4 : SEVERITY -->
+      <!-- =================================================== -->
+
+      <section *ngIf="currentStep === 4">
+
+        <div class="step-icon">
+          <i class="bi bi-exclamation-triangle-fill"></i>
         </div>
 
         <h2>
-          How urgent is the situation?
+          {{ t('howUrgent') }}
         </h2>
 
         <p class="step-description">
-          Select the urgency level based on what you
-          can currently see at the accident location.
+          {{ t('urgencyDescription') }}
         </p>
+
+
+        <!-- SEVERITY OPTIONS -->
+
+        <div class="severity-options">
+
+          <button
+            type="button"
+            class="severity-card"
+            *ngFor="let option of severityOptions"
+            [class.selected]="
+              selectedSeverity === option.value
+            "
+            [class.normal]="
+              option.value === 'normal'
+            "
+            [class.moderate]="
+              option.value === 'moderate'
+            "
+            [class.critical]="
+              option.value === 'critical'
+            "
+            (click)="selectSeverity(option.value)">
+
+            <div class="severity-icon">
+
+              <i [class]="option.icon"></i>
+
+            </div>
+
+
+            <div class="severity-content">
+
+              <strong>
+                {{ t(option.labelKey) }}
+              </strong>
+
+              <span>
+                {{ t(option.descriptionKey) }}
+              </span>
+
+            </div>
+
+
+            <i
+              class="bi bi-check-circle-fill selected-check"
+              *ngIf="
+                selectedSeverity === option.value
+              ">
+            </i>
+
+          </button>
+
+        </div>
 
 
         <!-- REVIEW -->
 
         <div class="review-section">
 
+
           <div class="review-item">
 
             <span>
               <i class="bi bi-car-front"></i>
-              Incident
+              {{ t('incident') }}
             </span>
 
             <strong>
-              {{ incidentType || 'Not selected' }}
+
+              {{
+                incidentType === 'ROAD_ACCIDENT'
+                  ? t('roadAccident')
+
+                  : incidentType ===
+                    'TWO_WHEELER_ACCIDENT'
+                    ? t('twoWheelerAccident')
+
+                  : incidentType ===
+                    'PEDESTRIAN_INCIDENT'
+                    ? t('pedestrianIncident')
+
+                  : incidentType === 'NOT_SURE'
+                    ? t('notSure')
+
+                  : t('notSelected')
+              }}
+
             </strong>
 
           </div>
@@ -530,7 +797,7 @@
 
             <span>
               <i class="bi bi-people"></i>
-              People affected
+              {{ t('peopleAffected') }}
             </span>
 
             <strong>
@@ -544,15 +811,35 @@
 
             <span>
               <i class="bi bi-geo-alt"></i>
-              GPS Location
+              {{ t('gpsLocation') }}
             </span>
 
-            <strong class="gps-success">
+            <strong
+              *ngIf="locationCaptured"
+              class="gps-success">
 
-              <i class="bi bi-check-circle-fill"></i>
+              {{ t('captured') }}
 
-              Captured
+            </strong>
 
+            <strong *ngIf="!locationCaptured">
+
+              {{ t('locationRequired') }}
+
+            </strong>
+
+          </div>
+
+
+          <div class="review-item">
+
+            <span>
+              <i class="bi bi-exclamation-triangle"></i>
+              {{ t('selectedUrgency') }}
+            </span>
+
+            <strong>
+              {{ getSeverityLabel() }}
             </strong>
 
           </div>
@@ -560,72 +847,30 @@
         </div>
 
 
-        <!-- SEVERITY -->
+        <!-- SELECTED SEVERITY MESSAGE -->
 
-        <div class="severity-question">
+        <div
+          class="selected-severity-message"
+          *ngIf="selectedSeverity">
 
-          <h3>
-            Select emergency level
-          </h3>
+          <i class="bi bi-shield-check"></i>
 
-          <p>
-            GoldenLink will use your selection to
-            coordinate the appropriate response.
-          </p>
+          <span>
+            {{ t('selectEmergencyLevel') }}
+          </span>
 
         </div>
 
 
-        <div class="severity-options">
+        <!-- ACTIVATION NOTE -->
 
-          @for (
-            option of severityOptions;
-            track option.value
-          ) {
+        <div class="activation-note">
 
-            <button
-              type="button"
-              class="severity-card"
-              [class.selected]="selectedSeverity === option.value"
-              [class.normal]="option.value === 'normal'"
-              [class.moderate]="option.value === 'moderate'"
-              [class.critical]="option.value === 'critical'"
-              (click)="selectSeverity(option.value)">
+          <i class="bi bi-info-circle"></i>
 
-              <div class="severity-icon">
-
-                <i
-                  class="bi"
-                  [class]="option.icon">
-                </i>
-
-              </div>
-
-              <div class="severity-content">
-
-                <strong>
-                  {{ option.label }}
-                </strong>
-
-                <span>
-                  {{ option.description }}
-                </span>
-
-              </div>
-
-              @if (
-                selectedSeverity === option.value
-              ) {
-
-                <i
-                  class="bi bi-check-circle-fill selected-check">
-                </i>
-
-              }
-
-            </button>
-
-          }
+          <span>
+            {{ t('activationNote') }}
+          </span>
 
         </div>
 
@@ -635,90 +880,66 @@
         <button
           type="button"
           class="activate-button"
-          [disabled]="!selectedSeverity"
+          [disabled]="
+            !selectedSeverity ||
+            !locationCaptured
+          "
           (click)="submitReport()">
 
-          <i class="bi bi-broadcast-pin"></i>
+          <i class="bi bi-shield-fill-check"></i>
 
-          Activate GoldenLink
+          <span>
+            {{ t('activateGoldenLink') }}
+          </span>
 
         </button>
 
 
-        @if (selectedSeverity) {
+        <!-- NAVIGATION -->
 
-          <div class="selected-severity-message">
+        <div class="navigation">
 
-            <i class="bi bi-info-circle"></i>
+          <button
+            type="button"
+            class="previous-button"
+            (click)="previousStep()">
 
-            Selected urgency:
+            <i class="bi bi-arrow-left"></i>
 
-            <strong>
-              {{ getSeverityLabel() }}
-            </strong>
+            <span>
+              {{ t('previous') }}
+            </span>
 
-          </div>
-
-        }
-
-
-        <div class="activation-note">
-
-          <i class="bi bi-shield-check"></i>
-
-          GoldenLink will use this report to coordinate
-          nearby community assistance.
+          </button>
 
         </div>
 
-      </div>
-
-    }
-
-
-    <!-- ===================================================== -->
-    <!-- NAVIGATION -->
-    <!-- ===================================================== -->
-
-    <div class="navigation">
-
-      @if (currentStep > 1) {
-
-        <button
-          type="button"
-          class="previous-button"
-          (click)="previousStep()">
-
-          <i class="bi bi-arrow-left"></i>
-
-          Previous
-
-        </button>
-
-      }
-
-
-      @if (currentStep < totalSteps) {
-
-        <button
-          type="button"
-          class="continue-button"
-          [disabled]="
-            (currentStep === 1 && !locationCaptured) ||
-            (currentStep === 2 && !incidentType) ||
-            (currentStep === 3 && !accident.victims)
-          "
-          (click)="nextStep()">
-
-          Continue
-
-          <i class="bi bi-arrow-right"></i>
-
-        </button>
-
-      }
+      </section>
 
     </div>
+
+
+    <!-- ===================================================== -->
+    <!-- FOOTER -->
+    <!-- ===================================================== -->
+
+    <footer class="report-footer">
+
+      <div class="footer-security">
+
+        <i class="bi bi-shield-check"></i>
+
+        <span>
+          GoldenLink AI
+        </span>
+
+      </div>
+
+      <p>
+        {{ t('reportAccidentDescription') }}
+      </p>
+
+    </footer>
 
   </div>
 

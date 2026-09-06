@@ -1,8 +1,6 @@
 <div class="community-page">
 
-  <!-- =========================
-       HEADER
-  ========================== -->
+  <!-- HEADER -->
 
   <section class="community-header">
 
@@ -16,13 +14,15 @@
 
         <p class="eyebrow">
           <i class="bi bi-globe2"></i>
-          GoldenLink Network
+          {{ t('communityGoldenLinkNetwork') }}
         </p>
 
-        <h1>Our Community</h1>
+        <h1>
+          {{ t('communityOurCommunity') }}
+        </h1>
 
         <p class="header-description">
-          Together, ordinary people can become a stronger first-response network.
+          {{ t('communityHeaderDescription') }}
         </p>
 
       </div>
@@ -32,9 +32,7 @@
   </section>
 
 
-  <!-- =========================
-       HERO
-  ========================== -->
+  <!-- HERO -->
 
   <section class="community-hero">
 
@@ -42,17 +40,18 @@
 
       <div class="hero-badge">
         <i class="bi bi-heart-fill"></i>
-        Community-powered response
+        {{ t('communityPoweredResponse') }}
       </div>
 
       <h2>
-        Don't just report the accident.
-        <span>Activate the community.</span>
+        {{ t('communityDontJustReport') }}
+        <span>
+          {{ t('communityActivateTheCommunity') }}
+        </span>
       </h2>
 
       <p>
-        GoldenLink connects people who are ready to help with incidents
-        happening around them.
+        {{ t('communityHeroDescription') }}
       </p>
 
       <button
@@ -61,7 +60,7 @@
         (click)="joinCommunity()"
       >
         <i class="bi bi-person-plus-fill"></i>
-        Join the Community
+        {{ t('joinCommunity') }}
       </button>
 
     </div>
@@ -79,10 +78,11 @@
 
         <i class="bi bi-people-fill"></i>
 
-        <span>Community</span>
+        <span>
+          {{ t('community') }}
+        </span>
 
       </div>
-
 
       <div class="floating-icon icon-one">
         <i class="bi bi-person-fill"></i>
@@ -105,9 +105,7 @@
   </section>
 
 
-  <!-- =========================
-       STATISTICS
-  ========================== -->
+  <!-- STATISTICS -->
 
   <section class="stats-section">
 
@@ -120,7 +118,7 @@
       <div>
 
         <span class="stat-label">
-          Total responders
+          {{ t('communityTotalResponders') }}
         </span>
 
         <strong>
@@ -141,7 +139,7 @@
       <div>
 
         <span class="stat-label">
-          Available now
+          {{ t('communityAvailableNow') }}
         </span>
 
         <strong>
@@ -162,7 +160,7 @@
       <div>
 
         <span class="stat-label">
-          Active incidents
+          {{ t('communityActiveIncidents') }}
         </span>
 
         <strong>
@@ -183,7 +181,7 @@
       <div>
 
         <span class="stat-label">
-          Average coverage
+          {{ t('communityAverageCoverage') }}
         </span>
 
         <strong>
@@ -197,9 +195,7 @@
   </section>
 
 
-  <!-- =========================
-       COMMUNITY AREAS
-  ========================== -->
+  <!-- COMMUNITY AREAS -->
 
   <section class="areas-section">
 
@@ -208,17 +204,17 @@
       <div>
 
         <span class="section-label">
-          NETWORK COVERAGE
+          {{ t('communityNetworkCoverage') }}
         </span>
 
         <h2>
-          Community Response Areas
+          {{ t('communityResponseAreas') }}
         </h2>
 
       </div>
 
       <p>
-        See how GoldenLink responders are distributed across different areas.
+        {{ t('communityAreasDescription') }}
       </p>
 
     </div>
@@ -233,12 +229,10 @@
           <div class="area-top">
 
             <div class="area-icon">
-
               <i
                 class="bi"
                 [class]="area.icon"
               ></i>
-
             </div>
 
             <div>
@@ -248,7 +242,7 @@
               </h3>
 
               <span>
-                GoldenLink Community
+                {{ t('communityGoldenLinkCommunity') }}
               </span>
 
             </div>
@@ -265,7 +259,7 @@
               </strong>
 
               <span>
-                Responders
+                {{ t('communityResponders') }}
               </span>
 
             </div>
@@ -278,7 +272,7 @@
               </strong>
 
               <span>
-                Available
+                {{ t('communityAvailable') }}
               </span>
 
             </div>
@@ -291,7 +285,7 @@
               </strong>
 
               <span>
-                Incidents
+                {{ t('communityIncidents') }}
               </span>
 
             </div>
@@ -304,7 +298,7 @@
             <div class="coverage-header">
 
               <span>
-                Coverage
+                {{ t('communityCoverage') }}
               </span>
 
               <strong>
@@ -330,7 +324,8 @@
             type="button"
             (click)="viewArea(area)"
           >
-            View Community
+
+            {{ t('communityViewCommunity') }}
 
             <i class="bi bi-arrow-right"></i>
 
@@ -345,24 +340,22 @@
   </section>
 
 
-  <!-- =========================
-       HOW IT WORKS
-  ========================== -->
+  <!-- HOW IT WORKS -->
 
   <section class="how-section">
 
     <div class="section-heading centered">
 
       <span class="section-label">
-        HOW IT WORKS
+        {{ t('communityHowItWorks') }}
       </span>
 
       <h2>
-        One community. Faster help.
+        {{ t('communityOneCommunityFasterHelp') }}
       </h2>
 
       <p>
-        GoldenLink brings nearby people together when every second matters.
+        {{ t('communityHowItWorksDescription') }}
       </p>
 
     </div>
@@ -381,11 +374,11 @@
         </div>
 
         <h3>
-          Join
+          {{ t('communityJoin') }}
         </h3>
 
         <p>
-          Register yourself with your basic information and verification certificate.
+          {{ t('communityJoinDescription') }}
         </p>
 
       </div>
@@ -402,11 +395,11 @@
         </div>
 
         <h3>
-          Stay Connected
+          {{ t('communityStayConnected') }}
         </h3>
 
         <p>
-          GoldenLink can identify nearby community responders when an emergency is reported.
+          {{ t('communityStayConnectedDescription') }}
         </p>
 
       </div>
@@ -423,11 +416,11 @@
         </div>
 
         <h3>
-          Respond
+          {{ t('communityRespond') }}
         </h3>
 
         <p>
-          Nearby volunteers can accept the request and provide immediate assistance.
+          {{ t('communityRespondDescription') }}
         </p>
 
       </div>
@@ -444,11 +437,11 @@
         </div>
 
         <h3>
-          Save Lives
+          {{ t('communitySaveLives') }}
         </h3>
 
         <p>
-          Faster community response helps bridge the critical gap before professional emergency services arrive.
+          {{ t('communitySaveLivesDescription') }}
         </p>
 
       </div>
@@ -458,9 +451,7 @@
   </section>
 
 
-  <!-- =========================
-       FOOTER NOTE
-  ========================== -->
+  <!-- COMMUNITY NOTE -->
 
   <section class="community-note">
 
@@ -471,12 +462,11 @@
     <div>
 
       <h3>
-        Be part of the GoldenLink network
+        {{ t('communityBePartOfNetwork') }}
       </h3>
 
       <p>
-        Your small action can make a big difference during an emergency.
-        Together we can build a faster and safer community response system.
+        {{ t('communityNetworkNote') }}
       </p>
 
     </div>
@@ -484,9 +474,7 @@
   </section>
 
 
-  <!-- ==========================================================
-       JOIN COMMUNITY MODAL
-  =========================================================== -->
+  <!-- JOIN COMMUNITY MODAL -->
 
   @if (showJoinForm) {
 
@@ -500,25 +488,22 @@
         (click)="$event.stopPropagation()"
       >
 
-
-        <!-- =========================
-             MODAL HEADER
-        ========================== -->
+        <!-- MODAL HEADER -->
 
         <div class="modal-header">
 
           <div>
 
             <span class="modal-label">
-              GOLDENLINK COMMUNITY
+              {{ t('communityGoldenLinkCommunity') }}
             </span>
 
             <h2>
-              Join the Community
+              {{ t('joinCommunity') }}
             </h2>
 
             <p>
-              Register as a community responder and help people around you during emergencies.
+              {{ t('communityRegistrationDescription') }}
             </p>
 
           </div>
@@ -528,7 +513,7 @@
             type="button"
             class="close-button"
             (click)="closeJoinForm()"
-            aria-label="Close"
+            [attr.aria-label]="t('close')"
           >
 
             <i class="bi bi-x-lg"></i>
@@ -538,9 +523,7 @@
         </div>
 
 
-        <!-- =====================================================
-             SUCCESS SCREEN
-        ====================================================== -->
+        <!-- SUCCESS -->
 
         @if (submitted) {
 
@@ -551,17 +534,17 @@
             </div>
 
             <span class="success-label">
-              APPLICATION RECEIVED
+              {{ t('communityApplicationReceived') }}
             </span>
 
             <h2>
-              Application Submitted Successfully!
+              {{ t('communityApplicationSubmitted') }}
             </h2>
 
             <p>
-              Thank you, {{ communityMember.name }}.
-              Your registration, photo and volunteer certificate
-              have been submitted successfully.
+              {{ t('communityThankYou') }}
+              {{ communityMember.name }}.
+              {{ t('communityRegistrationSubmitted') }}
             </p>
 
 
@@ -572,7 +555,7 @@
               <div>
 
                 <strong>
-                  Mobile Verified
+                  {{ t('communityMobileVerified') }}
                 </strong>
 
                 <span>
@@ -591,12 +574,11 @@
               <div>
 
                 <strong>
-                  Certificate Verification Pending
+                  {{ t('communityCertificatePending') }}
                 </strong>
 
                 <span>
-                  Your certificate will be reviewed before your
-                  community membership is activated.
+                  {{ t('communityCertificatePendingDescription') }}
                 </span>
 
               </div>
@@ -609,7 +591,8 @@
               class="done-button"
               (click)="resetForm()"
             >
-              Done
+
+              {{ t('communityDone') }}
 
               <i class="bi bi-arrow-right"></i>
 
@@ -620,9 +603,7 @@
         }
 
 
-        <!-- =====================================================
-             REGISTRATION FORM
-        ====================================================== -->
+        <!-- REGISTRATION -->
 
         @if (!submitted && currentStep === 'registration') {
 
@@ -631,7 +612,6 @@
             #communityForm="ngForm"
             (ngSubmit)="sendOtp()"
           >
-
 
             <!-- NOTICE -->
 
@@ -642,13 +622,11 @@
               <div>
 
                 <strong>
-                  Volunteer verification required
+                  {{ t('communityVolunteerVerificationRequired') }}
                 </strong>
 
                 <p>
-                  Please provide your photo and valid volunteer
-                  verification certificate. Your details will be
-                  reviewed before community access is activated.
+                  {{ t('communityVerificationDescription') }}
                 </p>
 
               </div>
@@ -656,19 +634,15 @@
             </div>
 
 
-            <!-- =========================
-                 FORM GRID
-            ========================== -->
-
             <div class="form-grid">
 
-
-              <!-- NAME -->
+              <!-- FULL NAME -->
 
               <div class="form-group full">
 
                 <label for="name">
-                  Full Name <span>*</span>
+                  {{ t('communityFullName') }}
+                  <span>*</span>
                 </label>
 
                 <div class="input-wrapper">
@@ -679,7 +653,7 @@
                     id="name"
                     name="name"
                     type="text"
-                    placeholder="Enter your full name"
+                    [placeholder]="t('communityFullNamePlaceholder')"
                     [(ngModel)]="communityMember.name"
                     required
                   />
@@ -694,7 +668,8 @@
               <div class="form-group">
 
                 <label for="dob">
-                  Date of Birth <span>*</span>
+                  {{ t('dateOfBirth') }}
+                  <span>*</span>
                 </label>
 
                 <div class="input-wrapper">
@@ -720,7 +695,8 @@
               <div class="form-group">
 
                 <label for="gender">
-                  Gender <span>*</span>
+                  {{ t('communityGender') }}
+                  <span>*</span>
                 </label>
 
                 <div class="input-wrapper">
@@ -735,23 +711,23 @@
                   >
 
                     <option value="">
-                      Select gender
+                      {{ t('communitySelectGender') }}
                     </option>
 
                     <option value="Male">
-                      Male
+                      {{ t('communityMale') }}
                     </option>
 
                     <option value="Female">
-                      Female
+                      {{ t('communityFemale') }}
                     </option>
 
                     <option value="Other">
-                      Other
+                      {{ t('communityOther') }}
                     </option>
 
                     <option value="Prefer not to say">
-                      Prefer not to say
+                      {{ t('communityPreferNotToSay') }}
                     </option>
 
                   </select>
@@ -766,7 +742,8 @@
               <div class="form-group">
 
                 <label for="place">
-                  Place <span>*</span>
+                  {{ t('communityPlace') }}
+                  <span>*</span>
                 </label>
 
                 <div class="input-wrapper">
@@ -777,7 +754,7 @@
                     id="place"
                     name="place"
                     type="text"
-                    placeholder="City / Town / Area"
+                    [placeholder]="t('communityPlacePlaceholder')"
                     [(ngModel)]="communityMember.place"
                     required
                   />
@@ -792,7 +769,8 @@
               <div class="form-group">
 
                 <label for="contactNumber">
-                  Mobile Number <span>*</span>
+                  {{ t('mobileNumber') }}
+                  <span>*</span>
                 </label>
 
                 <div class="mobile-wrapper">
@@ -809,7 +787,7 @@
                     minlength="10"
                     pattern="[0-9]{10}"
                     inputmode="numeric"
-                    placeholder="10-digit mobile number"
+                    [placeholder]="t('communityMobilePlaceholder')"
                     [(ngModel)]="communityMember.contactNumber"
                     (input)="onMobileInput($event)"
                     required
@@ -818,18 +796,19 @@
                 </div>
 
                 <small class="field-hint">
-                  OTP will be sent to this mobile number.
+                  {{ t('communityOtpWillBeSent') }}
                 </small>
 
               </div>
 
 
-              <!-- EMAIL -->
+              <!-- GMAIL -->
 
               <div class="form-group">
 
                 <label for="email">
-                  Gmail Address <span>*</span>
+                  {{ t('communityGmailAddress') }}
+                  <span>*</span>
                 </label>
 
                 <div class="input-wrapper">
@@ -840,7 +819,7 @@
                     id="email"
                     name="email"
                     type="email"
-                    placeholder="example@gmail.com"
+                    [placeholder]="t('communityGmailPlaceholder')"
                     [(ngModel)]="communityMember.email"
                     pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
                     required
@@ -849,7 +828,7 @@
                 </div>
 
                 <small class="field-hint">
-                  Only Gmail addresses are accepted.
+                  {{ t('communityOnlyGmail') }}
                 </small>
 
               </div>
@@ -860,7 +839,8 @@
               <div class="form-group">
 
                 <label for="designation">
-                  Designation <span>*</span>
+                  {{ t('communityDesignation') }}
+                  <span>*</span>
                 </label>
 
                 <div class="input-wrapper">
@@ -871,7 +851,7 @@
                     id="designation"
                     name="designation"
                     type="text"
-                    placeholder="Student / Engineer / Driver..."
+                    [placeholder]="t('communityDesignationPlaceholder')"
                     [(ngModel)]="communityMember.designation"
                     required
                   />
@@ -886,7 +866,8 @@
               <div class="form-group">
 
                 <label for="vehicle">
-                  Vehicle Type <span>*</span>
+                  {{ t('communityVehicleType') }}
+                  <span>*</span>
                 </label>
 
                 <div class="input-wrapper">
@@ -901,35 +882,35 @@
                   >
 
                     <option value="">
-                      Select vehicle
+                      {{ t('communitySelectVehicle') }}
                     </option>
 
                     <option value="None">
-                      No Vehicle
+                      {{ t('communityNoVehicle') }}
                     </option>
 
                     <option value="Two Wheeler">
-                      Two Wheeler
+                      {{ t('communityTwoWheeler') }}
                     </option>
 
                     <option value="Car">
-                      Car
+                      {{ t('communityCar') }}
                     </option>
 
                     <option value="Auto / Taxi">
-                      Auto / Taxi
+                      {{ t('communityAutoTaxi') }}
                     </option>
 
                     <option value="Van">
-                      Van
+                      {{ t('communityVan') }}
                     </option>
 
                     <option value="Truck">
-                      Truck
+                      {{ t('communityTruck') }}
                     </option>
 
                     <option value="Other">
-                      Other
+                      {{ t('communityOther') }}
                     </option>
 
                   </select>
@@ -944,7 +925,8 @@
               <div class="form-group">
 
                 <label for="maritalStatus">
-                  Marital Status <span>*</span>
+                  {{ t('communityMaritalStatus') }}
+                  <span>*</span>
                 </label>
 
                 <div class="input-wrapper">
@@ -959,15 +941,15 @@
                   >
 
                     <option value="">
-                      Select status
+                      {{ t('communitySelectStatus') }}
                     </option>
 
                     <option value="Married">
-                      Married
+                      {{ t('communityMarried') }}
                     </option>
 
                     <option value="Unmarried">
-                      Unmarried
+                      {{ t('communityUnmarried') }}
                     </option>
 
                   </select>
@@ -977,12 +959,13 @@
               </div>
 
 
-              <!-- PERSON PHOTO -->
+              <!-- PHOTO -->
 
               <div class="form-group full">
 
                 <label for="personPhoto">
-                  Person Photo <span>*</span>
+                  {{ t('communityPersonPhoto') }}
+                  <span>*</span>
                 </label>
 
                 <label
@@ -996,7 +979,6 @@
 
                   </div>
 
-
                   <div class="upload-content">
 
                     @if (selectedPhotoName) {
@@ -1006,26 +988,24 @@
                       </strong>
 
                       <span>
-                        Photo selected successfully
+                        {{ t('communityPhotoSelected') }}
                       </span>
 
                     } @else {
 
                       <strong>
-                        Upload your photo
+                        {{ t('communityUploadPhoto') }}
                       </strong>
 
                       <span>
-                        JPG, JPEG or PNG
+                        {{ t('communityPhotoFormats') }}
                       </span>
 
                     }
 
                   </div>
 
-
                   <i class="bi bi-plus-circle upload-plus"></i>
-
 
                   <input
                     id="personPhoto"
@@ -1045,7 +1025,8 @@
               <div class="form-group full">
 
                 <label for="certificate">
-                  Volunteer Verified Certificate <span>*</span>
+                  {{ t('communityVerifiedVolunteerCertificate') }}
+                  <span>*</span>
                 </label>
 
                 <label
@@ -1059,7 +1040,6 @@
 
                   </div>
 
-
                   <div class="upload-content">
 
                     @if (selectedCertificateName) {
@@ -1069,26 +1049,24 @@
                       </strong>
 
                       <span>
-                        Certificate selected successfully
+                        {{ t('communityCertificateSelected') }}
                       </span>
 
                     } @else {
 
                       <strong>
-                        Upload verified volunteer certificate
+                        {{ t('communityUploadCertificate') }}
                       </strong>
 
                       <span>
-                        PDF, JPG, JPEG or PNG
+                        {{ t('communityCertificateFormats') }}
                       </span>
 
                     }
 
                   </div>
 
-
                   <i class="bi bi-plus-circle upload-plus"></i>
-
 
                   <input
                     id="certificate"
@@ -1108,16 +1086,16 @@
               <div class="form-group full">
 
                 <label>
-                  Security Verification <span>*</span>
+                  {{ t('communitySecurityVerification') }}
+                  <span>*</span>
                 </label>
-
 
                 <div class="captcha-box">
 
                   <div class="captcha-question">
 
                     <span>
-                      CAPTCHA
+                      {{ t('captcha') }}
                     </span>
 
                     <strong>
@@ -1126,22 +1104,20 @@
 
                   </div>
 
-
                   <input
                     type="number"
                     name="captcha"
                     class="captcha-input"
-                    placeholder="Answer"
+                    [placeholder]="t('communityCaptchaAnswer')"
                     [(ngModel)]="captchaAnswer"
                     required
                   />
-
 
                   <button
                     type="button"
                     class="captcha-refresh"
                     (click)="generateCaptcha()"
-                    title="Refresh CAPTCHA"
+                    [title]="t('communityRefreshCaptcha')"
                   >
 
                     <i class="bi bi-arrow-clockwise"></i>
@@ -1173,9 +1149,8 @@
                 class="cancel-button"
                 (click)="closeJoinForm()"
               >
-                Cancel
+                {{ t('cancel') }}
               </button>
-
 
               <button
                 type="submit"
@@ -1185,7 +1160,7 @@
 
                 <i class="bi bi-shield-lock-fill"></i>
 
-                Verify & Send OTP
+                {{ t('communityVerifyAndSendOtp') }}
 
               </button>
 
@@ -1196,36 +1171,27 @@
         }
 
 
-        <!-- =====================================================
-             OTP VERIFICATION
-        ====================================================== -->
+        <!-- OTP -->
 
         @if (!submitted && currentStep === 'otp') {
 
           <div class="otp-container">
 
-
             <div class="otp-icon">
-
               <i class="bi bi-phone-fill"></i>
-
             </div>
 
-
             <span class="otp-label">
-              MOBILE VERIFICATION
+              {{ t('communityMobileVerification') }}
             </span>
 
-
             <h2>
-              Verify Your Mobile Number
+              {{ t('communityVerifyMobileNumber') }}
             </h2>
 
-
             <p>
-              Enter the 6-digit OTP sent to
+              {{ t('communityEnterOtpSent') }}
             </p>
-
 
             <div class="otp-mobile-number">
 
@@ -1243,19 +1209,19 @@
               <i class="bi bi-info-circle-fill"></i>
 
               <span>
-                Frontend demo mode:
+                {{ t('communityFrontendDemoMode') }}
                 {{ otpMessage }}
               </span>
 
             </div>
 
 
-            <!-- OTP -->
+            <!-- OTP INPUT -->
 
             <div class="otp-input-area">
 
               <label for="otp">
-                Enter OTP
+                {{ t('enterOtp') }}
               </label>
 
               <input
@@ -1280,7 +1246,8 @@
 
                 <i class="bi bi-clock"></i>
 
-                OTP expires in
+                {{ t('communityOtpExpiresIn') }}
+
                 <strong>
                   {{ otpTimeDisplay }}
                 </strong>
@@ -1293,7 +1260,7 @@
 
                 <i class="bi bi-exclamation-circle"></i>
 
-                OTP has expired.
+                {{ t('communityOtpExpired') }}
 
               </div>
 
@@ -1315,7 +1282,7 @@
             }
 
 
-            <!-- SUCCESS MESSAGE -->
+            <!-- VERIFIED -->
 
             @if (mobileVerified) {
 
@@ -1323,7 +1290,7 @@
 
                 <i class="bi bi-check-circle-fill"></i>
 
-                Mobile number verified successfully.
+                {{ t('communityMobileVerified') }}
 
               </div>
 
@@ -1342,7 +1309,7 @@
 
                 <i class="bi bi-pencil"></i>
 
-                Change Number
+                {{ t('communityChangeNumber') }}
 
               </button>
 
@@ -1357,7 +1324,7 @@
 
                   <i class="bi bi-check-circle-fill"></i>
 
-                  Verify OTP
+                  {{ t('verifyOtp') }}
 
                 </button>
 
@@ -1369,7 +1336,7 @@
                   (click)="submitCommunityForm()"
                 >
 
-                  Complete Registration
+                  {{ t('communityCompleteRegistration') }}
 
                   <i class="bi bi-arrow-right"></i>
 
@@ -1387,14 +1354,14 @@
               <div class="resend-section">
 
                 <span>
-                  Didn't receive the OTP?
+                  {{ t('communityDidntReceiveOtp') }}
                 </span>
 
                 <button
                   type="button"
                   (click)="resendOtp()"
                 >
-                  Resend OTP
+                  {{ t('communityResendOtp') }}
                 </button>
 
               </div>

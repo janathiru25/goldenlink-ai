@@ -9,32 +9,28 @@
       </div>
 
       <span class="section-label">
-        Golden Hour Response
+        {{ t('goldenHourResponse') }}
       </span>
 
       <h2>
-        When every second matters,
-        <span>know what to do.</span>
+        {{ t('whenEverySecondMatters') }}
+        <span>{{ t('knowWhatToDo') }}</span>
       </h2>
 
       <p>
-        Report an accident and help activate suitable people
-        around the incident while professional emergency services
-        take over.
+        {{ t('emergencyCtaDescription') }}
       </p>
 
       <a
         routerLink="/report-accident"
         class="btn btn-emergency"
-       >
-      <i class="bi bi-exclamation-triangle-fill"></i>
-          Report Accident
+      >
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        {{ t('reportAccident') }}
       </a>
 
       <small>
-        GoldenLink AI supports community coordination.
-        It does not replace ambulances, doctors, police or
-        professional emergency services.
+        {{ t('goldenLinkEmergencyDisclaimer') }}
       </small>
 
     </div>

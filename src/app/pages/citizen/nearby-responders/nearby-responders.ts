@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner';
 import { IncidentService } from '../../../core/services/incident';
 import { Incident } from '../../../core/models/incident';
+import { TranslationService } from '../../../core/services/translation';
 
 interface Responder {
   id: number;
@@ -33,7 +34,16 @@ interface Responder {
 export class NearbyResponders {
 
   private readonly router = inject(Router);
-  private readonly incidentService = inject(IncidentService);
+
+  private readonly incidentService =
+    inject(IncidentService);
+
+  readonly translation =
+    inject(TranslationService);
+
+  t(key: string): string {
+    return this.translation.translate(key);
+  }
 
   searchRadius = '2 km';
 
@@ -120,9 +130,10 @@ export class NearbyResponders {
   }
 
   private loadActiveIncident(): void {
-   this.activeIncident =
-  this.incidentService.getActiveIncident() ?? null;
-  
+
+    this.activeIncident =
+      this.incidentService.getActiveIncident() ?? null;
+
     if (this.activeIncident) {
 
       console.log(
@@ -130,10 +141,11 @@ export class NearbyResponders {
         this.activeIncident
       );
 
-      // Move incident into responder search state
+      // Keep existing incident workflow unchanged.
       if (
         this.activeIncident.status === 'reported'
       ) {
+
         this.activeIncident =
           this.incidentService.updateIncident(
             this.activeIncident.incidentId,
@@ -166,9 +178,11 @@ export class NearbyResponders {
     }
 
     if (!this.activeIncident) {
+
       alert(
-        'No active GoldenLink incident was found.'
+        this.t('nearbyNoActiveIncident')
       );
+
       return;
     }
 
@@ -233,15 +247,12 @@ export class NearbyResponders {
         updatedIncident
       );
 
-      /*
-       * Give the user a moment to see
-       * the successful assignment message.
-       */
-
       setTimeout(() => {
+
         this.router.navigate([
           '/responder-dashboard'
         ]);
+
       }, 1800);
 
     }, 700);
@@ -262,21 +273,70 @@ export class NearbyResponders {
   getIncidentSeverityLabel(): string {
 
     if (!this.activeIncident) {
-      return 'Unknown';
+      return this.t('nearbyUnknown');
     }
 
-    return (
-      this.activeIncident.severity
-        .charAt(0)
-        .toUpperCase() +
-      this.activeIncident.severity.slice(1)
-    );
+    switch (this.activeIncident.severity) {
+
+      case 'critical':
+        return this.t('critical');
+
+      case 'serious':
+        return this.t('nearbySerious');
+
+      case 'moderate':
+        return this.t('moderate');
+
+      default:
+        return this.t('nearbyUnknown');
+    }
+  }
+
+  getAccidentTypeLabel(): string {
+
+    if (!this.activeIncident) {
+      return this.t('notSure');
+    }
+
+    const type =
+      String(
+        this.activeIncident.accidentType ?? ''
+      )
+        .trim()
+        .toUpperCase();
+
+    switch (type) {
+
+      case 'ROAD_ACCIDENT':
+      case 'ROAD':
+      case 'CAR_ACCIDENT':
+      case 'CAR':
+        return this.t('roadAccident');
+
+      case 'TWO_WHEELER':
+      case 'TWO_WHEELER_ACCIDENT':
+      case 'TWO_WHEELER_INCIDENT':
+      case 'BIKE':
+      case 'MOTORCYCLE':
+        return this.t('twoWheelerAccident');
+
+      case 'PEDESTRIAN':
+      case 'PEDESTRIAN_INCIDENT':
+        return this.t('pedestrianIncident');
+
+      case 'NOT_SURE':
+      case 'UNKNOWN':
+        return this.t('notSure');
+
+      default:
+        return this.activeIncident.accidentType || this.t('notSure');
+    }
   }
 
   getIncidentLocation(): string {
 
     if (!this.activeIncident) {
-      return 'Location unavailable';
+      return this.t('nearbyLocationUnavailable');
     }
 
     return (
@@ -284,5 +344,50 @@ export class NearbyResponders {
       `${this.activeIncident.location.latitude.toFixed(5)}, ` +
       `${this.activeIncident.location.longitude.toFixed(5)}`
     );
+  }
+
+  getResponderRole(role: string): string {
+
+    switch (role) {
+
+      case 'First-Aid Trained':
+        return this.t('nearbyFirstAidTrained');
+
+      case 'Community Volunteer':
+        return this.t('nearbyCommunityVolunteer');
+
+      case 'First Response Volunteer':
+        return this.t('nearbyFirstResponseVolunteer');
+
+      default:
+        return role;
+    }
+  }
+
+  getSkillLabel(skill: string): string {
+
+    switch (skill) {
+
+      case 'First Aid':
+        return this.t('nearbyFirstAid');
+
+      case 'Traffic Support':
+        return this.t('nearbyTrafficSupport');
+
+      case 'Community Support':
+        return this.t('nearbyCommunitySupport');
+
+      case 'Location Guidance':
+        return this.t('nearbyLocationGuidance');
+
+      case 'Emergency Communication':
+        return this.t('nearbyEmergencyCommunication');
+
+      case 'Communication':
+        return this.t('nearbyCommunication');
+
+      default:
+        return skill;
+    }
   }
 }
