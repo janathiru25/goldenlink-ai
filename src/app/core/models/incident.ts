@@ -1,8 +1,28 @@
+import { Hospital } from './hospital';
+import { Responder } from './responder';
+
 export type IncidentSeverity =
   | 'normal'
   | 'moderate'
   | 'serious'
-  | 'critical';
+  | 'critical'
+  | string;
+
+export type IncidentStatus =
+  | 'reported'
+  | 'under-review'
+  | 'confirmed'
+  | 'responder-dispatched'
+  | 'responder-on-scene'
+  | 'transporting'
+  | 'hospital-arrived'
+  | 'resolved'
+  | 'cancelled'
+  | 'responder_search'
+  | 'responder_assigned'
+  | string;
+
+export type AccidentType = string;
 
 export interface IncidentLocation {
   latitude: number;
@@ -14,14 +34,17 @@ export interface IncidentAI {
   severity: IncidentSeverity;
   confidence: number;
   summary: string;
+  recommendedAction?: string;
+  emergencyLevel?: string;
+  detectedConditions?: string[];
 }
 
 export interface Incident {
   incidentId: string;
   reportedAt: string;
-  status: string;
+  status: IncidentStatus;
 
-  accidentType: string;
+  accidentType: AccidentType;
   severity: IncidentSeverity;
 
   victims: number;
@@ -37,7 +60,13 @@ export interface Incident {
 
   aiAssessment: IncidentAI;
 
-  responder: unknown;
-  ambulanceStatus: string;
-  hospital: unknown;
+  responder?: Responder | null;
+
+  ambulanceStatus?: string;
+
+  hospital?: Hospital | null;
+
+  emergencyContact?: string;
+
+  lastUpdated?: string;
 }
