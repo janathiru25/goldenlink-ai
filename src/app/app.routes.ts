@@ -15,6 +15,30 @@ export const routes: Routes = [
 
 
   // =====================================================
+  // BYSTANDER LOGIN
+  // =====================================================
+
+  {
+    path: 'bystander-login',
+    loadComponent: () =>
+      import('./features/bystander-login/bystander-login')
+        .then(m => m.BystanderLogin),
+  },
+
+
+  // =====================================================
+  // BYSTANDER REGISTRATION
+  // =====================================================
+
+  {
+    path: 'bystander-registration',
+    loadComponent: () =>
+      import('./features/bystander-registration/bystander-registration')
+        .then(m => m.BystanderRegistration),
+  },
+
+
+  // =====================================================
   // CITIZEN PAGES
   // =====================================================
 
@@ -37,6 +61,18 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/citizen/accident-records/accident-records')
         .then(m => m.AccidentRecords),
+  },
+
+
+  // =====================================================
+  // ACCIDENT DETAILS
+  // =====================================================
+
+  {
+    path: 'accident-details/:id',
+    loadComponent: () =>
+      import('./features/accident-details/accident-details')
+        .then(m => m.AccidentDetails),
   },
 
   {
@@ -78,6 +114,7 @@ export const routes: Routes = [
   // =====================================================
 
   // Responder Dashboard
+
   {
     path: 'responder-dashboard',
     loadComponent: () =>
@@ -85,7 +122,9 @@ export const routes: Routes = [
         .then(m => m.ResponderDashboard),
   },
 
+
   // Incident Response
+
   {
     path: 'incident-response',
     loadComponent: () =>
@@ -93,7 +132,9 @@ export const routes: Routes = [
         .then(m => m.IncidentResponse),
   },
 
+
   // Responder Profile
+
   {
     path: 'responder-profile',
     loadComponent: () =>

@@ -1,0 +1,59 @@
+<section class="timeline-card" *ngIf="incident">
+  <div class="timeline-header">
+    <div class="header-icon">
+      <i class="bi bi-clock-history"></i>
+    </div>
+
+    <div>
+      <h2>{{ getText('title') }}</h2>
+      <p>{{ getText('subtitle') }}</p>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div
+      class="timeline-item"
+      *ngFor="let step of timelineSteps; let i = index"
+      [class.completed]="isCompleted(i)"
+      [class.current]="isCurrent(i)"
+      [class.pending]="isPending(i)"
+    >
+      <div class="timeline-line" *ngIf="i < timelineSteps.length - 1"></div>
+
+      <div class="timeline-marker">
+        <i class="bi" [ngClass]="isCompleted(i) ? 'bi-check-lg' : step.icon"></i>
+      </div>
+
+      <div class="timeline-content">
+        <div class="timeline-title-row">
+          <h3>{{ getStepText(step.key, 'label') }}</h3>
+
+          <span class="status-badge" *ngIf="isCurrent(i)">
+            {{ getText('current') }}
+          </span>
+
+          <span class="completed-badge" *ngIf="isCompleted(i)">
+            {{ getText('completed') }}
+          </span>
+        </div>
+
+        <p>{{ getStepText(step.key, 'description') }}</p>
+
+        <span class="timeline-time" *ngIf="isCompleted(i) || isCurrent(i)">
+          <i class="bi bi-clock"></i>
+          {{ getText('statusUpdated') }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline-footer">
+    <i class="bi bi-shield-check"></i>
+    <span>{{ getText('footer') }}</span>
+  </div>
+</section>
+
+<section class="timeline-empty" *ngIf="!incident">
+  <i class="bi bi-clock-history"></i>
+  <p>{{ getText('noIncident') }}</p>
+</section>

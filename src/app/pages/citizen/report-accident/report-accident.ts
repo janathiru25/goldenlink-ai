@@ -77,6 +77,18 @@ export class ReportAccident {
   description = '';
 
   // ============================================================
+  // BYSTANDER / REPORTER
+  // ============================================================
+
+  /**
+   * Reserved for the future Bystander Login feature.
+   *
+   * The current report page does not yet contain a mobile
+   * number input, so this value is optional for now.
+   */
+  reporterMobile = '';
+
+  // ============================================================
   // LOCATION
   // ============================================================
 
@@ -596,6 +608,15 @@ export class ReportAccident {
       return;
     }
 
+    /*
+     * IMPORTANT:
+     * reporterMobile is NOT validated here because the
+     * current HTML does not contain a mobile input.
+     *
+     * This keeps the existing Activate GoldenLink flow
+     * working exactly as before.
+     */
+
     this.syncFormValues();
 
     this.submitIncident();
@@ -651,6 +672,10 @@ export class ReportAccident {
       description:
         this.accident.description,
 
+      // Optional until mobile input is added.
+      reporterMobile:
+        this.reporterMobile.trim() || undefined,
+
       location: {
 
         latitude:
@@ -680,12 +705,49 @@ export class ReportAccident {
 
       responder: null,
 
+      assignedResponderId: null,
+
       ambulanceStatus:
         severity === 'critical'
           ? 'requested'
           : 'not_requested',
 
-      hospital: null
+      hospital: null,
+
+      // ========================================================
+      // VERIFICATION
+      // ========================================================
+
+      verificationStatus:
+        'pending',
+
+      verifiedAt:
+        null,
+
+      verificationCode:
+        undefined,
+
+      qrVerificationToken:
+        undefined,
+
+      // ========================================================
+      // REWARDS
+      // ========================================================
+
+      rewardPoints:
+        0,
+
+      rewardStatus:
+        'pending',
+
+      voucherId:
+        null,
+
+      voucherValue:
+        null,
+
+      voucherStatus:
+        'available'
 
     };
 
@@ -701,6 +763,26 @@ export class ReportAccident {
     console.log(
       'GoldenLink INCIDENT CREATED:',
       incident
+    );
+
+    console.log(
+      'GoldenLink ACCIDENT ID:',
+      incident.incidentId
+    );
+
+    console.log(
+      'GoldenLink REPORT TIME:',
+      incident.reportedAt
+    );
+
+    console.log(
+      'GoldenLink REPORTER MOBILE:',
+      incident.reporterMobile
+    );
+
+    console.log(
+      'GoldenLink VERIFICATION CODE:',
+      incident.verificationCode
     );
 
     console.log(

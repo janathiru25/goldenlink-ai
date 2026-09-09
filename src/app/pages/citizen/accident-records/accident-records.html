@@ -88,6 +88,46 @@
 
       </div>
 
+
+      <!-- VERIFIED REPORTS -->
+      <div class="summary-card">
+
+        <div class="summary-icon all">
+          <i class="bi bi-patch-check-fill"></i>
+        </div>
+
+        <div>
+          <span>
+            Verified Reports
+          </span>
+
+          <strong>
+            {{ verifiedCount }}
+          </strong>
+        </div>
+
+      </div>
+
+
+      <!-- REWARD POINTS -->
+      <div class="summary-card">
+
+        <div class="summary-icon responders">
+          <i class="bi bi-star-fill"></i>
+        </div>
+
+        <div>
+          <span>
+            Reward Points
+          </span>
+
+          <strong>
+            {{ totalRewardPoints }}
+          </strong>
+        </div>
+
+      </div>
+
     </div>
 
 
@@ -202,6 +242,10 @@
                     <i class="bi bi-check-circle"></i>
                   }
 
+                  @if (record.status === 'CANCELLED') {
+                    <i class="bi bi-x-circle"></i>
+                  }
+
                   {{ getStatusDisplay(record.status) }}
 
                 </span>
@@ -211,6 +255,70 @@
               <span class="incident-id">
                 {{ record.id }}
               </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- ACCIDENT ID + VERIFICATION -->
+          <div class="record-proof">
+
+            <div class="proof-item">
+
+              <i class="bi bi-fingerprint"></i>
+
+              <div>
+
+                <span>
+                  Accident ID
+                </span>
+
+                <strong>
+                  {{ record.id }}
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="verification-badge"
+              [ngClass]="
+                getVerificationClass(
+                  record.verificationStatus
+                )
+              "
+            >
+
+              @if (
+                record.verificationStatus === 'verified'
+              ) {
+
+                <i class="bi bi-patch-check-fill"></i>
+
+              }
+
+              @if (
+                record.verificationStatus === 'pending'
+              ) {
+
+                <i class="bi bi-hourglass-split"></i>
+
+              }
+
+              @if (
+                record.verificationStatus === 'rejected'
+              ) {
+
+                <i class="bi bi-x-circle-fill"></i>
+
+              }
+
+              {{ getVerificationLabel(
+                record.verificationStatus
+              ) }}
 
             </div>
 
@@ -263,6 +371,114 @@
           </div>
 
 
+          <!-- EXACT REPORT TIME -->
+          <div class="exact-report-time">
+
+            <i class="bi bi-calendar-check"></i>
+
+            <div>
+
+              <span>
+                Reported on
+              </span>
+
+              <strong>
+                {{
+                  getExactReportedTime(
+                    record.incident
+                  )
+                }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- GPS COORDINATES -->
+          <div class="gps-information">
+
+            <i class="bi bi-crosshair"></i>
+
+            <div>
+
+              <span>
+                GPS Coordinates
+              </span>
+
+              <strong>
+                {{
+                  getCoordinates(
+                    record.incident
+                  )
+                }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- REWARD INFORMATION -->
+          <div class="reward-info">
+
+            <div class="reward-item">
+
+              <i class="bi bi-star-fill"></i>
+
+              <div>
+
+                <span>
+                  Reward
+                </span>
+
+                <strong>
+                  {{ record.rewardPoints }} points
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <div class="reward-status">
+
+              {{ getRewardStatusLabel(
+                record.rewardStatus
+              ) }}
+
+            </div>
+
+          </div>
+
+
+          <!-- VOUCHER -->
+          @if (
+            record.voucherValue &&
+            record.voucherValue > 0
+          ) {
+
+            <div class="voucher-info">
+
+              <i class="bi bi-ticket-perforated-fill"></i>
+
+              <div>
+
+                <span>
+                  Voucher
+                </span>
+
+                <strong>
+                  {{ getVoucherLabel(record.incident) }}
+                </strong>
+
+              </div>
+
+            </div>
+
+          }
+
+
           <!-- RESPONSE STATUS -->
           <div
             class="response-status"
@@ -282,7 +498,10 @@
           <button
             type="button"
             class="view-button"
-            (click)="viewIncident(record)"
+            [routerLink]="[
+              '/accident-details',
+              record.id
+            ]"
           >
 
             <span>
@@ -326,7 +545,10 @@
 </div>
 
 
-<!-- INCIDENT DETAILS MODAL -->
+<!-- ============================================================
+     INCIDENT DETAILS MODAL
+============================================================ -->
+
 @if (selectedIncident) {
 
   <div
@@ -368,7 +590,9 @@
           [attr.aria-label]="t('accidentRecordsCloseIncidentDetails')"
           (click)="closeIncidentDetails()"
         >
+
           <i class="bi bi-x-lg"></i>
+
         </button>
 
       </div>
@@ -388,26 +612,136 @@
       </div>
 
 
+      <!-- REPORT PROOF -->
+      <div class="report-proof-section">
+
+        <div class="proof-row">
+
+          <i class="bi bi-fingerprint"></i>
+
+          <div>
+
+            <span>
+              Accident ID
+            </span>
+
+            <strong>
+              {{ selectedIncident.id }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="proof-row">
+
+          <i class="bi bi-calendar-check"></i>
+
+          <div>
+
+            <span>
+              Exact Report Time
+            </span>
+
+            <strong>
+              {{
+                getExactReportedTime(
+                  selectedIncident.incident
+                )
+              }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="proof-row">
+
+          <i class="bi bi-geo-alt-fill"></i>
+
+          <div>
+
+            <span>
+              GPS Location
+            </span>
+
+            <strong>
+              {{
+                getCoordinates(
+                  selectedIncident.incident
+                )
+              }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="proof-row"
+          [ngClass]="
+            getVerificationClass(
+              selectedIncident.verificationStatus
+            )
+          "
+        >
+
+          <i class="bi bi-patch-check-fill"></i>
+
+          <div>
+
+            <span>
+              Verification
+            </span>
+
+            <strong>
+              {{
+                getVerificationLabel(
+                  selectedIncident.verificationStatus
+                )
+              }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
       <!-- STATUS -->
       <div class="details-status">
 
         <span
           class="status-badge"
-          [ngClass]="getIncidentStatusClass(selectedIncident.incident)"
+          [ngClass]="
+            getIncidentStatusClass(
+              selectedIncident.incident
+            )
+          "
         >
 
           <i class="bi bi-activity"></i>
 
-          {{ getStatusDisplay(
-            selectedIncident.incident.status
-          ) }}
+          {{
+            getStatusDisplay(
+              selectedIncident.status
+            )
+          }}
 
         </span>
 
         <span>
-          {{ getIncidentStatusText(
-            selectedIncident.incident
-          ) }}
+
+          {{
+            getIncidentStatusText(
+              selectedIncident.incident
+            )
+          }}
+
         </span>
 
       </div>
@@ -445,9 +779,11 @@
 
             <i
               class="bi"
-              [ngClass]="getSeverityClass(
-                selectedIncident.incident.severity
-              )"
+              [ngClass]="
+                getSeverityClass(
+                  selectedIncident.incident.severity
+                )
+              "
             ></i>
 
           </div>
@@ -459,13 +795,19 @@
             </span>
 
             <strong
-              [ngClass]="getSeverityClass(
-                selectedIncident.incident.severity
-              )"
+              [ngClass]="
+                getSeverityClass(
+                  selectedIncident.incident.severity
+                )
+              "
             >
-              {{ getSeverityLabel(
-                selectedIncident.incident.severity
-              ) }}
+
+              {{
+                getSeverityLabel(
+                  selectedIncident.incident.severity
+                )
+              }}
+
             </strong>
 
           </div>
@@ -517,7 +859,13 @@
             </span>
 
             <strong>
-              {{ selectedIncident.reportedAt }}
+
+              {{
+                getExactReportedTime(
+                  selectedIncident.incident
+                )
+              }}
+
             </strong>
 
           </div>
@@ -527,12 +875,99 @@
       </div>
 
 
+      <!-- VERIFICATION & REWARD -->
+      <div class="verification-reward-section">
+
+        <div class="verification-card">
+
+          <div class="verification-card-icon">
+            <i class="bi bi-patch-check-fill"></i>
+          </div>
+
+          <div>
+
+            <span>
+              Verification
+            </span>
+
+            <strong>
+
+              {{
+                getVerificationLabel(
+                  selectedIncident.verificationStatus
+                )
+              }}
+
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="reward-card">
+
+          <div class="reward-card-icon">
+            <i class="bi bi-star-fill"></i>
+          </div>
+
+          <div>
+
+            <span>
+              Reward Points
+            </span>
+
+            <strong>
+              {{ selectedIncident.rewardPoints }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- VOUCHER -->
+      @if (
+        selectedIncident.voucherValue &&
+        selectedIncident.voucherValue > 0
+      ) {
+
+        <div class="voucher-detail">
+
+          <i class="bi bi-ticket-perforated-fill"></i>
+
+          <div>
+
+            <span>
+              Voucher
+            </span>
+
+            <strong>
+              {{
+                getVoucherLabel(
+                  selectedIncident.incident
+                )
+              }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      }
+
+
       <!-- VICTIM CONDITIONS -->
       <div class="conditions-section">
 
         <h3>
+
           <i class="bi bi-heart-pulse"></i>
+
           {{ t('accidentRecordsVictimInformation') }}
+
         </h3>
 
         <div class="condition-list">
@@ -639,8 +1074,11 @@
         <div class="section-heading">
 
           <h3>
+
             <i class="bi bi-geo-alt-fill"></i>
+
             {{ t('accidentRecordsIncidentLocation') }}
+
           </h3>
 
           <a
@@ -648,8 +1086,11 @@
             target="_blank"
             rel="noopener noreferrer"
           >
+
             {{ t('accidentRecordsOpenInMaps') }}
+
             <i class="bi bi-box-arrow-up-right"></i>
+
           </a>
 
         </div>
@@ -661,12 +1102,14 @@
           </strong>
 
           <span>
+
             {{
               selectedIncident.incident.location.latitude
             }},
             {{
               selectedIncident.incident.location.longitude
             }}
+
           </span>
 
         </div>
@@ -678,8 +1121,11 @@
       <div class="responder-section">
 
         <h3>
+
           <i class="bi bi-person-badge-fill"></i>
+
           {{ t('responder') }}
+
         </h3>
 
         <div class="responder-box">
@@ -693,22 +1139,35 @@
           <div class="responder-info">
 
             <strong>
-              {{ getResponderName(
-                selectedIncident.incident
-              ) }}
+
+              {{
+                getResponderName(
+                  selectedIncident.incident
+                )
+              }}
+
             </strong>
 
             <span>
-              {{ getResponderRole(
-                selectedIncident.incident
-              ) }}
+
+              {{
+                getResponderRole(
+                  selectedIncident.incident
+                )
+              }}
+
             </span>
 
             <small>
+
               {{ t('eta') }}:
-              {{ getResponderEta(
-                selectedIncident.incident
-              ) }}
+
+              {{
+                getResponderEta(
+                  selectedIncident.incident
+                )
+              }}
+
             </small>
 
           </div>
@@ -722,8 +1181,11 @@
       <div class="description-section">
 
         <h3>
+
           <i class="bi bi-chat-left-text-fill"></i>
+
           {{ t('accidentRecordsReportDescription') }}
+
         </h3>
 
         <p>
@@ -767,9 +1229,13 @@
               </span>
 
               <strong>
-                {{ getSeverityLabel(
-                  selectedIncident.incident.aiAssessment.severity
-                ) }}
+
+                {{
+                  getSeverityLabel(
+                    selectedIncident.incident.aiAssessment.severity
+                  )
+                }}
+
               </strong>
 
             </div>
@@ -781,11 +1247,13 @@
               </span>
 
               <strong>
+
                 {{
                   (
                     selectedIncident.incident.aiAssessment.confidence * 100
                   ) | number:'1.0-0'
                 }}%
+
               </strong>
 
             </div>
@@ -793,9 +1261,11 @@
           </div>
 
           <p class="ai-summary">
+
             {{
               selectedIncident.incident.aiAssessment.summary
             }}
+
           </p>
 
         </div>
@@ -811,7 +1281,9 @@
           class="close-button"
           (click)="closeIncidentDetails()"
         >
+
           {{ t('accidentRecordsCloseDetails') }}
+
         </button>
 
       </div>

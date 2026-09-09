@@ -1,0 +1,294 @@
+.timeline-card {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e4e9f0;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(31, 45, 61, 0.06);
+}
+
+.timeline-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.header-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  background: #eef5ff;
+  color: #2563eb;
+  border-radius: 12px;
+
+  font-size: 21px;
+}
+
+.timeline-header h2 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.timeline-header p {
+  margin: 5px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 4px;
+}
+
+.timeline-item {
+  position: relative;
+  display: flex;
+  gap: 18px;
+  min-height: 88px;
+}
+
+.timeline-marker {
+  position: relative;
+  z-index: 2;
+
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid #d7dee8;
+  border-radius: 50%;
+
+  background: #ffffff;
+  color: #9aa5b1;
+
+  font-size: 16px;
+  transition: all 0.25s ease;
+}
+
+.timeline-line {
+  position: absolute;
+  z-index: 1;
+
+  top: 42px;
+  left: 20px;
+
+  width: 2px;
+  height: calc(100% - 1px);
+
+  background: #dfe5ec;
+}
+
+.timeline-content {
+  flex: 1;
+  padding: 1px 0 28px;
+}
+
+.timeline-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.timeline-content h3 {
+  margin: 0;
+  color: #374151;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.timeline-content p {
+  margin: 6px 0 8px;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.timeline-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #8a94a3;
+  font-size: 12px;
+}
+
+.status-badge,
+.completed-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 9px;
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.status-badge {
+  background: #eaf2ff;
+  color: #2563eb;
+}
+
+.completed-badge {
+  background: #eaf8f0;
+  color: #198754;
+}
+
+/* Completed */
+
+.timeline-item.completed .timeline-marker {
+  border-color: #198754;
+  background: #198754;
+  color: #ffffff;
+}
+
+.timeline-item.completed .timeline-line {
+  background: #198754;
+}
+
+.timeline-item.completed .timeline-content h3 {
+  color: #198754;
+}
+
+/* Current */
+
+.timeline-item.current .timeline-marker {
+  border-color: #2563eb;
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.1);
+}
+
+.timeline-item.current .timeline-content h3 {
+  color: #2563eb;
+}
+
+/* Pending */
+
+.timeline-item.pending .timeline-content h3 {
+  color: #9aa5b1;
+}
+
+.timeline-item.pending .timeline-content p {
+  color: #a7afb9;
+}
+
+.timeline-footer {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-top: 4px;
+  padding: 13px 15px;
+
+  background: #f7f9fc;
+  border-radius: 10px;
+
+  color: #667085;
+  font-size: 12px;
+}
+
+.timeline-footer i {
+  color: #198754;
+  font-size: 15px;
+}
+
+.timeline-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 180px;
+  padding: 25px;
+
+  background: #ffffff;
+  border: 1px solid #e4e9f0;
+  border-radius: 18px;
+
+  color: #8a94a3;
+  text-align: center;
+}
+
+.timeline-empty i {
+  margin-bottom: 10px;
+  font-size: 30px;
+}
+
+.timeline-empty p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Responsive */
+
+@media (max-width: 576px) {
+  .timeline-card {
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+
+  .timeline-header {
+    margin-bottom: 24px;
+  }
+
+  .header-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+  }
+
+  .timeline-header h2 {
+    font-size: 18px;
+  }
+
+  .timeline-header p {
+    font-size: 12px;
+  }
+
+  .timeline-item {
+    gap: 13px;
+  }
+
+  .timeline-marker {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+    font-size: 14px;
+  }
+
+  .timeline-line {
+    left: 17px;
+    top: 36px;
+  }
+
+  .timeline-content {
+    padding-bottom: 24px;
+  }
+
+  .timeline-content h3 {
+    font-size: 14px;
+  }
+
+  .timeline-content p {
+    font-size: 12px;
+  }
+
+  .status-badge,
+  .completed-badge {
+    font-size: 10px;
+    padding: 3px 7px;
+  }
+}

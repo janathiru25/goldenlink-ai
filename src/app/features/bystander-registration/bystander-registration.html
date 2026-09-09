@@ -1,0 +1,383 @@
+<div class="bystander-registration-page">
+
+  <div class="registration-container">
+
+    <!-- BRANDING PANEL -->
+
+    <section class="branding-panel">
+
+      <div class="brand-content">
+
+        <div class="brand-icon">
+          <span>GL</span>
+        </div>
+
+        <h1>GoldenLink AI</h1>
+
+        <p class="brand-tagline">
+          Every second matters. Every life matters.
+        </p>
+
+        <div class="feature-list">
+
+          <div class="feature-item">
+            <div class="feature-icon">🚨</div>
+
+            <div>
+              <strong>Report Accidents</strong>
+
+              <span>
+                Quickly report emergencies and incidents.
+              </span>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">📍</div>
+
+            <div>
+              <strong>Track Your Incident</strong>
+
+              <span>
+                Follow your accident status in real time.
+              </span>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">🏆</div>
+
+            <div>
+              <strong>Earn Rewards</strong>
+
+              <span>
+                Get rewarded for helping your community.
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="branding-footer">
+        <span>Powered by GoldenLink AI</span>
+      </div>
+
+    </section>
+
+
+    <!-- REGISTRATION PANEL -->
+
+    <section class="registration-panel">
+
+      <div class="registration-card">
+
+        <div class="registration-header">
+
+          <div class="mobile-brand-icon">
+            <span>GL</span>
+          </div>
+
+          <h2>Create Your Account</h2>
+
+          <p>
+            Join GoldenLink AI and help make emergency
+            response faster and safer.
+          </p>
+
+        </div>
+
+
+        <!-- REGISTRATION FORM -->
+
+        <form
+          class="registration-form"
+          (ngSubmit)="register()"
+          #registrationForm="ngForm"
+        >
+
+          <!-- FULL NAME -->
+
+          <div class="form-group">
+
+            <label for="fullName">
+              Full Name
+            </label>
+
+            <div class="input-wrapper">
+
+              <span class="input-icon">👤</span>
+
+              <input
+                id="fullName"
+                name="fullName"
+                type="text"
+                [(ngModel)]="fullName"
+                placeholder="Enter your full name"
+                autocomplete="name"
+                required
+              />
+
+            </div>
+
+          </div>
+
+
+          <!-- MOBILE NUMBER -->
+
+          <div class="form-group">
+
+            <label for="phoneNumber">
+              Mobile Number
+            </label>
+
+            <div class="input-wrapper">
+
+              <span class="input-icon">📱</span>
+
+              <input
+                id="phoneNumber"
+                name="phoneNumber"
+                type="tel"
+                [(ngModel)]="phoneNumber"
+                placeholder="Enter your mobile number"
+                autocomplete="tel"
+                required
+              />
+
+            </div>
+
+          </div>
+
+
+          <!-- EMAIL -->
+
+          <div class="form-group">
+
+            <label for="email">
+              Email Address
+            </label>
+
+            <div class="input-wrapper">
+
+              <span class="input-icon">✉️</span>
+
+              <input
+                id="email"
+                name="email"
+                type="email"
+                [(ngModel)]="email"
+                placeholder="Enter your email address"
+                autocomplete="email"
+                required
+              />
+
+            </div>
+
+          </div>
+
+
+          <!-- LOCATION -->
+
+          <div class="form-group">
+
+            <label for="location">
+              Location
+            </label>
+
+            <div class="input-wrapper">
+
+              <span class="input-icon">📍</span>
+
+              <input
+                id="location"
+                name="location"
+                type="text"
+                [(ngModel)]="location"
+                placeholder="Enter your city or location"
+                autocomplete="address-level2"
+                required
+              />
+
+            </div>
+
+          </div>
+
+
+          <!-- PASSWORD -->
+
+          <div class="form-group">
+
+            <label for="password">
+              Password
+            </label>
+
+            <div class="input-wrapper">
+
+              <span class="input-icon">🔒</span>
+
+              <input
+                id="password"
+                name="password"
+                [type]="showPassword ? 'text' : 'password'"
+                [(ngModel)]="password"
+                placeholder="Create a password"
+                autocomplete="new-password"
+                required
+              />
+
+              <button
+                type="button"
+                class="password-toggle"
+                (click)="togglePassword()"
+                [attr.aria-label]="
+                  showPassword
+                    ? 'Hide password'
+                    : 'Show password'
+                "
+              >
+                {{ showPassword ? '🙈' : '👁️' }}
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- CONFIRM PASSWORD -->
+
+          <div class="form-group">
+
+            <label for="confirmPassword">
+              Confirm Password
+            </label>
+
+            <div class="input-wrapper">
+
+              <span class="input-icon">🔐</span>
+
+              <input
+                id="confirmPassword"
+                name="confirmPassword"
+                [type]="
+                  showConfirmPassword
+                    ? 'text'
+                    : 'password'
+                "
+                [(ngModel)]="confirmPassword"
+                placeholder="Confirm your password"
+                autocomplete="new-password"
+                required
+              />
+
+              <button
+                type="button"
+                class="password-toggle"
+                (click)="toggleConfirmPassword()"
+                [attr.aria-label]="
+                  showConfirmPassword
+                    ? 'Hide password'
+                    : 'Show password'
+                "
+              >
+                {{ showConfirmPassword ? '🙈' : '👁️' }}
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- CREATE ACCOUNT BUTTON -->
+
+          <button
+            type="submit"
+            class="register-button"
+            [disabled]="
+              registrationForm.invalid ||
+              isLoading
+            "
+          >
+
+            <span *ngIf="!isLoading">
+              Create Account
+            </span>
+
+            <span
+              *ngIf="isLoading"
+              class="loading-content"
+            >
+              <span class="spinner"></span>
+              Creating account...
+            </span>
+
+          </button>
+
+        </form>
+
+
+        <!-- LOGIN -->
+
+        <div class="login-section">
+
+          <span>
+            Already have a GoldenLink account?
+          </span>
+
+          <button
+            type="button"
+            class="login-link"
+            (click)="goToLogin()"
+          >
+            Sign In
+          </button>
+
+        </div>
+
+
+        <!-- SECURITY -->
+
+        <div class="security-message">
+
+          <span class="security-icon">
+            🛡️
+          </span>
+
+          <div>
+
+            <strong>
+              Your information is secure
+            </strong>
+
+            <p>
+              GoldenLink AI protects your personal
+              information and emergency reports.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div class="registration-footer">
+
+          <span>GoldenLink AI</span>
+
+          <span class="footer-dot">•</span>
+
+          <span>
+            Emergency Response Platform
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>

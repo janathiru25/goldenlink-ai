@@ -5,8 +5,14 @@ import {
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
-import { Incident } from '../../../core/models/incident';
+import {
+  Incident,
+  IncidentVerificationStatus,
+  IncidentRewardStatus
+} from '../../../core/models/incident';
+
 import { IncidentService } from '../../../core/services/incident';
 import { TranslationService } from '../../../core/services/translation';
 
@@ -15,12 +21,24 @@ interface AccidentRecord {
   type: string;
   location: string;
   reportedAt: string;
+  exactReportedAt: string;
   severity: string;
   victims: number;
   status: string;
   responders: number;
   description: string;
   icon: string;
+
+  verificationStatus: IncidentVerificationStatus;
+  verificationCode: string;
+  rewardPoints: number;
+  rewardStatus: IncidentRewardStatus;
+  voucherValue: number | null;
+  voucherStatus: string;
+
+  latitude: number;
+  longitude: number;
+
   incident: Incident;
 }
 
@@ -28,7 +46,8 @@ interface AccidentRecord {
   selector: 'app-accident-records',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    RouterLink
   ],
   templateUrl: './accident-records.html',
   styleUrl: './accident-records.scss'
@@ -55,7 +74,12 @@ export class AccidentRecords implements OnInit {
     this.loadRecords();
   }
 
+  // ============================================================
+  // LOAD ACCIDENT RECORDS
+  // ============================================================
+
   loadRecords(): void {
+
     const incidents =
       this.incidentService.getIncidents();
 
@@ -66,14 +90,25 @@ export class AccidentRecords implements OnInit {
       );
   }
 
+  // ============================================================
+  // CONVERT INCIDENT TO RECORD
+  // ============================================================
+
   private convertIncidentToRecord(
     incident: Incident
   ): AccidentRecord {
 
     return {
-      id: incident.incidentId,
 
-      type: incident.accidentType,
+      // --------------------------------------------------------
+      // BASIC INFORMATION
+      // --------------------------------------------------------
+
+      id:
+        incident.incidentId,
+
+      type:
+        incident.accidentType,
 
       location:
         incident.location?.address ||
@@ -84,9 +119,14 @@ export class AccidentRecords implements OnInit {
           incident.reportedAt
         ),
 
-      severity: incident.severity,
+      exactReportedAt:
+        incident.reportedAt,
 
-      victims: incident.victims,
+      severity:
+        incident.severity,
+
+      victims:
+        incident.victims,
 
       status:
         this.convertStatus(
@@ -94,20 +134,72 @@ export class AccidentRecords implements OnInit {
         ),
 
       responders:
-        this.getResponderCount(incident),
+        this.getResponderCount(
+          incident
+        ),
 
       description:
         incident.description ||
-        this.t('accidentRecordsDefaultDescription'),
+        this.t(
+          'accidentRecordsDefaultDescription'
+        ),
 
       icon:
         this.getIncidentIcon(
           incident.accidentType
         ),
 
+      // --------------------------------------------------------
+      // VERIFICATION
+      // --------------------------------------------------------
+
+      verificationStatus:
+        incident.verificationStatus ||
+        'pending',
+
+      verificationCode:
+        incident.verificationCode ||
+        '',
+
+      // --------------------------------------------------------
+      // REWARDS
+      // --------------------------------------------------------
+
+      rewardPoints:
+        incident.rewardPoints ?? 0,
+
+      rewardStatus:
+        incident.rewardStatus ||
+        'pending',
+
+      voucherValue:
+        incident.voucherValue ?? null,
+
+      voucherStatus:
+        incident.voucherStatus ||
+        'available',
+
+      // --------------------------------------------------------
+      // GPS
+      // --------------------------------------------------------
+
+      latitude:
+        incident.location?.latitude ?? 0,
+
+      longitude:
+        incident.location?.longitude ?? 0,
+
+      // --------------------------------------------------------
+      // ORIGINAL INCIDENT
+      // --------------------------------------------------------
+
       incident
     };
   }
+
+  // ============================================================
+  // STATUS CONVERSION
+  // ============================================================
 
   private convertStatus(
     status: string
@@ -123,18 +215,28 @@ export class AccidentRecords implements OnInit {
       case 'responder_assigned':
       case 'responder_en_route':
       case 'on_scene':
+      case 'responder-dispatched':
+      case 'responder-on-scene':
         return 'RESPONDING';
 
       case 'handed_over':
         return 'HANDED_OVER';
 
       case 'completed':
+      case 'resolved':
         return 'COMPLETED';
+
+      case 'cancelled':
+        return 'CANCELLED';
 
       default:
         return 'ACTIVE';
     }
   }
+
+  // ============================================================
+  // RESPONDER COUNT
+  // ============================================================
 
   private getResponderCount(
     incident: Incident
@@ -146,6 +248,10 @@ export class AccidentRecords implements OnInit {
 
     return 1;
   }
+
+  // ============================================================
+  // INCIDENT ICON
+  // ============================================================
 
   private getIncidentIcon(
     accidentType: string
@@ -183,6 +289,10 @@ export class AccidentRecords implements OnInit {
     return 'bi-car-front-fill';
   }
 
+  // ============================================================
+  // ACTIVE COUNT
+  // ============================================================
+
   get activeCount(): number {
 
     return this.records.filter(
@@ -191,6 +301,10 @@ export class AccidentRecords implements OnInit {
         record.status === 'RESPONDING'
     ).length;
   }
+
+  // ============================================================
+  // TOTAL RESPONDERS
+  // ============================================================
 
   get totalResponders(): number {
 
@@ -203,6 +317,39 @@ export class AccidentRecords implements OnInit {
       0
     );
   }
+
+  // ============================================================
+  // TOTAL REWARD POINTS
+  // ============================================================
+
+  get totalRewardPoints(): number {
+
+    return this.records.reduce(
+      (
+        total,
+        record
+      ) =>
+        total + record.rewardPoints,
+      0
+    );
+  }
+
+  // ============================================================
+  // VERIFIED REPORT COUNT
+  // ============================================================
+
+  get verifiedCount(): number {
+
+    return this.records.filter(
+      record =>
+        record.verificationStatus ===
+        'verified'
+    ).length;
+  }
+
+  // ============================================================
+  // FILTERED RECORDS
+  // ============================================================
 
   get filteredRecords(): AccidentRecord[] {
 
@@ -219,12 +366,21 @@ export class AccidentRecords implements OnInit {
     );
   }
 
+  // ============================================================
+  // SET FILTER
+  // ============================================================
+
   setFilter(
     filter: string
   ): void {
 
-    this.activeFilter = filter;
+    this.activeFilter =
+      filter;
   }
+
+  // ============================================================
+  // STATUS LABEL
+  // ============================================================
 
   getStatusLabel(
     status: string
@@ -252,12 +408,21 @@ export class AccidentRecords implements OnInit {
           'accidentRecordsResponseCompleted'
         );
 
+      case 'CANCELLED':
+        return this.t(
+          'accidentRecordsUnknownStatus'
+        );
+
       default:
         return this.t(
           'accidentRecordsUnknownStatus'
         );
     }
   }
+
+  // ============================================================
+  // STATUS CLASS
+  // ============================================================
 
   getStatusClass(
     status: string
@@ -277,10 +442,17 @@ export class AccidentRecords implements OnInit {
       case 'COMPLETED':
         return 'status-completed';
 
+      case 'CANCELLED':
+        return 'status-cancelled';
+
       default:
         return '';
     }
   }
+
+  // ============================================================
+  // STATUS DISPLAY
+  // ============================================================
 
   getStatusDisplay(
     status: string
@@ -314,6 +486,10 @@ export class AccidentRecords implements OnInit {
         );
     }
   }
+
+  // ============================================================
+  // SEVERITY LABEL
+  // ============================================================
 
   getSeverityLabel(
     severity: string
@@ -355,6 +531,10 @@ export class AccidentRecords implements OnInit {
     }
   }
 
+  // ============================================================
+  // SEVERITY CLASS
+  // ============================================================
+
   getSeverityClass(
     severity: string
   ): string {
@@ -379,6 +559,10 @@ export class AccidentRecords implements OnInit {
         return '';
     }
   }
+
+  // ============================================================
+  // REPORT TIME
+  // ============================================================
 
   private formatReportedTime(
     reportedAt: string
@@ -465,6 +649,133 @@ export class AccidentRecords implements OnInit {
     return date.toLocaleDateString();
   }
 
+  // ============================================================
+  // EXACT REPORT DATE & TIME
+  // ============================================================
+
+  getExactReportedTime(
+    incident: Incident
+  ): string {
+
+    if (!incident.reportedAt) {
+      return this.t(
+        'accidentRecordsUnknownTime'
+      );
+    }
+
+    const date =
+      new Date(
+        incident.reportedAt
+      );
+
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
+      return incident.reportedAt;
+    }
+
+    return date.toLocaleString(
+      undefined,
+      {
+        dateStyle: 'medium',
+        timeStyle: 'short'
+      }
+    );
+  }
+
+  // ============================================================
+  // VERIFICATION LABEL
+  // ============================================================
+
+  getVerificationLabel(
+    status?: IncidentVerificationStatus
+  ): string {
+
+    switch (status) {
+
+      case 'verified':
+        return 'Verified';
+
+      case 'rejected':
+        return 'Rejected';
+
+      case 'pending':
+      default:
+        return 'Pending verification';
+    }
+  }
+
+  // ============================================================
+  // VERIFICATION CLASS
+  // ============================================================
+
+  getVerificationClass(
+    status?: IncidentVerificationStatus
+  ): string {
+
+    switch (status) {
+
+      case 'verified':
+        return 'verification-verified';
+
+      case 'rejected':
+        return 'verification-rejected';
+
+      case 'pending':
+      default:
+        return 'verification-pending';
+    }
+  }
+
+  // ============================================================
+  // REWARD LABEL
+  // ============================================================
+
+  getRewardStatusLabel(
+    status?: IncidentRewardStatus
+  ): string {
+
+    switch (status) {
+
+      case 'earned':
+        return 'Reward earned';
+
+      case 'pending':
+        return 'Reward pending';
+
+      case 'not_eligible':
+        return 'Not eligible';
+
+      default:
+        return 'Reward pending';
+    }
+  }
+
+  // ============================================================
+  // VOUCHER LABEL
+  // ============================================================
+
+  getVoucherLabel(
+    incident: Incident
+  ): string {
+
+    if (
+      incident.voucherValue &&
+      incident.voucherValue > 0
+    ) {
+
+      return `₹${incident.voucherValue} voucher`;
+    }
+
+    return 'No voucher assigned';
+  }
+
+  // ============================================================
+  // INCIDENT DETAILS
+  // ============================================================
+
   viewIncident(
     record: AccidentRecord
   ): void {
@@ -473,11 +784,19 @@ export class AccidentRecords implements OnInit {
       record;
   }
 
+  // ============================================================
+  // CLOSE DETAILS
+  // ============================================================
+
   closeIncidentDetails(): void {
 
     this.selectedIncident =
       null;
   }
+
+  // ============================================================
+  // INCIDENT STATUS TEXT
+  // ============================================================
 
   getIncidentStatusText(
     incident: Incident
@@ -490,6 +809,10 @@ export class AccidentRecords implements OnInit {
     );
   }
 
+  // ============================================================
+  // INCIDENT STATUS CLASS
+  // ============================================================
+
   getIncidentStatusClass(
     incident: Incident
   ): string {
@@ -500,6 +823,10 @@ export class AccidentRecords implements OnInit {
       )
     );
   }
+
+  // ============================================================
+  // RESPONDER NAME
+  // ============================================================
 
   getResponderName(
     incident: Incident
@@ -516,6 +843,10 @@ export class AccidentRecords implements OnInit {
       );
   }
 
+  // ============================================================
+  // RESPONDER ROLE
+  // ============================================================
+
   getResponderRole(
     incident: Incident
   ): string {
@@ -530,6 +861,10 @@ export class AccidentRecords implements OnInit {
         'communityResponder'
       );
   }
+
+  // ============================================================
+  // RESPONDER ETA
+  // ============================================================
 
   getResponderEta(
     incident: Incident
@@ -546,6 +881,10 @@ export class AccidentRecords implements OnInit {
       );
   }
 
+  // ============================================================
+  // MAP URL
+  // ============================================================
+
   getMapUrl(
     incident: Incident
   ): string {
@@ -556,4 +895,20 @@ export class AccidentRecords implements OnInit {
 
     return `https://www.google.com/maps?q=${incident.location.latitude},${incident.location.longitude}`;
   }
+
+  // ============================================================
+  // GPS COORDINATES
+  // ============================================================
+
+  getCoordinates(
+    incident: Incident
+  ): string {
+
+    if (!incident.location) {
+      return '0, 0';
+    }
+
+    return `${incident.location.latitude.toFixed(6)}, ${incident.location.longitude.toFixed(6)}`;
+  }
+
 }

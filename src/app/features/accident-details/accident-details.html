@@ -1,0 +1,768 @@
+<div class="accident-details-page">
+
+  <!-- Loading -->
+  <div
+    class="state-card"
+    *ngIf="loading">
+
+    <div class="loading-spinner"></div>
+
+    <h3>
+      {{ t('accidentDetailsLoading') }}
+    </h3>
+
+    <p>
+      {{ t('accidentDetailsLoadingMessage') }}
+    </p>
+
+  </div>
+
+
+  <!-- Error -->
+  <div
+    class="state-card error-card"
+    *ngIf="!loading && errorMessage">
+
+    <div class="state-icon">
+      <i class="bi bi-exclamation-circle"></i>
+    </div>
+
+    <h3>
+      {{ errorMessage }}
+    </h3>
+
+    <button
+      type="button"
+      class="back-button"
+      (click)="goBack()">
+
+      <i class="bi bi-arrow-left"></i>
+
+      {{ t('accidentDetailsBack') }}
+
+    </button>
+
+  </div>
+
+
+  <!-- Accident Details -->
+  <ng-container *ngIf="!loading && incident">
+
+    <!-- Header -->
+    <header class="details-header">
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="goBack()">
+
+        <i class="bi bi-arrow-left"></i>
+
+        {{ t('accidentDetailsBack') }}
+
+      </button>
+
+      <div class="header-content">
+
+        <div>
+          <span class="page-eyebrow">
+            {{ t('accidentDetailsEyebrow') }}
+          </span>
+
+          <h1>
+            {{ t('accidentDetailsTitle') }}
+          </h1>
+
+          <p>
+            {{ t('accidentDetailsSubtitle') }}
+          </p>
+        </div>
+
+        <div class="incident-id-box">
+
+          <span>
+            {{ t('accidentDetailsAccidentId') }}
+          </span>
+
+          <strong>
+            {{ incident.incidentId }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- Main Grid -->
+    <main class="details-grid">
+
+      <!-- Left -->
+      <section class="main-column">
+
+        <!-- Status Card -->
+        <article class="card status-card">
+
+          <div class="card-heading">
+
+            <div class="heading-icon">
+              <i class="bi bi-shield-check"></i>
+            </div>
+
+            <div>
+              <h2>
+                {{ t('accidentDetailsCurrentStatus') }}
+              </h2>
+
+              <p>
+                {{ t('accidentDetailsStatusDescription') }}
+              </p>
+            </div>
+
+          </div>
+
+          <div class="status-row">
+
+            <span
+              class="status-badge"
+              [ngClass]="getStatusClass()">
+
+              <i class="bi bi-circle-fill"></i>
+
+              {{ getStatusLabel() }}
+
+            </span>
+
+          </div>
+
+        </article>
+
+
+        <!-- Accident Timeline -->
+        <app-accident-timeline
+          [incident]="incident">
+        </app-accident-timeline>
+
+
+        <!-- Incident Information -->
+        <article class="card">
+
+          <div class="card-heading">
+
+            <div class="heading-icon">
+              <i class="bi bi-file-earmark-text"></i>
+            </div>
+
+            <div>
+              <h2>
+                {{ t('accidentDetailsIncidentInformation') }}
+              </h2>
+
+              <p>
+                {{ t('accidentDetailsIncidentInformationDescription') }}
+              </p>
+            </div>
+
+          </div>
+
+          <div class="info-grid">
+
+            <div class="info-item">
+
+              <span class="info-label">
+                {{ t('accidentDetailsAccidentType') }}
+              </span>
+
+              <strong>
+                {{ incident.accidentType }}
+              </strong>
+
+            </div>
+
+            <div class="info-item">
+
+              <span class="info-label">
+                {{ t('accidentDetailsSeverity') }}
+              </span>
+
+              <strong
+                class="severity-value"
+                [ngClass]="getSeverityClass()">
+
+                {{ getSeverityLabel() }}
+
+              </strong>
+
+            </div>
+
+            <div class="info-item">
+
+              <span class="info-label">
+                {{ t('accidentDetailsVictims') }}
+              </span>
+
+              <strong>
+                {{ incident.victims }}
+              </strong>
+
+            </div>
+
+            <div class="info-item">
+
+              <span class="info-label">
+                {{ t('accidentDetailsReportedAt') }}
+              </span>
+
+              <strong>
+                {{ getReportedTime() }}
+              </strong>
+
+            </div>
+
+          </div>
+
+          <div
+            class="description-box"
+            *ngIf="incident.description">
+
+            <span class="info-label">
+              {{ t('accidentDetailsDescription') }}
+            </span>
+
+            <p>
+              {{ incident.description }}
+            </p>
+
+          </div>
+
+        </article>
+
+
+        <!-- Location -->
+        <article class="card location-card">
+
+          <div class="card-heading">
+
+            <div class="heading-icon">
+              <i class="bi bi-geo-alt-fill"></i>
+            </div>
+
+            <div>
+              <h2>
+                {{ t('accidentDetailsLocation') }}
+              </h2>
+
+              <p>
+                {{ t('accidentDetailsLocationDescription') }}
+              </p>
+            </div>
+
+          </div>
+
+          <div class="location-content">
+
+            <div class="location-info">
+
+              <div class="address-row">
+
+                <i class="bi bi-geo-alt"></i>
+
+                <span>
+                  {{ incident.location?.address ||
+                     t('accidentDetailsLocationUnavailable') }}
+                </span>
+
+              </div>
+
+              <div class="coordinates-row">
+
+                <span class="info-label">
+                  {{ t('accidentDetailsGpsCoordinates') }}
+                </span>
+
+                <strong>
+                  {{ getCoordinates() }}
+                </strong>
+
+              </div>
+
+            </div>
+
+            <button
+              type="button"
+              class="map-button"
+              (click)="openMap()">
+
+              <i class="bi bi-map"></i>
+
+              {{ t('accidentDetailsOpenMap') }}
+
+            </button>
+
+          </div>
+
+          <div class="map-placeholder">
+
+            <div class="map-overlay">
+
+              <div class="map-pin">
+                <i class="bi bi-geo-alt-fill"></i>
+              </div>
+
+              <strong>
+                {{ t('accidentDetailsIncidentLocation') }}
+              </strong>
+
+              <span>
+                {{ getCoordinates() }}
+              </span>
+
+              <button
+                type="button"
+                (click)="openMap()">
+
+                {{ t('accidentDetailsViewOnGoogleMaps') }}
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- AI Assessment -->
+        <article
+          class="card ai-card"
+          *ngIf="hasAiAssessment()">
+
+          <div class="card-heading">
+
+            <div class="heading-icon ai-icon">
+              <i class="bi bi-robot"></i>
+            </div>
+
+            <div>
+              <h2>
+                {{ t('accidentDetailsAiAssessment') }}
+              </h2>
+
+              <p>
+                {{ t('accidentDetailsAiDescription') }}
+              </p>
+            </div>
+
+          </div>
+
+          <div class="ai-summary">
+
+            <span class="info-label">
+              {{ t('accidentDetailsAiSummary') }}
+            </span>
+
+            <p>
+              {{ getAiSummary() }}
+            </p>
+
+          </div>
+
+          <div class="ai-metrics">
+
+            <div class="ai-metric">
+
+              <span>
+                {{ t('accidentDetailsAiConfidence') }}
+              </span>
+
+              <strong>
+                {{ getAiConfidence() }}
+              </strong>
+
+            </div>
+
+            <div class="ai-metric">
+
+              <span>
+                {{ t('accidentDetailsEmergencyLevel') }}
+              </span>
+
+              <strong>
+                {{ getEmergencyLevel() }}
+              </strong>
+
+            </div>
+
+          </div>
+
+          <div
+            class="tag-section"
+            *ngIf="getDetectedConditions().length">
+
+            <span class="info-label">
+              {{ t('accidentDetailsDetectedConditions') }}
+            </span>
+
+            <div class="tags">
+
+              <span
+                class="tag"
+                *ngFor="
+                  let condition
+                  of getDetectedConditions()
+                ">
+
+                {{ condition }}
+
+              </span>
+
+            </div>
+
+          </div>
+
+          <div
+            class="tag-section"
+            *ngIf="getRequiredResources().length">
+
+            <span class="info-label">
+              {{ t('accidentDetailsRequiredResources') }}
+            </span>
+
+            <div class="tags">
+
+              <span
+                class="tag"
+                *ngFor="
+                  let resource
+                  of getRequiredResources()
+                ">
+
+                {{ resource }}
+
+              </span>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- Right -->
+      <aside class="side-column">
+
+        <!-- Verified Accident Report + QR -->
+        <article class="card verification-card">
+
+          <div class="card-heading">
+
+            <div class="heading-icon">
+              <i class="bi bi-patch-check-fill"></i>
+            </div>
+
+            <div>
+              <h2>
+                {{ t('accidentDetailsVerification') }}
+              </h2>
+
+              <p>
+                {{ t('accidentDetailsVerificationProofDescription') }}
+              </p>
+            </div>
+
+          </div>
+
+
+          <!-- Verification Status -->
+          <div
+            class="verification-badge"
+            [ngClass]="getVerificationClass()">
+
+            <i
+              class="bi"
+              [ngClass]="
+                incident.verificationStatus === 'verified'
+                  ? 'bi-patch-check-fill'
+                  : 'bi-clock-history'
+              ">
+            </i>
+
+            <span>
+              {{ getVerificationLabel() }}
+            </span>
+
+          </div>
+
+
+          <!-- Accident ID -->
+          <div class="verification-detail">
+
+            <span>
+              {{ t('accidentDetailsAccidentId') }}
+            </span>
+
+            <strong>
+              {{ incident.incidentId }}
+            </strong>
+
+          </div>
+
+
+          <!-- Verification Code -->
+          <div
+            class="verification-code"
+            *ngIf="incident.verificationCode">
+
+            <span>
+              {{ t('AccidentDetailsVerificationCode') }}
+            </span>
+
+            <strong>
+              {{ incident.verificationCode }}
+            </strong>
+
+          </div>
+
+
+          <!-- QR Proof -->
+          <div
+            class="qr-proof-section"
+            *ngIf="qrCodeDataUrl">
+
+            <div class="qr-header">
+
+              <div>
+                <strong>
+                  {{ t('AccidentDetailsQrVerification') }}
+                </strong>
+
+                <span>
+                  {{ t('AccidentDetailsQrVerificationDescription') }}
+                </span>
+              </div>
+
+              <i class="bi bi-qr-code-scan"></i>
+
+            </div>
+
+
+            <div class="qr-code-wrapper">
+
+              <img
+                [src]="qrCodeDataUrl"
+                [alt]="
+                  t('AccidentDetailsQrVerification') +
+                  ' - ' +
+                  incident.incidentId
+                "
+                class="qr-code-image">
+
+            </div>
+
+
+            <div class="qr-security-note">
+
+              <i class="bi bi-shield-lock-fill"></i>
+
+              <span>
+                {{ t('AccidentDetailsQrSecurityMessage') }}
+              </span>
+
+            </div>
+
+
+            <!-- QR Actions -->
+            <div class="qr-actions">
+
+              <button
+                type="button"
+                class="qr-action-button download"
+                (click)="downloadQrCode()">
+
+                <i class="bi bi-download"></i>
+
+                {{ t('AccidentDetailsDownloadQr') }}
+
+              </button>
+
+              <button
+                type="button"
+                class="qr-action-button print"
+                (click)="printVerificationProof()">
+
+                <i class="bi bi-printer"></i>
+
+                {{ t('AccidentDetailsPrintProof') }}
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- Reward -->
+        <article class="card reward-card">
+
+          <div class="card-heading">
+
+            <div class="heading-icon">
+              <i class="bi bi-gift-fill"></i>
+            </div>
+
+            <div>
+              <h2>
+                {{ t('AccidentDetailsReward') }}
+              </h2>
+            </div>
+
+          </div>
+
+          <div class="reward-points">
+
+            <strong>
+              {{ getRewardPoints() }}
+            </strong>
+
+            <span>
+              {{ t('AccidentDetailsPoints') }}
+            </span>
+
+          </div>
+
+          <p>
+            {{ getRewardStatusLabel() }}
+          </p>
+
+          <div
+            class="voucher"
+            *ngIf="hasVoucher()">
+
+            <i class="bi bi-ticket-perforated"></i>
+
+            <div>
+              <span>
+                {{ t('AccidentDetailsVoucher') }}
+              </span>
+
+              <strong>
+                {{ getVoucherText() }}
+              </strong>
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- Responder -->
+        <article class="card responder-card">
+
+          <div class="card-heading">
+
+            <div class="heading-icon">
+              <i class="bi bi-person-badge-fill"></i>
+            </div>
+
+            <div>
+              <h2>
+                {{ t('AccidentDetailsResponder') }}
+              </h2>
+            </div>
+
+          </div>
+
+          <div class="responder-info">
+
+            <div class="responder-avatar">
+              <i class="bi bi-person-fill"></i>
+            </div>
+
+            <div>
+
+              <strong>
+                {{ getResponderName() }}
+              </strong>
+
+              <span *ngIf="getResponderRole()">
+                {{ getResponderRole() }}
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="eta-row">
+
+            <span>
+              {{ t('AccidentDetailsEta') }}
+            </span>
+
+            <strong>
+              {{ getResponderEta() }}
+            </strong>
+
+          </div>
+
+        </article>
+
+
+        <!-- Hospital -->
+        <article class="card hospital-card">
+
+          <div class="card-heading">
+
+            <div class="heading-icon">
+              <i class="bi bi-hospital-fill"></i>
+            </div>
+
+            <div>
+              <h2>
+                {{ t('AccidentDetailsHospital') }}
+              </h2>
+            </div>
+
+          </div>
+
+          <strong class="hospital-name">
+            {{ getHospitalName() }}
+          </strong>
+
+          <p *ngIf="getHospitalAddress()">
+            {{ getHospitalAddress() }}
+          </p>
+
+        </article>
+
+
+        <!-- Safety -->
+        <div class="privacy-note">
+
+          <i class="bi bi-shield-lock-fill"></i>
+
+          <div>
+
+            <strong>
+              {{ t('AccidentDetailsPrivacyTitle') }}
+            </strong>
+
+            <p>
+              {{ t('AccidentDetailsPrivacyMessage') }}
+            </p>
+
+          </div>
+
+        </div>
+
+      </aside>
+
+    </main>
+
+  </ng-container>
+
+</div>

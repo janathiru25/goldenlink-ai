@@ -1120,6 +1120,139 @@ aiSafetyNote: 'Stay in a safe location and follow instructions from emergency se
 aiNotRequested: 'Not requested',
 confidence: 'Confidence',
 
+
+//accident-details//
+
+accidentDetailsLoading: 'Loading accident details...',
+accidentDetailsLoadingMessage: 'Please wait while we retrieve the report.',
+accidentDetailsNotFound: 'Accident report not found',
+accidentDetailsBack: 'Back to Accident Records',
+accidentDetailsEyebrow: 'GoldenLink Emergency Report',
+accidentDetailsTitle: 'Accident Details',
+accidentDetailsSubtitle: 'Complete information about this emergency report.',
+accidentDetailsAccidentId: 'Accident ID',
+accidentDetailsCurrentStatus: 'Current Status',
+accidentDetailsStatusDescription: 'Live status of the reported incident.',
+accidentDetailsIncidentInformation: 'Incident Information',
+accidentDetailsIncidentInformationDescription: 'Basic information recorded during the report.',
+accidentDetailsAccidentType: 'Accident Type',
+accidentDetailsSeverity: 'Severity',
+accidentDetailsVictims: 'Victims',
+accidentDetailsReportedAt: 'Reported At',
+accidentDetailsDescription: 'Description',
+accidentDetailsLocation: 'Incident Location',
+accidentDetailsLocationDescription: 'GPS location captured when the accident was reported.',
+accidentDetailsGpsCoordinates: 'GPS Coordinates',
+accidentDetailsOpenMap: 'Open Map',
+accidentDetailsIncidentLocation: 'Accident Location',
+accidentDetailsViewOnGoogleMaps: 'View on Google Maps',
+accidentDetailsLocationUnavailable: 'Location unavailable',
+accidentDetailsAiAssessment: 'AI Assessment',
+accidentDetailsAiDescription: 'AI-powered emergency assessment for this report.',
+accidentDetailsAiSummary: 'AI Summary',
+accidentDetailsAiConfidence: 'AI Confidence',
+accidentDetailsEmergencyLevel: 'Emergency Level',
+accidentDetailsDetectedConditions: 'Detected Conditions',
+accidentDetailsRequiredResources: 'Required Resources',
+accidentDetailsVerification: 'Report Verification',
+accidentDetailsVerificationCode: 'Verification Code',
+accidentDetailsVerificationPending: 'Verification Pending',
+accidentDetailsVerified: 'Verified Report',
+accidentDetailsVerificationRejected: 'Verification Rejected',
+accidentDetailsVerificationReview: 'Under Verification Review',
+accidentDetailsReward: 'Rewards',
+accidentDetailsPoints: 'Reward Points',
+accidentDetailsRewardEarned: 'Reward earned',
+accidentDetailsRewardPending: 'Reward pending',
+accidentDetailsRewardNotEligible: 'Not eligible for reward',
+accidentDetailsRewardClaimed: 'Reward claimed',
+accidentDetailsVoucher: 'Voucher',
+accidentDetailsNoVoucher: 'No voucher available',
+accidentDetailsResponder: 'Responder',
+accidentDetailsNoResponder: 'No responder assigned',
+accidentDetailsEta: 'Estimated Arrival',
+accidentDetailsEtaUnavailable: 'ETA unavailable',
+accidentDetailsHospital: 'Hospital',
+accidentDetailsNoHospital: 'No hospital assigned',
+accidentDetailsNoAiSummary: 'AI assessment summary unavailable',
+accidentDetailsUnavailable: 'Unavailable',
+accidentDetailsTimeUnavailable: 'Time unavailable',
+accidentDetailsUnknown: 'Unknown',
+accidentDetailsStatusReported: 'Report Submitted',
+accidentDetailsStatusReview: 'Under Review',
+accidentDetailsStatusConfirmed: 'Confirmed',
+accidentDetailsStatusDispatched: 'Responder Dispatched',
+accidentDetailsStatusOnScene: 'Responder On Scene',
+accidentDetailsStatusTransporting: 'Transporting',
+accidentDetailsStatusHospital: 'Arrived at Hospital',
+accidentDetailsStatusResolved: 'Resolved',
+accidentDetailsStatusCancelled: 'Cancelled',
+accidentDetailsPrivacyTitle: 'Privacy Protected',
+accidentDetailsPrivacyMessage: 'Only necessary emergency information is displayed. Private contact details are protected.',
+
+//accident-timelines//
+
+// accident-timeline//
+
+accidentTimelineTitle: 'Accident Timeline',
+accidentTimelineSubtitle:
+  'Track the progress of this emergency report.',
+
+accidentTimelineReportCreated:
+  'Report Created',
+accidentTimelineReportCreatedDescription:
+  'The accident report was successfully submitted.',
+
+accidentTimelineAiAssessment:
+  'AI Assessment',
+accidentTimelineAiAssessmentDescription:
+  'GoldenLink AI assessed the reported emergency.',
+
+accidentTimelineUnderReview:
+  'Under Review',
+accidentTimelineUnderReviewDescription:
+  'The incident is being reviewed and coordinated.',
+
+accidentTimelineVerified:
+  'Verified',
+accidentTimelineVerifiedDescription:
+  'The accident report has been verified.',
+
+accidentTimelineResponderAssigned:
+  'Responder Assigned',
+accidentTimelineResponderAssignedDescription:
+  'A responder has been assigned to the incident.',
+
+accidentTimelineResponderOnScene:
+  'Responder On Scene',
+accidentTimelineResponderOnSceneDescription:
+  'The responder has reached the accident location.',
+
+accidentTimelineHospitalArrival:
+  'Hospital Arrival',
+accidentTimelineHospitalArrivalDescription:
+  'The affected person has reached the hospital.',
+
+accidentTimelineResolved:
+  'Resolved',
+accidentTimelineResolvedDescription:
+  'The emergency incident has been successfully resolved.',
+
+accidentTimelineCurrent:
+  'Current',
+
+accidentTimelineCompleted:
+  'Completed',
+
+accidentTimelineStatusUpdated:
+  'Status updated',
+
+accidentTimelineFooter:
+  'GoldenLink keeps track of the emergency response journey.',
+
+accidentTimelineNoIncident:
+  'No incident is available to display.',
+
       },
 
 
@@ -2258,6 +2391,136 @@ aiSafetyNote: 'பாதுகாப்பான இடத்தில் இர
 
 aiNotRequested: 'கோரப்படவில்லை',
 confidence: 'நம்பகத்தன்மை',
+
+//accident details//
+
+accidentDetailsLoading: 'விபத்து விவரங்கள் ஏற்றப்படுகின்றன...',
+accidentDetailsLoadingMessage: 'அறிக்கையைப் பெறும் வரை காத்திருக்கவும்.',
+accidentDetailsNotFound: 'விபத்து அறிக்கை கிடைக்கவில்லை',
+accidentDetailsBack: 'விபத்து பதிவுகளுக்குத் திரும்பு',
+accidentDetailsEyebrow: 'GoldenLink அவசர அறிக்கை',
+accidentDetailsTitle: 'விபத்து விவரங்கள்',
+accidentDetailsSubtitle: 'இந்த அவசர அறிக்கையின் முழுமையான விவரங்கள்.',
+accidentDetailsAccidentId: 'விபத்து ID',
+accidentDetailsCurrentStatus: 'தற்போதைய நிலை',
+accidentDetailsStatusDescription: 'பதிவுசெய்யப்பட்ட விபத்தின் தற்போதைய நிலை.',
+accidentDetailsIncidentInformation: 'விபத்து தகவல்',
+accidentDetailsIncidentInformationDescription: 'அறிக்கையின் போது பதிவு செய்யப்பட்ட அடிப்படை தகவல்கள்.',
+accidentDetailsAccidentType: 'விபத்து வகை',
+accidentDetailsSeverity: 'தீவிரம்',
+accidentDetailsVictims: 'பாதிக்கப்பட்டவர்கள்',
+accidentDetailsReportedAt: 'அறிக்கை நேரம்',
+accidentDetailsDescription: 'விளக்கம்',
+accidentDetailsLocation: 'விபத்து நடந்த இடம்',
+accidentDetailsLocationDescription: 'விபத்து பதிவு செய்யப்பட்டபோது பெறப்பட்ட GPS இருப்பிடம்.',
+accidentDetailsGpsCoordinates: 'GPS ஒருங்கிணைப்புகள்',
+accidentDetailsOpenMap: 'வரைபடத்தைத் திற',
+accidentDetailsIncidentLocation: 'விபத்து இடம்',
+accidentDetailsViewOnGoogleMaps: 'Google Maps-ல் பார்க்கவும்',
+accidentDetailsLocationUnavailable: 'இருப்பிடம் கிடைக்கவில்லை',
+accidentDetailsAiAssessment: 'AI மதிப்பீடு',
+accidentDetailsAiDescription: 'இந்த அறிக்கைக்கான AI அடிப்படையிலான அவசர மதிப்பீடு.',
+accidentDetailsAiSummary: 'AI சுருக்கம்',
+accidentDetailsAiConfidence: 'AI நம்பகத்தன்மை',
+accidentDetailsEmergencyLevel: 'அவசர நிலை',
+accidentDetailsDetectedConditions: 'கண்டறியப்பட்ட நிலைகள்',
+accidentDetailsRequiredResources: 'தேவையான வளங்கள்',
+accidentDetailsVerification: 'அறிக்கை சரிபார்ப்பு',
+accidentDetailsVerificationCode: 'சரிபார்ப்பு குறியீடு',
+accidentDetailsVerificationPending: 'சரிபார்ப்பு நிலுவையில் உள்ளது',
+accidentDetailsVerified: 'சரிபார்க்கப்பட்ட அறிக்கை',
+accidentDetailsVerificationRejected: 'சரிபார்ப்பு நிராகரிக்கப்பட்டது',
+accidentDetailsVerificationReview: 'சரிபார்ப்பு மதிப்பாய்வில் உள்ளது',
+accidentDetailsReward: 'வெகுமதிகள்',
+accidentDetailsPoints: 'வெகுமதி புள்ளிகள்',
+accidentDetailsRewardEarned: 'வெகுமதி கிடைத்தது',
+accidentDetailsRewardPending: 'வெகுமதி நிலுவையில் உள்ளது',
+accidentDetailsRewardNotEligible: 'வெகுமதிக்கு தகுதியில்லை',
+accidentDetailsRewardClaimed: 'வெகுமதி பெற்றுக்கொள்ளப்பட்டது',
+accidentDetailsVoucher: 'வவுச்சர்',
+accidentDetailsNoVoucher: 'வவுச்சர் இல்லை',
+accidentDetailsResponder: 'மீட்புப் பணியாளர்',
+accidentDetailsNoResponder: 'மீட்புப் பணியாளர் நியமிக்கப்படவில்லை',
+accidentDetailsEta: 'வருகை நேரம்',
+accidentDetailsEtaUnavailable: 'வருகை நேரம் கிடைக்கவில்லை',
+accidentDetailsHospital: 'மருத்துவமனை',
+accidentDetailsNoHospital: 'மருத்துவமனை நியமிக்கப்படவில்லை',
+accidentDetailsNoAiSummary: 'AI மதிப்பீட்டு சுருக்கம் கிடைக்கவில்லை',
+accidentDetailsUnavailable: 'கிடைக்கவில்லை',
+accidentDetailsTimeUnavailable: 'நேரம் கிடைக்கவில்லை',
+accidentDetailsUnknown: 'தெரியவில்லை',
+accidentDetailsStatusReported: 'அறிக்கை சமர்ப்பிக்கப்பட்டது',
+accidentDetailsStatusReview: 'மதிப்பாய்வில் உள்ளது',
+accidentDetailsStatusConfirmed: 'உறுதிப்படுத்தப்பட்டது',
+accidentDetailsStatusDispatched: 'மீட்புப் பணியாளர் அனுப்பப்பட்டார்',
+accidentDetailsStatusOnScene: 'மீட்புப் பணியாளர் சம்பவ இடத்தில் உள்ளார்',
+accidentDetailsStatusTransporting: 'மருத்துவமனைக்கு அழைத்துச் செல்லப்படுகிறது',
+accidentDetailsStatusHospital: 'மருத்துவமனையை அடைந்தது',
+accidentDetailsStatusResolved: 'தீர்க்கப்பட்டது',
+accidentDetailsStatusCancelled: 'ரத்து செய்யப்பட்டது',
+accidentDetailsPrivacyTitle: 'தனியுரிமை பாதுகாக்கப்பட்டுள்ளது',
+accidentDetailsPrivacyMessage: 'தேவையான அவசர தகவல்கள் மட்டுமே காட்டப்படுகின்றன. தனிப்பட்ட தொடர்பு விவரங்கள் பாதுகாக்கப்படுகின்றன.',
+
+// accident-timeline//
+
+accidentTimelineTitle: 'விபத்து காலவரிசை',
+accidentTimelineSubtitle:
+  'இந்த அவசர அறிக்கையின் முன்னேற்றத்தை கண்காணிக்கவும்.',
+
+accidentTimelineReportCreated:
+  'அறிக்கை உருவாக்கப்பட்டது',
+accidentTimelineReportCreatedDescription:
+  'விபத்து அறிக்கை வெற்றிகரமாக சமர்ப்பிக்கப்பட்டது.',
+
+accidentTimelineAiAssessment:
+  'AI மதிப்பீடு',
+accidentTimelineAiAssessmentDescription:
+  'GoldenLink AI புகாரளிக்கப்பட்ட அவசரநிலையை மதிப்பீடு செய்துள்ளது.',
+
+accidentTimelineUnderReview:
+  'மதிப்பாய்வில் உள்ளது',
+accidentTimelineUnderReviewDescription:
+  'சம்பவம் மதிப்பாய்வு செய்யப்பட்டு ஒருங்கிணைக்கப்படுகிறது.',
+
+accidentTimelineVerified:
+  'சரிபார்க்கப்பட்டது',
+accidentTimelineVerifiedDescription:
+  'விபத்து அறிக்கை சரிபார்க்கப்பட்டுள்ளது.',
+
+accidentTimelineResponderAssigned:
+  'உதவியாளர் நியமிக்கப்பட்டார்',
+accidentTimelineResponderAssignedDescription:
+  'சம்பவத்திற்கு ஒரு உதவியாளர் நியமிக்கப்பட்டுள்ளார்.',
+
+accidentTimelineResponderOnScene:
+  'உதவியாளர் சம்பவ இடத்தில் உள்ளார்',
+accidentTimelineResponderOnSceneDescription:
+  'உதவியாளர் விபத்து நடந்த இடத்தை அடைந்துள்ளார்.',
+
+accidentTimelineHospitalArrival:
+  'மருத்துவமனை வருகை',
+accidentTimelineHospitalArrivalDescription:
+  'பாதிக்கப்பட்ட நபர் மருத்துவமனையை அடைந்துள்ளார்.',
+
+accidentTimelineResolved:
+  'தீர்க்கப்பட்டது',
+accidentTimelineResolvedDescription:
+  'அவசர சம்பவம் வெற்றிகரமாக தீர்க்கப்பட்டுள்ளது.',
+
+accidentTimelineCurrent:
+  'தற்போதைய நிலை',
+
+accidentTimelineCompleted:
+  'முடிந்தது',
+
+accidentTimelineStatusUpdated:
+  'நிலை புதுப்பிக்கப்பட்டது',
+
+accidentTimelineFooter:
+  'GoldenLink அவசர உதவியின் முழு பயணத்தையும் கண்காணிக்கிறது.',
+
+accidentTimelineNoIncident:
+  'காண்பிக்க எந்த சம்பவமும் இல்லை.',
 
       },
 
@@ -3403,6 +3666,136 @@ aiSafetyNote: 'सुरक्षित स्थान पर रहें औ�
 aiNotRequested: 'अनुरोध नहीं किया गया',
 confidence: 'विश्वास स्तर',
 
+//accident-details//
+
+accidentDetailsLoading: 'दुर्घटना विवरण लोड हो रहा है...',
+accidentDetailsLoadingMessage: 'रिपोर्ट प्राप्त होने तक प्रतीक्षा करें।',
+accidentDetailsNotFound: 'दुर्घटना रिपोर्ट नहीं मिली',
+accidentDetailsBack: 'दुर्घटना रिकॉर्ड पर वापस जाएं',
+accidentDetailsEyebrow: 'GoldenLink आपातकालीन रिपोर्ट',
+accidentDetailsTitle: 'दुर्घटना विवरण',
+accidentDetailsSubtitle: 'इस आपातकालीन रिपोर्ट की पूरी जानकारी।',
+accidentDetailsAccidentId: 'दुर्घटना ID',
+accidentDetailsCurrentStatus: 'वर्तमान स्थिति',
+accidentDetailsStatusDescription: 'रिपोर्ट की गई दुर्घटना की वर्तमान स्थिति।',
+accidentDetailsIncidentInformation: 'दुर्घटना जानकारी',
+accidentDetailsIncidentInformationDescription: 'रिपोर्ट के समय दर्ज की गई मूल जानकारी।',
+accidentDetailsAccidentType: 'दुर्घटना का प्रकार',
+accidentDetailsSeverity: 'गंभीरता',
+accidentDetailsVictims: 'पीड़ित',
+accidentDetailsReportedAt: 'रिपोर्ट का समय',
+accidentDetailsDescription: 'विवरण',
+accidentDetailsLocation: 'दुर्घटना स्थान',
+accidentDetailsLocationDescription: 'दुर्घटना की रिपोर्ट करते समय प्राप्त GPS स्थान।',
+accidentDetailsGpsCoordinates: 'GPS निर्देशांक',
+accidentDetailsOpenMap: 'मानचित्र खोलें',
+accidentDetailsIncidentLocation: 'दुर्घटना स्थान',
+accidentDetailsViewOnGoogleMaps: 'Google Maps पर देखें',
+accidentDetailsLocationUnavailable: 'स्थान उपलब्ध नहीं है',
+accidentDetailsAiAssessment: 'AI मूल्यांकन',
+accidentDetailsAiDescription: 'इस रिपोर्ट के लिए AI आधारित आपातकालीन मूल्यांकन।',
+accidentDetailsAiSummary: 'AI सारांश',
+accidentDetailsAiConfidence: 'AI विश्वसनीयता',
+accidentDetailsEmergencyLevel: 'आपातकालीन स्तर',
+accidentDetailsDetectedConditions: 'पता चली स्थितियां',
+accidentDetailsRequiredResources: 'आवश्यक संसाधन',
+accidentDetailsVerification: 'रिपोर्ट सत्यापन',
+accidentDetailsVerificationCode: 'सत्यापन कोड',
+accidentDetailsVerificationPending: 'सत्यापन लंबित है',
+accidentDetailsVerified: 'सत्यापित रिपोर्ट',
+accidentDetailsVerificationRejected: 'सत्यापन अस्वीकार किया गया',
+accidentDetailsVerificationReview: 'सत्यापन समीक्षा में है',
+accidentDetailsReward: 'पुरस्कार',
+accidentDetailsPoints: 'रिवॉर्ड पॉइंट्स',
+accidentDetailsRewardEarned: 'पुरस्कार प्राप्त हुआ',
+accidentDetailsRewardPending: 'पुरस्कार लंबित है',
+accidentDetailsRewardNotEligible: 'पुरस्कार के लिए पात्र नहीं',
+accidentDetailsRewardClaimed: 'पुरस्कार प्राप्त किया गया',
+accidentDetailsVoucher: 'वाउचर',
+accidentDetailsNoVoucher: 'कोई वाउचर उपलब्ध नहीं है',
+accidentDetailsResponder: 'रिस्पॉन्डर',
+accidentDetailsNoResponder: 'कोई रिस्पॉन्डर नियुक्त नहीं है',
+accidentDetailsEta: 'अनुमानित आगमन',
+accidentDetailsEtaUnavailable: 'आगमन समय उपलब्ध नहीं है',
+accidentDetailsHospital: 'अस्पताल',
+accidentDetailsNoHospital: 'कोई अस्पताल नियुक्त नहीं है',
+accidentDetailsNoAiSummary: 'AI मूल्यांकन सारांश उपलब्ध नहीं है',
+accidentDetailsUnavailable: 'उपलब्ध नहीं',
+accidentDetailsTimeUnavailable: 'समय उपलब्ध नहीं है',
+accidentDetailsUnknown: 'अज्ञात',
+accidentDetailsStatusReported: 'रिपोर्ट जमा की गई',
+accidentDetailsStatusReview: 'समीक्षा में',
+accidentDetailsStatusConfirmed: 'पुष्टि की गई',
+accidentDetailsStatusDispatched: 'रिस्पॉन्डर भेजा गया',
+accidentDetailsStatusOnScene: 'रिस्पॉन्डर घटनास्थल पर है',
+accidentDetailsStatusTransporting: 'अस्पताल ले जाया जा रहा है',
+accidentDetailsStatusHospital: 'अस्पताल पहुंच गया',
+accidentDetailsStatusResolved: 'समाधान हो गया',
+accidentDetailsStatusCancelled: 'रद्द किया गया',
+accidentDetailsPrivacyTitle: 'गोपनीयता सुरक्षित है',
+accidentDetailsPrivacyMessage: 'केवल आवश्यक आपातकालीन जानकारी दिखाई जाती है। निजी संपर्क विवरण सुरक्षित रखे जाते हैं।',
+
+// accident-timeline//
+
+accidentTimelineTitle: 'दुर्घटना समयरेखा',
+accidentTimelineSubtitle:
+  'इस आपातकालीन रिपोर्ट की प्रगति को ट्रैक करें।',
+
+accidentTimelineReportCreated:
+  'रिपोर्ट बनाई गई',
+accidentTimelineReportCreatedDescription:
+  'दुर्घटना रिपोर्ट सफलतापूर्वक सबमिट की गई है।',
+
+accidentTimelineAiAssessment:
+  'AI आकलन',
+accidentTimelineAiAssessmentDescription:
+  'GoldenLink AI ने रिपोर्ट की गई आपात स्थिति का आकलन किया है।',
+
+accidentTimelineUnderReview:
+  'समीक्षा में',
+accidentTimelineUnderReviewDescription:
+  'घटना की समीक्षा और समन्वय किया जा रहा है।',
+
+accidentTimelineVerified:
+  'सत्यापित',
+accidentTimelineVerifiedDescription:
+  'दुर्घटना रिपोर्ट सत्यापित की गई है।',
+
+accidentTimelineResponderAssigned:
+  'Responder नियुक्त',
+accidentTimelineResponderAssignedDescription:
+  'घटना के लिए एक responder नियुक्त किया गया है।',
+
+accidentTimelineResponderOnScene:
+  'Responder घटनास्थल पर',
+accidentTimelineResponderOnSceneDescription:
+  'Responder दुर्घटना स्थल पर पहुंच गया है।',
+
+accidentTimelineHospitalArrival:
+  'अस्पताल पहुंचना',
+accidentTimelineHospitalArrivalDescription:
+  'प्रभावित व्यक्ति अस्पताल पहुंच गया है।',
+
+accidentTimelineResolved:
+  'समाधान किया गया',
+accidentTimelineResolvedDescription:
+  'आपातकालीन घटना सफलतापूर्वक हल कर दी गई है।',
+
+accidentTimelineCurrent:
+  'वर्तमान',
+
+accidentTimelineCompleted:
+  'पूर्ण',
+
+accidentTimelineStatusUpdated:
+  'स्थिति अपडेट की गई',
+
+accidentTimelineFooter:
+  'GoldenLink आपातकालीन प्रतिक्रिया की पूरी प्रक्रिया को ट्रैक करता है।',
+
+accidentTimelineNoIncident:
+  'दिखाने के लिए कोई घटना उपलब्ध नहीं है।',
+
       },
 
 
@@ -4544,6 +4937,136 @@ aiSafetyNote: 'సురక్షితమైన ప్రదేశంలో ఉ
 aiNotRequested: 'అభ్యర్థించలేదు',
 confidence: 'నమ్మక స్థాయి',
 
+//accident-details//
+
+accidentDetailsLoading: 'ప్రమాద వివరాలు లోడ్ అవుతున్నాయి...',
+accidentDetailsLoadingMessage: 'నివేదికను పొందే వరకు వేచి ఉండండి.',
+accidentDetailsNotFound: 'ప్రమాద నివేదిక కనుగొనబడలేదు',
+accidentDetailsBack: 'ప్రమాద రికార్డులకు తిరిగి వెళ్ళు',
+accidentDetailsEyebrow: 'GoldenLink అత్యవసర నివేదిక',
+accidentDetailsTitle: 'ప్రమాద వివరాలు',
+accidentDetailsSubtitle: 'ఈ అత్యవసర నివేదికకు సంబంధించిన పూర్తి సమాచారం.',
+accidentDetailsAccidentId: 'ప్రమాద ID',
+accidentDetailsCurrentStatus: 'ప్రస్తుత స్థితి',
+accidentDetailsStatusDescription: 'నమోదైన ప్రమాదం యొక్క ప్రస్తుత స్థితి.',
+accidentDetailsIncidentInformation: 'ప్రమాద సమాచారం',
+accidentDetailsIncidentInformationDescription: 'నివేదిక సమయంలో నమోదు చేసిన ప్రాథమిక సమాచారం.',
+accidentDetailsAccidentType: 'ప్రమాద రకం',
+accidentDetailsSeverity: 'తీవ్రత',
+accidentDetailsVictims: 'బాధితులు',
+accidentDetailsReportedAt: 'నివేదించిన సమయం',
+accidentDetailsDescription: 'వివరణ',
+accidentDetailsLocation: 'ప్రమాద స్థలం',
+accidentDetailsLocationDescription: 'ప్రమాదం నివేదించినప్పుడు పొందిన GPS స్థానం.',
+accidentDetailsGpsCoordinates: 'GPS కోఆర్డినేట్లు',
+accidentDetailsOpenMap: 'మ్యాప్ తెరవండి',
+accidentDetailsIncidentLocation: 'ప్రమాద స్థానం',
+accidentDetailsViewOnGoogleMaps: 'Google Mapsలో చూడండి',
+accidentDetailsLocationUnavailable: 'స్థానం అందుబాటులో లేదు',
+accidentDetailsAiAssessment: 'AI అంచనా',
+accidentDetailsAiDescription: 'ఈ నివేదిక కోసం AI ఆధారిత అత్యవసర అంచనా.',
+accidentDetailsAiSummary: 'AI సారాంశం',
+accidentDetailsAiConfidence: 'AI నమ్మక స్థాయి',
+accidentDetailsEmergencyLevel: 'అత్యవసర స్థాయి',
+accidentDetailsDetectedConditions: 'గుర్తించిన పరిస్థితులు',
+accidentDetailsRequiredResources: 'అవసరమైన వనరులు',
+accidentDetailsVerification: 'నివేదిక ధృవీకరణ',
+accidentDetailsVerificationCode: 'ధృవీకరణ కోడ్',
+accidentDetailsVerificationPending: 'ధృవీకరణ పెండింగ్‌లో ఉంది',
+accidentDetailsVerified: 'ధృవీకరించిన నివేదిక',
+accidentDetailsVerificationRejected: 'ధృవీకరణ తిరస్కరించబడింది',
+accidentDetailsVerificationReview: 'ధృవీకరణ సమీక్షలో ఉంది',
+accidentDetailsReward: 'రివార్డులు',
+accidentDetailsPoints: 'రివార్డ్ పాయింట్లు',
+accidentDetailsRewardEarned: 'రివార్డ్ పొందారు',
+accidentDetailsRewardPending: 'రివార్డ్ పెండింగ్‌లో ఉంది',
+accidentDetailsRewardNotEligible: 'రివార్డుకు అర్హత లేదు',
+accidentDetailsRewardClaimed: 'రివార్డ్ పొందబడింది',
+accidentDetailsVoucher: 'వౌచర్',
+accidentDetailsNoVoucher: 'వౌచర్ అందుబాటులో లేదు',
+accidentDetailsResponder: 'రెస్పాండర్',
+accidentDetailsNoResponder: 'రెస్పాండర్ కేటాయించబడలేదు',
+accidentDetailsEta: 'అంచనా రాక సమయం',
+accidentDetailsEtaUnavailable: 'రాక సమయం అందుబాటులో లేదు',
+accidentDetailsHospital: 'ఆసుపత్రి',
+accidentDetailsNoHospital: 'ఆసుపత్రి కేటాయించబడలేదు',
+accidentDetailsNoAiSummary: 'AI అంచనా సారాంశం అందుబాటులో లేదు',
+accidentDetailsUnavailable: 'అందుబాటులో లేదు',
+accidentDetailsTimeUnavailable: 'సమయం అందుబాటులో లేదు',
+accidentDetailsUnknown: 'తెలియదు',
+accidentDetailsStatusReported: 'నివేదిక సమర్పించబడింది',
+accidentDetailsStatusReview: 'సమీక్షలో ఉంది',
+accidentDetailsStatusConfirmed: 'ధృవీకరించబడింది',
+accidentDetailsStatusDispatched: 'రెస్పాండర్ పంపబడింది',
+accidentDetailsStatusOnScene: 'రెస్పాండర్ సంఘటన స్థలంలో ఉన్నారు',
+accidentDetailsStatusTransporting: 'ఆసుపత్రికి తరలిస్తున్నారు',
+accidentDetailsStatusHospital: 'ఆసుపత్రికి చేరుకుంది',
+accidentDetailsStatusResolved: 'పరిష్కరించబడింది',
+accidentDetailsStatusCancelled: 'రద్దు చేయబడింది',
+accidentDetailsPrivacyTitle: 'గోప్యత రక్షించబడింది',
+accidentDetailsPrivacyMessage: 'అవసరమైన అత్యవసర సమాచారం మాత్రమే చూపబడుతుంది. వ్యక్తిగత సంప్రదింపు వివరాలు రక్షించబడతాయి.',
+
+
+// accident-timeline//
+
+accidentTimelineTitle: 'ప్రమాద కాలక్రమం',
+accidentTimelineSubtitle:
+  'ఈ అత్యవసర నివేదిక పురోగతిని ట్రాక్ చేయండి.',
+
+accidentTimelineReportCreated:
+  'నివేదిక సృష్టించబడింది',
+accidentTimelineReportCreatedDescription:
+  'ప్రమాద నివేదిక విజయవంతంగా సమర్పించబడింది.',
+
+accidentTimelineAiAssessment:
+  'AI అంచనా',
+accidentTimelineAiAssessmentDescription:
+  'GoldenLink AI నివేదించబడిన అత్యవసర పరిస్థితిని అంచనా వేసింది.',
+
+accidentTimelineUnderReview:
+  'సమీక్షలో ఉంది',
+accidentTimelineUnderReviewDescription:
+  'సంఘటన సమీక్షించబడుతూ సమన్వయం చేయబడుతోంది.',
+
+accidentTimelineVerified:
+  'ధృవీకరించబడింది',
+accidentTimelineVerifiedDescription:
+  'ప్రమాద నివేదిక ధృవీకరించబడింది.',
+
+accidentTimelineResponderAssigned:
+  'సహాయకుడు కేటాయించబడ్డారు',
+accidentTimelineResponderAssignedDescription:
+  'సంఘటనకు ఒక సహాయకుడు కేటాయించబడ్డారు.',
+
+accidentTimelineResponderOnScene:
+  'సహాయకుడు సంఘటన స్థలంలో ఉన్నారు',
+accidentTimelineResponderOnSceneDescription:
+  'సహాయకుడు ప్రమాద స్థలానికి చేరుకున్నారు.',
+
+accidentTimelineHospitalArrival:
+  'ఆసుపత్రికి చేరుకున్నారు',
+accidentTimelineHospitalArrivalDescription:
+  'బాధిత వ్యక్తి ఆసుపత్రికి చేరుకున్నారు.',
+
+accidentTimelineResolved:
+  'పరిష్కరించబడింది',
+accidentTimelineResolvedDescription:
+  'అత్యవసర సంఘటన విజయవంతంగా పరిష్కరించబడింది.',
+
+accidentTimelineCurrent:
+  'ప్రస్తుత',
+
+accidentTimelineCompleted:
+  'పూర్తయింది',
+
+accidentTimelineStatusUpdated:
+  'స్థితి నవీకరించబడింది',
+
+accidentTimelineFooter:
+  'GoldenLink అత్యవసర స్పందన ప్రయాణాన్ని పూర్తిగా ట్రాక్ చేస్తుంది.',
+
+accidentTimelineNoIncident:
+  'చూపించడానికి ఎటువంటి సంఘటన అందుబాటులో లేదు.',
 
   },
 
@@ -5681,6 +6204,136 @@ aiSafetyNote: 'സുരക്ഷിതമായ സ്ഥലത്ത് തു
 
 aiNotRequested: 'അഭ്യർത്ഥിച്ചിട്ടില്ല',
 confidence: 'വിശ്വാസ്യത',
+
+//accident-details//
+
+accidentDetailsLoading: 'ప్రమాద వివరాలు లోడ్ అవుతున్నాయి...',
+accidentDetailsLoadingMessage: 'నివేదికను పొందే వరకు వేచి ఉండండి.',
+accidentDetailsNotFound: 'ప్రమాద నివేదిక కనుగొనబడలేదు',
+accidentDetailsBack: 'ప్రమాద రికార్డులకు తిరిగి వెళ్ళు',
+accidentDetailsEyebrow: 'GoldenLink అత్యవసర నివేదిక',
+accidentDetailsTitle: 'ప్రమాద వివరాలు',
+accidentDetailsSubtitle: 'ఈ అత్యవసర నివేదికకు సంబంధించిన పూర్తి సమాచారం.',
+accidentDetailsAccidentId: 'ప్రమాద ID',
+accidentDetailsCurrentStatus: 'ప్రస్తుత స్థితి',
+accidentDetailsStatusDescription: 'నమోదైన ప్రమాదం యొక్క ప్రస్తుత స్థితి.',
+accidentDetailsIncidentInformation: 'ప్రమాద సమాచారం',
+accidentDetailsIncidentInformationDescription: 'నివేదిక సమయంలో నమోదు చేసిన ప్రాథమిక సమాచారం.',
+accidentDetailsAccidentType: 'ప్రమాద రకం',
+accidentDetailsSeverity: 'తీవ్రత',
+accidentDetailsVictims: 'బాధితులు',
+accidentDetailsReportedAt: 'నివేదించిన సమయం',
+accidentDetailsDescription: 'వివరణ',
+accidentDetailsLocation: 'ప్రమాద స్థలం',
+accidentDetailsLocationDescription: 'ప్రమాదం నివేదించినప్పుడు పొందిన GPS స్థానం.',
+accidentDetailsGpsCoordinates: 'GPS కోఆర్డినేట్లు',
+accidentDetailsOpenMap: 'మ్యాప్ తెరవండి',
+accidentDetailsIncidentLocation: 'ప్రమాద స్థానం',
+accidentDetailsViewOnGoogleMaps: 'Google Mapsలో చూడండి',
+accidentDetailsLocationUnavailable: 'స్థానం అందుబాటులో లేదు',
+accidentDetailsAiAssessment: 'AI అంచనా',
+accidentDetailsAiDescription: 'ఈ నివేదిక కోసం AI ఆధారిత అత్యవసర అంచనా.',
+accidentDetailsAiSummary: 'AI సారాంశం',
+accidentDetailsAiConfidence: 'AI నమ్మక స్థాయి',
+accidentDetailsEmergencyLevel: 'అత్యవసర స్థాయి',
+accidentDetailsDetectedConditions: 'గుర్తించిన పరిస్థితులు',
+accidentDetailsRequiredResources: 'అవసరమైన వనరులు',
+accidentDetailsVerification: 'నివేదిక ధృవీకరణ',
+accidentDetailsVerificationCode: 'ధృవీకరణ కోడ్',
+accidentDetailsVerificationPending: 'ధృవీకరణ పెండింగ్‌లో ఉంది',
+accidentDetailsVerified: 'ధృవీకరించిన నివేదిక',
+accidentDetailsVerificationRejected: 'ధృవీకరణ తిరస్కరించబడింది',
+accidentDetailsVerificationReview: 'ధృవీకరణ సమీక్షలో ఉంది',
+accidentDetailsReward: 'రివార్డులు',
+accidentDetailsPoints: 'రివార్డ్ పాయింట్లు',
+accidentDetailsRewardEarned: 'రివార్డ్ పొందారు',
+accidentDetailsRewardPending: 'రివార్డ్ పెండింగ్‌లో ఉంది',
+accidentDetailsRewardNotEligible: 'రివార్డుకు అర్హత లేదు',
+accidentDetailsRewardClaimed: 'రివార్డ్ పొందబడింది',
+accidentDetailsVoucher: 'వౌచర్',
+accidentDetailsNoVoucher: 'వౌచర్ అందుబాటులో లేదు',
+accidentDetailsResponder: 'రెస్పాండర్',
+accidentDetailsNoResponder: 'రెస్పాండర్ కేటాయించబడలేదు',
+accidentDetailsEta: 'అంచనా రాక సమయం',
+accidentDetailsEtaUnavailable: 'రాక సమయం అందుబాటులో లేదు',
+accidentDetailsHospital: 'ఆసుపత్రి',
+accidentDetailsNoHospital: 'ఆసుపత్రి కేటాయించబడలేదు',
+accidentDetailsNoAiSummary: 'AI అంచనా సారాంశం అందుబాటులో లేదు',
+accidentDetailsUnavailable: 'అందుబాటులో లేదు',
+accidentDetailsTimeUnavailable: 'సమయం అందుబాటులో లేదు',
+accidentDetailsUnknown: 'తెలియదు',
+accidentDetailsStatusReported: 'నివేదిక సమర్పించబడింది',
+accidentDetailsStatusReview: 'సమీక్షలో ఉంది',
+accidentDetailsStatusConfirmed: 'ధృవీకరించబడింది',
+accidentDetailsStatusDispatched: 'రెస్పాండర్ పంపబడింది',
+accidentDetailsStatusOnScene: 'రెస్పాండర్ సంఘటన స్థలంలో ఉన్నారు',
+accidentDetailsStatusTransporting: 'ఆసుపత్రికి తరలిస్తున్నారు',
+accidentDetailsStatusHospital: 'ఆసుపత్రికి చేరుకుంది',
+accidentDetailsStatusResolved: 'పరిష్కరించబడింది',
+accidentDetailsStatusCancelled: 'రద్దు చేయబడింది',
+accidentDetailsPrivacyTitle: 'గోప్యత రక్షించబడింది',
+accidentDetailsPrivacyMessage: 'అవసరమైన అత్యవసర సమాచారం మాత్రమే చూపబడుతుంది. వ్యక్తిగత సంప్రదింపు వివరాలు రక్షించబడతాయి.',
+
+// accident-timeline//
+
+accidentTimelineTitle: 'അപകട സമയരേഖ',
+accidentTimelineSubtitle:
+  'ഈ അടിയന്തര റിപ്പോർട്ടിന്റെ പുരോഗതി ട്രാക്ക് ചെയ്യുക.',
+
+accidentTimelineReportCreated:
+  'റിപ്പോർട്ട് സൃഷ്ടിച്ചു',
+accidentTimelineReportCreatedDescription:
+  'അപകട റിപ്പോർട്ട് വിജയകരമായി സമർപ്പിച്ചു.',
+
+accidentTimelineAiAssessment:
+  'AI വിലയിരുത്തൽ',
+accidentTimelineAiAssessmentDescription:
+  'GoldenLink AI റിപ്പോർട്ട് ചെയ്ത അടിയന്തര സാഹചര്യം വിലയിരുത്തി.',
+
+accidentTimelineUnderReview:
+  'പരിശോധനയിൽ',
+accidentTimelineUnderReviewDescription:
+  'സംഭവം പരിശോധിക്കുകയും ഏകോപിപ്പിക്കുകയും ചെയ്യുന്നു.',
+
+accidentTimelineVerified:
+  'സ്ഥിരീകരിച്ചു',
+accidentTimelineVerifiedDescription:
+  'അപകട റിപ്പോർട്ട് സ്ഥിരീകരിച്ചു.',
+
+accidentTimelineResponderAssigned:
+  'പ്രതികരണ പ്രവർത്തകനെ നിയോഗിച്ചു',
+accidentTimelineResponderAssignedDescription:
+  'സംഭവത്തിന് ഒരു പ്രതികരണ പ്രവർത്തകനെ നിയോഗിച്ചിട്ടുണ്ട്.',
+
+accidentTimelineResponderOnScene:
+  'പ്രതികരണ പ്രവർത്തകൻ സംഭവസ്ഥലത്ത്',
+accidentTimelineResponderOnSceneDescription:
+  'പ്രതികരണ പ്രവർത്തകൻ അപകടസ്ഥലത്ത് എത്തിയിട്ടുണ്ട്.',
+
+accidentTimelineHospitalArrival:
+  'ആശുപത്രിയിലെത്തി',
+accidentTimelineHospitalArrivalDescription:
+  'ബാധിത വ്യക്തി ആശുപത്രിയിലെത്തി.',
+
+accidentTimelineResolved:
+  'പരിഹരിച്ചു',
+accidentTimelineResolvedDescription:
+  'അടിയന്തര സംഭവം വിജയകരമായി പരിഹരിച്ചു.',
+
+accidentTimelineCurrent:
+  'നിലവിലെ',
+
+accidentTimelineCompleted:
+  'പൂർത്തിയായി',
+
+accidentTimelineStatusUpdated:
+  'നില അപ്ഡേറ്റ് ചെയ്തു',
+
+accidentTimelineFooter:
+  'GoldenLink അടിയന്തര പ്രതികരണത്തിന്റെ മുഴുവൻ ഘട്ടങ്ങളും ട്രാക്ക് ചെയ്യുന്നു.',
+
+accidentTimelineNoIncident:
+  'പ്രദർശിപ്പിക്കാൻ സംഭവമൊന്നും ലഭ്യമല്ല.',
 
     },
 
@@ -6900,6 +7553,136 @@ aiSafetyNote: 'Safe location-la irundhu emergency services instructions-ai follo
 aiNotRequested: 'Request pannala',
 confidence: 'Confidence',
 
+//accident-details//
+
+accidentDetailsLoading: 'Accident details load aaguthu...',
+accidentDetailsLoadingMessage: 'Report retrieve aagum varaikum wait pannunga.',
+accidentDetailsNotFound: 'Accident report kidaikkala',
+accidentDetailsBack: 'Accident Records-ku thirumba',
+accidentDetailsEyebrow: 'GoldenLink Emergency Report',
+accidentDetailsTitle: 'Accident Details',
+accidentDetailsSubtitle: 'Indha emergency report-oda complete information.',
+accidentDetailsAccidentId: 'Accident ID',
+accidentDetailsCurrentStatus: 'Current Status',
+accidentDetailsStatusDescription: 'Reported accident-oda current status.',
+accidentDetailsIncidentInformation: 'Accident Information',
+accidentDetailsIncidentInformationDescription: 'Report pannumbodhu record panna basic information.',
+accidentDetailsAccidentType: 'Accident Type',
+accidentDetailsSeverity: 'Severity',
+accidentDetailsVictims: 'Victims',
+accidentDetailsReportedAt: 'Reported At',
+accidentDetailsDescription: 'Description',
+accidentDetailsLocation: 'Accident Location',
+accidentDetailsLocationDescription: 'Accident report pannumbodhu capture panna GPS location.',
+accidentDetailsGpsCoordinates: 'GPS Coordinates',
+accidentDetailsOpenMap: 'Map Open Pannu',
+accidentDetailsIncidentLocation: 'Accident Location',
+accidentDetailsViewOnGoogleMaps: 'Google Maps-la Paaru',
+accidentDetailsLocationUnavailable: 'Location kidaikkala',
+accidentDetailsAiAssessment: 'AI Assessment',
+accidentDetailsAiDescription: 'Indha report-ku AI based emergency assessment.',
+accidentDetailsAiSummary: 'AI Summary',
+accidentDetailsAiConfidence: 'AI Confidence',
+accidentDetailsEmergencyLevel: 'Emergency Level',
+accidentDetailsDetectedConditions: 'Detected Conditions',
+accidentDetailsRequiredResources: 'Required Resources',
+accidentDetailsVerification: 'Report Verification',
+accidentDetailsVerificationCode: 'Verification Code',
+accidentDetailsVerificationPending: 'Verification Pending',
+accidentDetailsVerified: 'Verified Report',
+accidentDetailsVerificationRejected: 'Verification Rejected',
+accidentDetailsVerificationReview: 'Verification Review-la irukku',
+accidentDetailsReward: 'Rewards',
+accidentDetailsPoints: 'Reward Points',
+accidentDetailsRewardEarned: 'Reward Earned',
+accidentDetailsRewardPending: 'Reward Pending',
+accidentDetailsRewardNotEligible: 'Reward-ku eligible illa',
+accidentDetailsRewardClaimed: 'Reward Claimed',
+accidentDetailsVoucher: 'Voucher',
+accidentDetailsNoVoucher: 'Voucher available illa',
+accidentDetailsResponder: 'Responder',
+accidentDetailsNoResponder: 'Responder assign pannala',
+accidentDetailsEta: 'Estimated Arrival',
+accidentDetailsEtaUnavailable: 'ETA available illa',
+accidentDetailsHospital: 'Hospital',
+accidentDetailsNoHospital: 'Hospital assign pannala',
+accidentDetailsNoAiSummary: 'AI assessment summary available illa',
+accidentDetailsUnavailable: 'Available illa',
+accidentDetailsTimeUnavailable: 'Time available illa',
+accidentDetailsUnknown: 'Unknown',
+accidentDetailsStatusReported: 'Report Submitted',
+accidentDetailsStatusReview: 'Review-la irukku',
+accidentDetailsStatusConfirmed: 'Confirmed',
+accidentDetailsStatusDispatched: 'Responder Dispatched',
+accidentDetailsStatusOnScene: 'Responder Scene-la irukkaru',
+accidentDetailsStatusTransporting: 'Hospital-ku transport pannitu irukku',
+accidentDetailsStatusHospital: 'Hospital reach aayiduchu',
+accidentDetailsStatusResolved: 'Resolved',
+accidentDetailsStatusCancelled: 'Cancelled',
+accidentDetailsPrivacyTitle: 'Privacy Protected',
+accidentDetailsPrivacyMessage: 'Necessary emergency information mattum display aagum. Private contact details protected-aa irukkum.',
+
+// accident-timeline//
+
+accidentTimelineTitle: 'Accident Timeline',
+accidentTimelineSubtitle:
+  'Indha emergency report-oda progress-ai track pannunga.',
+
+accidentTimelineReportCreated:
+  'Report Created',
+accidentTimelineReportCreatedDescription:
+  'Accident report successful-aa submit aayiduchu.',
+
+accidentTimelineAiAssessment:
+  'AI Assessment',
+accidentTimelineAiAssessmentDescription:
+  'GoldenLink AI reported emergency-ai assess pannirukku.',
+
+accidentTimelineUnderReview:
+  'Review-la Irukku',
+accidentTimelineUnderReviewDescription:
+  'Incident review panni coordinate pannitu irukku.',
+
+accidentTimelineVerified:
+  'Verified',
+accidentTimelineVerifiedDescription:
+  'Accident report verify pannappattadhu.',
+
+accidentTimelineResponderAssigned:
+  'Responder Assigned',
+accidentTimelineResponderAssignedDescription:
+  'Incident-ku oru responder assign pannappattirukkaru.',
+
+accidentTimelineResponderOnScene:
+  'Responder Scene-la',
+accidentTimelineResponderOnSceneDescription:
+  'Responder accident location-ku vandhuttaru.',
+
+accidentTimelineHospitalArrival:
+  'Hospital Arrival',
+accidentTimelineHospitalArrivalDescription:
+  'Affected person hospital-ai reach pannittanga.',
+
+accidentTimelineResolved:
+  'Resolved',
+accidentTimelineResolvedDescription:
+  'Emergency incident successful-aa resolve aayiduchu.',
+
+accidentTimelineCurrent:
+  'Current',
+
+accidentTimelineCompleted:
+  'Completed',
+
+accidentTimelineStatusUpdated:
+  'Status Updated',
+
+accidentTimelineFooter:
+  'GoldenLink emergency response journey-ai track pannum.',
+
+accidentTimelineNoIncident:
+  'Display panna incident available illa.',
+  
       }
 
     };
