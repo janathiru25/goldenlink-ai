@@ -575,6 +575,59 @@
         </section>
 
 
+        <!-- HOSPITAL RECOMMENDATION -->
+        @if (hospital) {
+          <section class="dashboard-card location-card">
+            <div class="card-header">
+              <div class="card-icon" style="background: #e8f7ef; color: #198754;">
+                <i class="bi bi-hospital-fill"></i>
+              </div>
+              <div>
+                <span>RECOMMENDED EMERGENCY HOSPITAL</span>
+                <h2>{{ hospital.name }}</h2>
+              </div>
+            </div>
+            <div class="location-box">
+              <div class="location-main-icon" style="background: #e8f7ef; color: #198754;">
+                <i class="bi bi-geo-alt-fill"></i>
+              </div>
+              <div class="location-content">
+                <span>{{ hospital.address }}</span>
+                <strong>Distance: {{ hospital.distanceKm }} km &bull; ETA: ~{{ hospital.estimatedArrivalMinutes }} mins</strong>
+                <small>Emergency: {{ hospital.emergencyAvailable ? 'Available' : 'Unavailable' }} &bull; ICU Beds: {{ hospital.icuAvailable }} &bull; General Beds: {{ hospital.availableBeds }}</small>
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- SIMULATED EMERGENCY DISPATCH STATUS -->
+        @if (notifications && notifications.length > 0) {
+          <section class="dashboard-card incident-details">
+            <div class="card-header">
+              <div class="card-icon" style="background: #fff3cd; color: #856404;">
+                <i class="bi bi-broadcast"></i>
+              </div>
+              <div>
+                <span>NATIONAL DEMO &bull; DISPATCH STATUS</span>
+                <h2>Emergency Dispatches (SIMULATED)</h2>
+              </div>
+            </div>
+            <div class="details-grid">
+              @for (n of notifications; track n.recipient) {
+                <div class="detail-item">
+                  <div class="detail-icon" style="background: #e8f7ef; color: #198754;">
+                    <i class="bi bi-check-circle-fill"></i>
+                  </div>
+                  <div>
+                    <span>{{ n.recipient }}</span>
+                    <strong style="color: #198754;">{{ n.status }} [SIMULATED]</strong>
+                  </div>
+                </div>
+              }
+            </div>
+          </section>
+        }
+
         <!-- AI SUPPORT -->
         <section class="dashboard-card ai-card">
 
@@ -594,9 +647,23 @@
                 {{ t('responderGoldenLinkAiAssistant') }}
               </h2>
 
-              <p>
-                {{ t('responderAiSupportDescription') }}
-              </p>
+              @if (aiAssessment) {
+                <p style="margin: 6px 0; font-weight: 600; color: #0d6efd;">
+                  AI Severity: {{ aiAssessment.severity | uppercase }} &bull; Confidence: {{ aiAssessment.confidence }}%
+                </p>
+                <p style="margin: 4px 0;">
+                  {{ aiAssessment.summary }}
+                </p>
+                @if (aiAssessment.recommendedAction) {
+                  <p style="margin: 4px 0; font-size: 13px; color: #198754;">
+                    <strong>Recommended Action:</strong> {{ aiAssessment.recommendedAction }}
+                  </p>
+                }
+              } @else {
+                <p>
+                  {{ t('responderAiSupportDescription') }}
+                </p>
+              }
 
             </div>
 

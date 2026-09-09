@@ -454,10 +454,23 @@ export class ResponderDashboard implements OnDestroy {
 
   goToAccidentRecords(): void {
 
+    // Navigate to responder emergency incident list rather than citizen general records
     this.router.navigate([
-      '/accident-records'
+      '/incident-response'
     ]);
 
+  }
+
+  get hospital(): any {
+    return this.incident?.hospital;
+  }
+
+  get aiAssessment(): any {
+    return this.incident?.aiAssessment;
+  }
+
+  get notifications(): any[] {
+    return this.incident?.notifications || [];
   }
 
   openAI(): void {

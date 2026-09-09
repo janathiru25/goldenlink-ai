@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner';
 import { IncidentService } from '../../../core/services/incident';
+import { ResponderService } from '../../../core/services/responder';
 import { Incident } from '../../../core/models/incident';
 import { TranslationService } from '../../../core/services/translation';
 
@@ -31,12 +32,15 @@ interface Responder {
   templateUrl: './nearby-responders.html',
   styleUrl: './nearby-responders.scss',
 })
-export class NearbyResponders {
+export class NearbyResponders implements OnInit {
 
   private readonly router = inject(Router);
 
   private readonly incidentService =
     inject(IncidentService);
+
+  private readonly responderService =
+    inject(ResponderService);
 
   readonly translation =
     inject(TranslationService);
@@ -129,6 +133,10 @@ export class NearbyResponders {
     this.loadActiveIncident();
   }
 
+  ngOnInit(): void {
+    this.loadActiveIncident();
+  }
+
   private loadActiveIncident(): void {
 
     this.activeIncident =
@@ -140,6 +148,25 @@ export class NearbyResponders {
         'GoldenLink ACTIVE INCIDENT:',
         this.activeIncident
       );
+
+      // Load recommended or nearby responders from backend
+      this.responderService.getRecommendedResponders(this.activeIncident.incidentId).subscribe(resList => {
+        if (resList && resList.length > 0) {
+          this.responders = resList.map((r, i) => ({
+            id: Number(r.id || i + 1),
+            name: r.name || 'Responder',
+            initials: r.initials || (r.name ? r.name.slice(0, 2).toUpperCase() : 'CR'),
+            role: r.role || 'Community Responder',
+            distance: r.distance || `${r.distanceKm || 0.5} km`,
+            eta: r.eta || `${r.estimatedArrivalMinutes || 4} min`,
+            rating: r.rating || 4.8,
+            verified: r.verified !== false,
+            available: r.available !== false,
+            skills: r.skills || ['First Aid'],
+            icon: r.icon || 'bi-person-check-fill'
+          }));
+        }
+      });
 
       // Keep existing incident workflow unchanged.
       if (
@@ -206,12 +233,11 @@ export class NearbyResponders {
       responder
     );
 
-    /*
-     * Update the local incident.
-     *
-     * Later this same operation will be
-     * connected to the backend API.
-     */
+    // Call backend accept endpoint
+    this.responderService.acceptIncident(responder.id, this.activeIncident.incidentId).subscribe({
+      next: (res) => console.log('GoldenLink: Backend responder accept success:', res),
+      error: (err) => console.warn('GoldenLink: Backend responder accept fallback:', err)
+    });
 
     setTimeout(() => {
 

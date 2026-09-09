@@ -43,5 +43,23 @@ export interface Responder {
 
   lastUpdated?: string;
 
+  initials?: string;
+
+  role?: string;
+
+  distance?: string;
+
+  eta?: string;
+
+  rating?: number;
+
+  verified?: boolean;
+
+  available?: boolean;
+
+  skills?: string[];
+
+  icon?: string;
+
   [key: string]: any;
 }

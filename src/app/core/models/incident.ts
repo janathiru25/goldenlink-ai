@@ -37,6 +37,7 @@ export interface IncidentAI {
   recommendedAction?: string;
   emergencyLevel?: string;
   detectedConditions?: string[];
+  requiredResources?: string[];
 }
 
 export interface Incident {
@@ -69,4 +70,8 @@ export interface Incident {
   emergencyContact?: string;
 
   lastUpdated?: string;
+
+  notifications?: any[];
+
+  recommendedResponders?: Responder[];
 }
